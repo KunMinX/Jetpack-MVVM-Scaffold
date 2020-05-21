@@ -1,0 +1,2 @@
+include ':app', ':architecture'
+rootProject.name = 'PureMusic'
