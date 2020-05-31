@@ -21,7 +21,7 @@
 
         <variable
             name="vm"
-            type="com.kunminx.puremusic.state.state.MainActivityViewModel" />
+            type="com.kunminx.puremusic.ui.state.MainActivityViewModel" />
 
     </data>
 

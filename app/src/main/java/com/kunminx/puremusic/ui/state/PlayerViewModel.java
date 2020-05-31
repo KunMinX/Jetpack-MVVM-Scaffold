@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.ui.state.state;
+package com.kunminx.puremusic.ui.state;
 
 import android.graphics.drawable.Drawable;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.ui.state.state;
+package com.kunminx.puremusic.ui.state;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.ui.state.state;
+package com.kunminx.puremusic.ui.state;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.kunminx.puremusic.data.bean.DownloadFile;
-import com.kunminx.puremusic.domain.request.DownloadRequest;
+import com.kunminx.puremusic.data.bean.TestAlbum;
+import com.kunminx.puremusic.domain.request.MusicRequest;
 import com.kunminx.puremusic.domain.request.Request;
-import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
+
+import java.util.List;
 
 /**
  * TODO tip：每个页面都要单独准备一个 state-ViewModel，
@@ -37,33 +40,34 @@ import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
  * <p>
  * Create by KunMinX at 19/10/29
  */
-public class SearchViewModel extends ViewModel implements Request.IDownloadRequest {
+public class MainViewModel extends ViewModel implements Request.IMusicRequest {
 
-    public final ObservableField<Integer> progress = new ObservableField<>();
-    private DownloadRequest mDownloadRequest = new DownloadRequest();
+    public final ObservableBoolean initTabAndPage = new ObservableBoolean();
 
-    @Override
-    public LiveData<DownloadFile> getDownloadFileLiveData() {
-        return mDownloadRequest.getDownloadFileLiveData();
+    public final ObservableField<String> pageAssetPath = new ObservableField<>();
+
+    //TODO 此处用于绑定的状态，使用 LiveData 而不是 ObservableField，主要是考虑到 ObservableField 具有防抖的特性，不适合该场景。
+
+    //如果这么说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
+
+    public final MutableLiveData<List<TestAlbum.TestMusic>> list = new MutableLiveData<>();
+
+    public final MutableLiveData<Boolean> notifyWholeListChanged = new MutableLiveData<>();
+
+    private MusicRequest mMusicRequest = new MusicRequest();
+
+    {
+        initTabAndPage.set(true);
+        pageAssetPath.set("summary.html");
     }
 
     @Override
-    public LiveData<DownloadFile> getDownloadFileCanBeStoppedLiveData() {
-        return mDownloadRequest.getDownloadFileCanBeStoppedLiveData();
+    public LiveData<TestAlbum> getFreeMusicsLiveData() {
+        return mMusicRequest.getFreeMusicsLiveData();
     }
 
     @Override
-    public CanBeStoppedUseCase getCanBeStoppedUseCase() {
-        return mDownloadRequest.getCanBeStoppedUseCase();
-    }
-
-    @Override
-    public void requestDownloadFile() {
-        mDownloadRequest.requestDownloadFile();
-    }
-
-    @Override
-    public void requestCanBeStoppedDownloadFile() {
-        mDownloadRequest.requestCanBeStoppedDownloadFile();
+    public void requestFreeMusics() {
+        mMusicRequest.requestFreeMusics();
     }
 }
