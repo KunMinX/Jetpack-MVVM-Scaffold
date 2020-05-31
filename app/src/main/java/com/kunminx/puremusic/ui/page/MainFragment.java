@@ -69,7 +69,6 @@ public class MainFragment extends BaseFragment {
             // 如此才能方便 追溯事件源，以及 避免 不可预期的 推送和错误。
             // 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/0168753249
 
-            mMainViewModel.list.setValue(PlayerManager.getInstance().getAlbum().getMusics());
             mMainViewModel.notifyWholeListChanged.setValue(true);
         });
 

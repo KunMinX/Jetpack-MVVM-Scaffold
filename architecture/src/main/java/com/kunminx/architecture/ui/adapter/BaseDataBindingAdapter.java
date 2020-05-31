@@ -23,11 +23,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author KunMinX
@@ -51,6 +55,11 @@ public abstract class BaseDataBindingAdapter<M, B extends ViewDataBinding> exten
     public BaseDataBindingAdapter(Context context, @NonNull DiffUtil.ItemCallback<M> diffCallback) {
         super(diffCallback);
         this.mContext = context;
+    }
+
+    @Override
+    public void submitList(@Nullable List<M> list) {
+        super.submitList(list == null ? new ArrayList<>() : new ArrayList<>(list));
     }
 
     @Override
