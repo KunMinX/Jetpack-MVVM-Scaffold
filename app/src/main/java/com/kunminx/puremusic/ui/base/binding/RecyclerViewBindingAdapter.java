@@ -18,6 +18,7 @@ package com.kunminx.puremusic.ui.base.binding;
 
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kunminx.architecture.ui.adapter.BaseBindingAdapter;
@@ -43,16 +44,13 @@ public class RecyclerViewBindingAdapter {
     }
 
     @BindingAdapter(value = {"adapter", "refreshList"}, requireAll = false)
-    public static void bindList(RecyclerView recyclerView, RecyclerView.Adapter adapter, List list) {
+    public static void bindList(RecyclerView recyclerView, ListAdapter adapter, List list) {
         if (recyclerView != null && list != null) {
             if (recyclerView.getAdapter() == null) {
                 recyclerView.setAdapter(adapter);
             }
 
-            ((BaseBindingAdapter) recyclerView.getAdapter()).setList(list);
-
-            //TODO 此处可通过 diffUtil 进一步优化用户体验
-            recyclerView.getAdapter().notifyDataSetChanged();
+            adapter.submitList(list);
         }
     }
 }

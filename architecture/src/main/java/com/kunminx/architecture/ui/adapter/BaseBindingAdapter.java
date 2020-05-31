@@ -25,48 +25,60 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author KunMinX
  * Create at 2018/6/30
  */
-public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends RecyclerView.Adapter {
+public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends ListAdapter<M, RecyclerView.ViewHolder> {
 
-    protected final Context mContext;
-    protected List<M> mList = new ArrayList<>();
+    protected Context mContext;
 
-    public BaseBindingAdapter(Context context) {
+    private OnItemClickListener<M> mOnItemClickListener;
+    private OnItemLongClickListener<M> mOnItemLongClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener<M> onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener<M> onItemLongClickListener) {
+        mOnItemLongClickListener = onItemLongClickListener;
+    }
+
+    public BaseBindingAdapter(Context context, @NonNull DiffUtil.ItemCallback<M> diffCallback) {
+        super(diffCallback);
         this.mContext = context;
-    }
-
-    public List<M> getList() {
-        return mList;
-    }
-
-    public void setList(List<M> list) {
-        this.mList = list;
-    }
-
-    @Override
-    public int getItemCount() {
-        return null == this.mList ? 0 : this.mList.size();
     }
 
     @Override
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         B binding = DataBindingUtil.inflate(LayoutInflater.from(this.mContext), this.getLayoutResId(viewType), parent, false);
-        return new BaseBindingViewHolder(binding.getRoot());
+        BaseBindingViewHolder holder = new BaseBindingViewHolder(binding.getRoot());
+        holder.itemView.setOnClickListener(v -> {
+            if (mOnItemClickListener != null) {
+                int position = holder.getBindingAdapterPosition();
+                mOnItemClickListener.onItemClick(getItem(position), position);
+            }
+        });
+        holder.itemView.setOnLongClickListener(v -> {
+            if (mOnItemLongClickListener != null) {
+                int position = holder.getBindingAdapterPosition();
+                mOnItemLongClickListener.onItemLongClick(getItem(position), position);
+                return true;
+            }
+            return false;
+        });
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         B binding = DataBindingUtil.getBinding(holder.itemView);
-        this.onBindItem(binding, this.mList.get(position), holder);
+        this.onBindItem(binding, getItem(position), holder);
         if (binding != null) {
             binding.executePendingBindings();
         }
@@ -78,7 +90,7 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
     /**
      * 注意：
      * RecyclerView 中的数据有位置改变（比如删除）时一般不会重新调用 onBindViewHolder() 方法，除非这个元素不可用。
-     * 为了实时获取元素的位置，我们通过 ViewHolder.getAdapterPosition() 方法。
+     * 为了实时获取元素的位置，我们通过 ViewHolder.getBindingAdapterPosition() 方法。
      *
      * @param binding .
      * @param item    .
@@ -90,5 +102,13 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends R
         BaseBindingViewHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    public interface OnItemClickListener<M> {
+        void onItemClick(M item, int position);
+    }
+
+    public interface OnItemLongClickListener<M> {
+        void onItemLongClick(M item, int position);
     }
 }
