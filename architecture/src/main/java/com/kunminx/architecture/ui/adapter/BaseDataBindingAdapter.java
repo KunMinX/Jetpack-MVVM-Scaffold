@@ -60,7 +60,7 @@ public abstract class BaseDataBindingAdapter<M, B extends ViewDataBinding> exten
     @Override
     public void submitList(@Nullable List<M> list) {
         super.submitList(list, () -> {
-            submitList(list == null ? new ArrayList<>() : new ArrayList<>(list));
+            super.submitList(list == null ? new ArrayList<>() : new ArrayList<>(list));
         });
     }
 
