@@ -1,12 +1,8 @@
-package com.kunminx.puremusic.ui.base.binding;
-
-import android.view.View;
+package com.kunminx.puremusic.ui.base.binding_adapter;
 
 import androidx.core.view.GravityCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import com.kunminx.puremusic.vm.callback.SharedViewModel;
 
 /**
  * Create by KunMinX at 2020/3/13

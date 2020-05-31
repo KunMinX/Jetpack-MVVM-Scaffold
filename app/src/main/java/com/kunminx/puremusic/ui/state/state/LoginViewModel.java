@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.vm.state;
+package com.kunminx.puremusic.ui.state.state;
 
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.kunminx.puremusic.data.bean.DownloadFile;
-import com.kunminx.puremusic.domain.request.DownloadRequest;
+import com.kunminx.puremusic.data.bean.User;
+import com.kunminx.puremusic.domain.request.AccountRequest;
 import com.kunminx.puremusic.domain.request.Request;
-import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
 
 /**
  * TODO tip：每个页面都要单独准备一个 state-ViewModel，
@@ -35,35 +35,25 @@ import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
  * <p>
  * 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
  * <p>
- * Create by KunMinX at 19/10/29
+ * Create by KunMinX at 20/04/26
  */
-public class SearchViewModel extends ViewModel implements Request.IDownloadRequest {
+public class LoginViewModel extends ViewModel implements Request.IAccountRequest {
 
-    public final ObservableField<Integer> progress = new ObservableField<>();
-    private DownloadRequest mDownloadRequest = new DownloadRequest();
+    public final ObservableField<String> name = new ObservableField<>();
+
+    public final ObservableField<String> password = new ObservableField<>();
+
+    public final ObservableBoolean loadingVisible = new ObservableBoolean();
+
+    private AccountRequest mAccountRequest = new AccountRequest();
 
     @Override
-    public LiveData<DownloadFile> getDownloadFileLiveData() {
-        return mDownloadRequest.getDownloadFileLiveData();
+    public LiveData<String> getTokenLiveData() {
+        return mAccountRequest.getTokenLiveData();
     }
 
     @Override
-    public LiveData<DownloadFile> getDownloadFileCanBeStoppedLiveData() {
-        return mDownloadRequest.getDownloadFileCanBeStoppedLiveData();
-    }
-
-    @Override
-    public CanBeStoppedUseCase getCanBeStoppedUseCase() {
-        return mDownloadRequest.getCanBeStoppedUseCase();
-    }
-
-    @Override
-    public void requestDownloadFile() {
-        mDownloadRequest.requestDownloadFile();
-    }
-
-    @Override
-    public void requestCanBeStoppedDownloadFile() {
-        mDownloadRequest.requestCanBeStoppedDownloadFile();
+    public void requestLogin(User user) {
+        mAccountRequest.requestLogin(user);
     }
 }

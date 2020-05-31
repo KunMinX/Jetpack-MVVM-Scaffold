@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.vm.callback;
+package com.kunminx.puremusic.ui.state.callback;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.ViewModel;

@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kunminx.architecture.ui.adapter.SimpleBindingAdapter;
+import com.kunminx.architecture.ui.adapter.SimpleDataBindingAdapter;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.data.bean.TestAlbum;
 import com.kunminx.puremusic.databinding.AdapterPlayItemBinding;
@@ -32,7 +32,7 @@ import com.kunminx.puremusic.player.PlayerManager;
 /**
  * Create by KunMinX at 20/4/19
  */
-public class PlaylistAdapter extends SimpleBindingAdapter<TestAlbum.TestMusic, AdapterPlayItemBinding> {
+public class PlaylistAdapter extends SimpleDataBindingAdapter<TestAlbum.TestMusic, AdapterPlayItemBinding> {
 
     public PlaylistAdapter(Context context) {
         super(context, R.layout.adapter_play_item, new DiffUtil.ItemCallback<TestAlbum.TestMusic>() {

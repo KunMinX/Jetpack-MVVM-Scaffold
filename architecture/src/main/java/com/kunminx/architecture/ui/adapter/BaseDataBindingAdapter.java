@@ -33,7 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author KunMinX
  * Create at 2018/6/30
  */
-public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends ListAdapter<M, RecyclerView.ViewHolder> {
+public abstract class BaseDataBindingAdapter<M, B extends ViewDataBinding> extends ListAdapter<M, RecyclerView.ViewHolder> {
 
     protected Context mContext;
 
@@ -48,7 +48,7 @@ public abstract class BaseBindingAdapter<M, B extends ViewDataBinding> extends L
         mOnItemLongClickListener = onItemLongClickListener;
     }
 
-    public BaseBindingAdapter(Context context, @NonNull DiffUtil.ItemCallback<M> diffCallback) {
+    public BaseDataBindingAdapter(Context context, @NonNull DiffUtil.ItemCallback<M> diffCallback) {
         super(diffCallback);
         this.mContext = context;
     }

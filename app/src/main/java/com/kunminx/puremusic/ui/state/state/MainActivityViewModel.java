@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.vm.state;
+package com.kunminx.puremusic.ui.state.state;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.kunminx.puremusic.data.bean.LibraryInfo;
-import com.kunminx.puremusic.domain.request.InfoRequest;
-import com.kunminx.puremusic.domain.request.Request;
-
-import java.util.List;
 
 /**
  * TODO tip：每个页面都要单独准备一个 state-ViewModel，
@@ -38,23 +31,18 @@ import java.util.List;
  * <p>
  * Create by KunMinX at 19/10/29
  */
-public class DrawerViewModel extends ViewModel implements Request.IInfoRequest {
+public class MainActivityViewModel extends ViewModel {
 
-    //TODO 此处用于绑定的状态，使用 LiveData 而不是 ObservableField，主要是考虑到 ObservableField 具有防抖的特性，不适合该场景。
+    //TODO 演示 LiveData 来用作 DataBinding 数据绑定的情况。
+    // 记得在视图控制器中要加入 mBinding.setLifecycleOwner(this);
+    //详见 https://xiaozhuanlan.com/topic/9816742350
 
-    //如果这么说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
+    public final MutableLiveData<Boolean> openDrawer = new MutableLiveData<>();
 
-    public final MutableLiveData<List<LibraryInfo>> list = new MutableLiveData<>();
+    public final MutableLiveData<Boolean> allowDrawerOpen = new MutableLiveData<>();
 
-    private InfoRequest mInfoRequest = new InfoRequest();
-
-    @Override
-    public LiveData<List<LibraryInfo>> getLibraryLiveData() {
-        return mInfoRequest.getLibraryLiveData();
-    }
-
-    @Override
-    public void requestLibraryInfo() {
-        mInfoRequest.requestLibraryInfo();
+    {
+        allowDrawerOpen.setValue(true);
+        openDrawer.setValue(false);
     }
 }

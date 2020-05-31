@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.vm.state;
+package com.kunminx.puremusic.ui.state.state;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.kunminx.puremusic.data.bean.User;
-import com.kunminx.puremusic.domain.request.AccountRequest;
+import com.kunminx.puremusic.data.bean.TestAlbum;
+import com.kunminx.puremusic.domain.request.MusicRequest;
 import com.kunminx.puremusic.domain.request.Request;
+
+import java.util.List;
 
 /**
  * TODO tip：每个页面都要单独准备一个 state-ViewModel，
@@ -35,25 +38,36 @@ import com.kunminx.puremusic.domain.request.Request;
  * <p>
  * 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
  * <p>
- * Create by KunMinX at 20/04/26
+ * Create by KunMinX at 19/10/29
  */
-public class LoginViewModel extends ViewModel implements Request.IAccountRequest {
+public class MainViewModel extends ViewModel implements Request.IMusicRequest {
 
-    public final ObservableField<String> name = new ObservableField<>();
+    public final ObservableBoolean initTabAndPage = new ObservableBoolean();
 
-    public final ObservableField<String> password = new ObservableField<>();
+    public final ObservableField<String> pageAssetPath = new ObservableField<>();
 
-    public final ObservableBoolean loadingVisible = new ObservableBoolean();
+    //TODO 此处用于绑定的状态，使用 LiveData 而不是 ObservableField，主要是考虑到 ObservableField 具有防抖的特性，不适合该场景。
 
-    private AccountRequest mAccountRequest = new AccountRequest();
+    //如果这么说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
 
-    @Override
-    public LiveData<String> getTokenLiveData() {
-        return mAccountRequest.getTokenLiveData();
+    public final MutableLiveData<List<TestAlbum.TestMusic>> list = new MutableLiveData<>();
+
+    public final MutableLiveData<Boolean> notifyWholeListChanged = new MutableLiveData<>();
+
+    private MusicRequest mMusicRequest = new MusicRequest();
+
+    {
+        initTabAndPage.set(true);
+        pageAssetPath.set("summary.html");
     }
 
     @Override
-    public void requestLogin(User user) {
-        mAccountRequest.requestLogin(user);
+    public LiveData<TestAlbum> getFreeMusicsLiveData() {
+        return mMusicRequest.getFreeMusicsLiveData();
+    }
+
+    @Override
+    public void requestFreeMusics() {
+        mMusicRequest.requestFreeMusics();
     }
 }

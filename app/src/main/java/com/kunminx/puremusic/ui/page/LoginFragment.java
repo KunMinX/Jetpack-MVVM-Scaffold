@@ -32,7 +32,7 @@ import com.kunminx.puremusic.data.config.Configs;
 import com.kunminx.puremusic.ui.base.BaseFragment;
 import com.kunminx.puremusic.ui.base.DataBindingConfig;
 import com.kunminx.puremusic.ui.helper.DrawerCoordinateHelper;
-import com.kunminx.puremusic.vm.state.LoginViewModel;
+import com.kunminx.puremusic.ui.state.state.LoginViewModel;
 
 /**
  * Create by KunMinX at 20/04/26

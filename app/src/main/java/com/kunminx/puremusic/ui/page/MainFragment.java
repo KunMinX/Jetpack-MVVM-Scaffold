@@ -28,7 +28,7 @@ import com.kunminx.puremusic.player.PlayerManager;
 import com.kunminx.puremusic.ui.base.BaseFragment;
 import com.kunminx.puremusic.ui.base.DataBindingConfig;
 import com.kunminx.puremusic.ui.page.adapter.PlaylistAdapter;
-import com.kunminx.puremusic.vm.state.MainViewModel;
+import com.kunminx.puremusic.ui.state.state.MainViewModel;
 
 /**
  * Create by KunMinX at 19/10/29

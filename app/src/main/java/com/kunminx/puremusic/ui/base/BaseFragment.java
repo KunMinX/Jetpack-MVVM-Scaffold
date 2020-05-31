@@ -45,7 +45,7 @@ import com.kunminx.architecture.data.manager.NetworkStateManager;
 import com.kunminx.puremusic.App;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
-import com.kunminx.puremusic.vm.callback.SharedViewModel;
+import com.kunminx.puremusic.ui.state.callback.SharedViewModel;
 
 
 /**

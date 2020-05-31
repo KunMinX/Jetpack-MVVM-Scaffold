@@ -25,7 +25,7 @@ import androidx.navigation.Navigation;
 
 import com.kunminx.puremusic.ui.base.BaseActivity;
 import com.kunminx.puremusic.ui.base.DataBindingConfig;
-import com.kunminx.puremusic.vm.state.MainActivityViewModel;
+import com.kunminx.puremusic.ui.state.state.MainActivityViewModel;
 
 /**
  * Create by KunMinX at 19/10/16

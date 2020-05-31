@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.vm.state;
+package com.kunminx.puremusic.ui.state.state;
 
-import androidx.databinding.ObservableBoolean;
-import androidx.databinding.ObservableField;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.kunminx.puremusic.data.bean.TestAlbum;
-import com.kunminx.puremusic.domain.request.MusicRequest;
+import com.kunminx.puremusic.data.bean.LibraryInfo;
+import com.kunminx.puremusic.domain.request.InfoRequest;
 import com.kunminx.puremusic.domain.request.Request;
 
 import java.util.List;
@@ -40,34 +38,23 @@ import java.util.List;
  * <p>
  * Create by KunMinX at 19/10/29
  */
-public class MainViewModel extends ViewModel implements Request.IMusicRequest {
-
-    public final ObservableBoolean initTabAndPage = new ObservableBoolean();
-
-    public final ObservableField<String> pageAssetPath = new ObservableField<>();
+public class DrawerViewModel extends ViewModel implements Request.IInfoRequest {
 
     //TODO 此处用于绑定的状态，使用 LiveData 而不是 ObservableField，主要是考虑到 ObservableField 具有防抖的特性，不适合该场景。
 
     //如果这么说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
 
-    public final MutableLiveData<List<TestAlbum.TestMusic>> list = new MutableLiveData<>();
+    public final MutableLiveData<List<LibraryInfo>> list = new MutableLiveData<>();
 
-    public final MutableLiveData<Boolean> notifyWholeListChanged = new MutableLiveData<>();
+    private InfoRequest mInfoRequest = new InfoRequest();
 
-    private MusicRequest mMusicRequest = new MusicRequest();
-
-    {
-        initTabAndPage.set(true);
-        pageAssetPath.set("summary.html");
+    @Override
+    public LiveData<List<LibraryInfo>> getLibraryLiveData() {
+        return mInfoRequest.getLibraryLiveData();
     }
 
     @Override
-    public LiveData<TestAlbum> getFreeMusicsLiveData() {
-        return mMusicRequest.getFreeMusicsLiveData();
-    }
-
-    @Override
-    public void requestFreeMusics() {
-        mMusicRequest.requestFreeMusics();
+    public void requestLibraryInfo() {
+        mInfoRequest.requestLibraryInfo();
     }
 }
