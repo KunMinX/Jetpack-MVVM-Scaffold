@@ -98,7 +98,7 @@ public abstract class BaseDataBindingAdapter<M, B extends ViewDataBinding> exten
      */
     protected abstract void onBindItem(B binding, M item, RecyclerView.ViewHolder holder);
 
-    public class BaseBindingViewHolder extends RecyclerView.ViewHolder {
+    public static class BaseBindingViewHolder extends RecyclerView.ViewHolder {
         BaseBindingViewHolder(View itemView) {
             super(itemView);
         }

@@ -18,8 +18,8 @@
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/dl"
         allowDrawerOpen="@{vm.allowDrawerOpen}"
-        isOpenDrawer="@{vm.openDrawer}"
         bindDrawerListener="@{event}"
+        isOpenDrawer="@{vm.openDrawer}"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
