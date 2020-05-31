@@ -70,6 +70,7 @@ public class MainFragment extends BaseFragment {
             // 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/0168753249
 
             mMainViewModel.list.setValue(PlayerManager.getInstance().getAlbum().getMusics());
+            mMainViewModel.notifyWholeListChanged.setValue(true);
         });
 
         mMainViewModel.getFreeMusicsLiveData().observe(getViewLifecycleOwner(), musicAlbum -> {

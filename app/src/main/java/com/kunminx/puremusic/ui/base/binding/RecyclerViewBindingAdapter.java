@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class RecyclerViewBindingAdapter {
 
-    @BindingAdapter(value = {"setSpanCount"})
+    /*@BindingAdapter(value = {"setSpanCount"})
     public static void setSpanCount(RecyclerView recyclerView, int spanCount) {
         if (recyclerView != null) {
             if (recyclerView.getLayoutManager() == null || !(recyclerView.getLayoutManager() instanceof GridLayoutManager)) {
@@ -41,16 +41,22 @@ public class RecyclerViewBindingAdapter {
                 }
             }
         }
-    }
+    }*/
 
-    @BindingAdapter(value = {"adapter", "refreshList"}, requireAll = false)
+    @BindingAdapter(value = {"adapter", "submitList"}, requireAll = false)
     public static void bindList(RecyclerView recyclerView, ListAdapter adapter, List list) {
         if (recyclerView != null && list != null) {
             if (recyclerView.getAdapter() == null) {
                 recyclerView.setAdapter(adapter);
             }
-
             adapter.submitList(list);
+        }
+    }
+
+    @BindingAdapter(value = {"notifyWholeListChanged"})
+    public static void notifyListChanged(RecyclerView recyclerView, boolean notify) {
+        if (recyclerView != null && recyclerView.getAdapter() != null) {
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
 }
