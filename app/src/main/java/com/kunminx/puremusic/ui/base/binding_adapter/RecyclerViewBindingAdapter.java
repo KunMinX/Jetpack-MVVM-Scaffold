@@ -52,7 +52,7 @@ public class RecyclerViewBindingAdapter {
 
     @BindingAdapter(value = {"notifyWholeListChanged"})
     public static void notifyListChanged(RecyclerView recyclerView, boolean notify) {
-        if (recyclerView != null && recyclerView.getAdapter() != null) {
+        if (notify && recyclerView != null && recyclerView.getAdapter() != null) {
             recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
