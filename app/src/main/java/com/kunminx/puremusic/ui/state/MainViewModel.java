@@ -52,7 +52,7 @@ public class MainViewModel extends ViewModel implements Request.IMusicRequest {
 
     public final MutableLiveData<List<TestAlbum.TestMusic>> list = new MutableLiveData<>();
 
-    public final MutableLiveData<Boolean> notifyWholeListChanged = new MutableLiveData<>();
+    public final MutableLiveData<Boolean> notifyCurrentListChanged = new MutableLiveData<>();
 
     private MusicRequest mMusicRequest = new MusicRequest();
 
