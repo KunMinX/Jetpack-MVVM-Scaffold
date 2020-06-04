@@ -37,15 +37,14 @@ import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
  * <p>
  * Create by KunMinX at 19/10/29
  */
-public class SearchViewModel extends ViewModel implements Request.IDownloadRequest {
+public class SearchViewModel extends ViewModel implements Request.ICanBeStoppedDownloadRequest {
 
     public final ObservableField<Integer> progress = new ObservableField<>();
+
+    public final ObservableField<Integer> progress_cancelable = new ObservableField<>();
+
     private DownloadRequest mDownloadRequest = new DownloadRequest();
 
-    @Override
-    public LiveData<DownloadFile> getDownloadFileLiveData() {
-        return mDownloadRequest.getDownloadFileLiveData();
-    }
 
     @Override
     public LiveData<DownloadFile> getDownloadFileCanBeStoppedLiveData() {
@@ -55,11 +54,6 @@ public class SearchViewModel extends ViewModel implements Request.IDownloadReque
     @Override
     public CanBeStoppedUseCase getCanBeStoppedUseCase() {
         return mDownloadRequest.getCanBeStoppedUseCase();
-    }
-
-    @Override
-    public void requestDownloadFile() {
-        mDownloadRequest.requestDownloadFile();
     }
 
     @Override

@@ -26,11 +26,14 @@ public class Request {
 
         LiveData<DownloadFile> getDownloadFileLiveData();
 
+        void requestDownloadFile();
+    }
+
+    public interface ICanBeStoppedDownloadRequest {
+
         LiveData<DownloadFile> getDownloadFileCanBeStoppedLiveData();
 
         CanBeStoppedUseCase getCanBeStoppedUseCase();
-
-        void requestDownloadFile();
 
         void requestCanBeStoppedDownloadFile();
     }

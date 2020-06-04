@@ -24,7 +24,7 @@ import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
  * <p>
  * Create by KunMinX at 20/03/18
  */
-public class DownloadRequest implements Request.IDownloadRequest {
+public class DownloadRequest implements Request.IDownloadRequest, Request.ICanBeStoppedDownloadRequest {
 
     private MutableLiveData<DownloadFile> mDownloadFileLiveData;
 

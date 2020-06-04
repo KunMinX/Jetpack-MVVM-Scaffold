@@ -16,8 +16,13 @@
 
 package com.kunminx.puremusic.ui.state;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.kunminx.puremusic.data.bean.DownloadFile;
+import com.kunminx.puremusic.domain.request.DownloadRequest;
+import com.kunminx.puremusic.domain.request.Request;
 
 /**
  * TODO tip：每个页面都要单独准备一个 state-ViewModel，
@@ -31,7 +36,7 @@ import androidx.lifecycle.ViewModel;
  * <p>
  * Create by KunMinX at 19/10/29
  */
-public class MainActivityViewModel extends ViewModel {
+public class MainActivityViewModel extends ViewModel implements Request.IDownloadRequest {
 
     //TODO 演示 LiveData 来用作 DataBinding 数据绑定的情况。
     // 记得在视图控制器中要加入 mBinding.setLifecycleOwner(this);
@@ -41,8 +46,22 @@ public class MainActivityViewModel extends ViewModel {
 
     public final MutableLiveData<Boolean> allowDrawerOpen = new MutableLiveData<>();
 
+    private DownloadRequest mDownloadRequest = new DownloadRequest();
+
+
     {
         allowDrawerOpen.setValue(true);
         openDrawer.setValue(false);
+    }
+
+
+    @Override
+    public LiveData<DownloadFile> getDownloadFileLiveData() {
+        return mDownloadRequest.getDownloadFileLiveData();
+    }
+
+    @Override
+    public void requestDownloadFile() {
+        mDownloadRequest.requestDownloadFile();
     }
 }

@@ -29,6 +29,7 @@ import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.ui.base.BaseFragment;
 import com.kunminx.puremusic.ui.base.DataBindingConfig;
 import com.kunminx.puremusic.ui.helper.DrawerCoordinateHelper;
+import com.kunminx.puremusic.ui.state.MainActivityViewModel;
 import com.kunminx.puremusic.ui.state.SearchViewModel;
 
 /**
@@ -37,10 +38,12 @@ import com.kunminx.puremusic.ui.state.SearchViewModel;
 public class SearchFragment extends BaseFragment {
 
     private SearchViewModel mSearchViewModel;
+    private MainActivityViewModel mMainActivityViewModel;
 
     @Override
     protected void initViewModel() {
         mSearchViewModel = getFragmentViewModel(SearchViewModel.class);
+        mMainActivityViewModel = getActivityViewModel(MainActivityViewModel.class);
     }
 
     @Override
@@ -72,12 +75,12 @@ public class SearchFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mSearchViewModel.getDownloadFileLiveData().observe(getViewLifecycleOwner(), downloadFile -> {
+        mMainActivityViewModel.getDownloadFileLiveData().observe(getViewLifecycleOwner(), downloadFile -> {
             mSearchViewModel.progress.set(downloadFile.getProgress());
         });
 
         mSearchViewModel.getDownloadFileCanBeStoppedLiveData().observe(getViewLifecycleOwner(), downloadFile -> {
-            mSearchViewModel.progress.set(downloadFile.getProgress());
+            mSearchViewModel.progress_cancelable.set(downloadFile.getProgress());
         });
     }
 
@@ -102,7 +105,7 @@ public class SearchFragment extends BaseFragment {
         }
 
         public void testDownload() {
-            mSearchViewModel.requestDownloadFile();
+            mMainActivityViewModel.requestDownloadFile();
         }
 
         //TODO tip2: 在 UseCase 中 执行可跟随生命周期中止的下载任务
