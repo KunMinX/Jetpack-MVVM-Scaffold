@@ -14,27 +14,18 @@
  * limitations under the License.
  */
 
-package com.kunminx.architecture.bridge.callback;
+package com.kunminx.architecture.domain.usecase;
 
 /**
- * TODO: 用于 callback 的情况，配合 MutableLiveData & SharedViewModel 的使用
- * <p>
- * Create by KunMinX at 2020/6/2
+ * Interface for schedulers, see {@link UseCaseThreadPoolScheduler}.
  */
-public class Event<T> {
+public interface UseCaseScheduler {
 
-    private T content;
-    private boolean hasHandled;
+    void execute(Runnable runnable);
 
-    public Event(T content) {
-        this.content = content;
-    }
+    <V extends UseCase.ResponseValue> void notifyResponse(final V response,
+                                                          final UseCase.UseCaseCallback<V> useCaseCallback);
 
-    public T getContent() {
-        if (hasHandled) {
-            return null;
-        }
-        hasHandled = true;
-        return content;
-    }
+    <V extends UseCase.ResponseValue> void onError(
+            final UseCase.UseCaseCallback<V> useCaseCallback);
 }

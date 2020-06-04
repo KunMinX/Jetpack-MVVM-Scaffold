@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kunminx.architecture.data.manager;
+package com.kunminx.architecture.domain.manager;
 
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -26,7 +26,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 
-import com.kunminx.architecture.bridge.callback.Event;
+import com.kunminx.architecture.ui.callback.Event;
 
 import static java.util.Objects.requireNonNull;
 

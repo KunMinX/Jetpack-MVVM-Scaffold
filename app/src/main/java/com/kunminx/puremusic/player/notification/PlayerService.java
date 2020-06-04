@@ -32,8 +32,8 @@ import android.widget.RemoteViews;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.kunminx.architecture.data.usecase.UseCase;
-import com.kunminx.architecture.data.usecase.UseCaseHandler;
+import com.kunminx.architecture.domain.usecase.UseCase;
+import com.kunminx.architecture.domain.usecase.UseCaseHandler;
 import com.kunminx.architecture.utils.ImageUtils;
 import com.kunminx.puremusic.MainActivity;
 import com.kunminx.puremusic.R;

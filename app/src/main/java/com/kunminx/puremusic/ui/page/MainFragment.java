@@ -22,7 +22,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.kunminx.architecture.bridge.callback.Event;
+import com.kunminx.architecture.ui.callback.Event;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.player.PlayerManager;

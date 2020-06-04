@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.kunminx.architecture.bridge.callback.Event;
+import com.kunminx.architecture.ui.callback.Event;
 import com.kunminx.puremusic.ui.base.BaseFragment;
 import com.kunminx.puremusic.ui.callback.SharedViewModel;
 

@@ -14,29 +14,27 @@
  * limitations under the License.
  */
 
-package com.kunminx.architecture.data.manager;
+package com.kunminx.architecture.ui.callback;
 
 /**
- * Create by KunMinX at 19/10/11
+ * TODO: 用于 callback 的情况，配合 MutableLiveData & SharedViewModel 的使用
+ * <p>
+ * Create by KunMinX at 2020/6/2
  */
-public class NetState {
+public class Event<T> {
 
-    private String responseCode;
-    private boolean success = true;
+    private T content;
+    private boolean hasHandled;
 
-    public String getResponseCode() {
-        return responseCode;
+    public Event(T content) {
+        this.content = content;
     }
 
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public T getContent() {
+        if (hasHandled) {
+            return null;
+        }
+        hasHandled = true;
+        return content;
     }
 }

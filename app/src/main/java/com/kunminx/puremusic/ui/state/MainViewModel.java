@@ -18,6 +18,7 @@ package com.kunminx.puremusic.ui.state;
 
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
