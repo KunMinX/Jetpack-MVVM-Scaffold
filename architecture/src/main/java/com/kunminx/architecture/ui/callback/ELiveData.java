@@ -67,7 +67,7 @@ abstract class ELiveData<T> {
                 newValue = mPendingData;
                 mPendingData = NOT_SET;
             }
-            setValue((Event<T>) newValue);
+            setEvent((Event<T>) newValue);
         }
     };
 
@@ -261,7 +261,7 @@ abstract class ELiveData<T> {
      *
      * @param value The new value
      */
-    protected void postValue(Event<T> value) {
+    protected void postEvent(Event<T> value) {
         boolean postTask;
         synchronized (mDataLock) {
             postTask = mPendingData == NOT_SET;
@@ -282,7 +282,7 @@ abstract class ELiveData<T> {
      * @param value The new value
      */
     @MainThread
-    protected void setValue(Event<T> value) {
+    protected void setEvent(Event<T> value) {
         assertMainThread("setValue");
         mVersion++;
         mData = value;
