@@ -90,7 +90,7 @@ abstract class ELiveData<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private void considerNotify(ObserverWrapper observer) {
+    private void considerNotify(ObserverWrapper observer, T data) {
         if (!observer.mActive) {
             return;
         }
@@ -107,10 +107,7 @@ abstract class ELiveData<T> {
             return;
         }
         observer.mLastVersion = mVersion;
-        T data = (T) ((Event<T>) mData).getContent();
-        if (data != null) {
-            observer.mEventObserver.onReceived(data);
-        }
+        observer.mEventObserver.onReceived(data);
     }
 
     @SuppressWarnings("WeakerAccess") /* synthetic access */
@@ -123,14 +120,17 @@ abstract class ELiveData<T> {
         do {
             mDispatchInvalidated = false;
             if (initiator != null) {
-                considerNotify(initiator);
+                considerNotify(initiator, null);
                 initiator = null;
             } else {
-                for (Iterator<Map.Entry<EventObserver<T>, ObserverWrapper>> iterator =
-                     mObservers.iteratorWithAdditions(); iterator.hasNext(); ) {
-                    considerNotify(iterator.next().getValue());
-                    if (mDispatchInvalidated) {
-                        break;
+                T data = (T) ((Event<T>) mData).getContent();
+                if (data != null) {
+                    for (Iterator<Map.Entry<EventObserver<T>, ObserverWrapper>> iterator =
+                         mObservers.iteratorWithAdditions(); iterator.hasNext(); ) {
+                        considerNotify(iterator.next().getValue(), data);
+                        if (mDispatchInvalidated) {
+                            break;
+                        }
                     }
                 }
             }
@@ -163,7 +163,7 @@ abstract class ELiveData<T> {
      * If the observer is already in the list with another owner, LiveData throws an
      * {@link IllegalArgumentException}.
      *
-     * @param owner    The LifecycleOwner which controls the observer
+     * @param owner         The LifecycleOwner which controls the observer
      * @param eventObserver The observer that will receive the events
      */
     @MainThread
