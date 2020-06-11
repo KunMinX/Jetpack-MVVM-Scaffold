@@ -30,11 +30,15 @@ public class Event<T> {
         this.content = content;
     }
 
-    public T getContent() {
+    T getContent() {
         if (hasHandled) {
             return null;
         }
         hasHandled = true;
         return content;
+    }
+
+    void setContentNull() {
+        content = null;
     }
 }
