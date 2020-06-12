@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/10/29
  */
-public interface IRemoteRequest {
+public interface IRemoteSource {
 
     void getFreeMusic(MutableLiveData<TestAlbum> liveData);
 
