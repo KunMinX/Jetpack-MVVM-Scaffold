@@ -29,8 +29,8 @@ import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.data.bean.User;
 import com.kunminx.puremusic.data.config.Configs;
-import com.kunminx.puremusic.ui.base.BaseFragment;
-import com.kunminx.puremusic.ui.base.DataBindingConfig;
+import com.kunminx.architecture.ui.page.BaseFragment;
+import com.kunminx.architecture.ui.page.DataBindingConfig;
 import com.kunminx.puremusic.ui.helper.DrawerCoordinateHelper;
 import com.kunminx.puremusic.ui.state.LoginViewModel;
 
@@ -57,7 +57,7 @@ public class LoginFragment extends BaseFragment {
 
         // 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
 
-        return new DataBindingConfig(R.layout.fragment_login, mLoginViewModel)
+        return new DataBindingConfig(R.layout.fragment_login, BR.vm, mLoginViewModel)
                 .addBindingParam(BR.click, new ClickProxy());
     }
 
