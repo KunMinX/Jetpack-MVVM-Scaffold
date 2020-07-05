@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.KunMinX'
 
 def theVersionName = "2.3.0"
 
@@ -42,6 +44,7 @@ dependencies {
 
 }
 
+/*
 publish {
     userOrg = 'architecture'
     repoName = 'maven'
@@ -51,4 +54,4 @@ publish {
     desc = 'for navigate by show hide'
     licences = ['Apache-2.0']
     website = 'https://github.com/KunMinX/Jetpack-MVVM-Scaffold'
-}
+}*/
