@@ -38,7 +38,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigator;
 import androidx.navigation.NavigatorProvider;
 
-import com.kunminx.architecture.R;
+import com.kunminx.navigation.R;
 
 
 /**
@@ -59,7 +59,7 @@ public final class DialogFragmentNavigator extends Navigator<DialogFragmentNavig
     private LifecycleEventObserver mObserver = new LifecycleEventObserver() {
         @Override
         public void onStateChanged(@NonNull LifecycleOwner source,
-                @NonNull Lifecycle.Event event) {
+                                   @NonNull Lifecycle.Event event) {
             if (event == Lifecycle.Event.ON_STOP) {
                 DialogFragment dialogFragment = (DialogFragment) source;
                 if (!dialogFragment.requireDialog().isShowing()) {
@@ -202,6 +202,7 @@ public final class DialogFragmentNavigator extends Navigator<DialogFragmentNavig
 
         /**
          * Set the DialogFragment class name associated with this destination
+         *
          * @param className The class name of the DialogFragment to show when you navigate to this
          *                  destination
          * @return this {@link Destination}

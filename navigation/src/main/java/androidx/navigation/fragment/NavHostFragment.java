@@ -37,7 +37,8 @@ import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.Navigator;
 
-import com.kunminx.architecture.R;
+import com.kunminx.navigation.R;
+
 
 /**
  * NavHostFragment provides an area within your layout for self-contained navigation to occur.

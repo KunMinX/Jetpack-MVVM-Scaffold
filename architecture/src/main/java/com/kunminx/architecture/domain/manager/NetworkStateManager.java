@@ -24,7 +24,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.kunminx.architecture.utils.Utils;
-import com.kunminx.event.EventLiveData;
+import com.kunminx.livedata.event.EventLiveData;
 
 /**
  * Create by KunMinX at 19/10/11

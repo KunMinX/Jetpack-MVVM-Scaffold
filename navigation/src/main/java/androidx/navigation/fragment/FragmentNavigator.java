@@ -37,7 +37,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigator;
 import androidx.navigation.NavigatorProvider;
 
-import com.kunminx.architecture.R;
+import com.kunminx.navigation.R;
 
 import java.util.ArrayDeque;
 import java.util.Collections;
@@ -112,14 +112,14 @@ public class FragmentNavigator extends Navigator<FragmentNavigator.Destination> 
     /**
      * Instantiates the Fragment via the FragmentManager's
      * {@link FragmentFactory}.
-     *
+     * <p>
      * Note that this method is <strong>not</strong> responsible for calling
      * {@link Fragment#setArguments(Bundle)} on the returned Fragment instance.
      *
-     * @param context Context providing the correct {@link ClassLoader}
+     * @param context         Context providing the correct {@link ClassLoader}
      * @param fragmentManager FragmentManager the Fragment will be added to
-     * @param className The Fragment to instantiate
-     * @param args The Fragment's arguments, if any
+     * @param className       The Fragment to instantiate
+     * @param args            The Fragment's arguments, if any
      * @return A new fragment instance.
      * @deprecated Set a custom {@link FragmentFactory} via
      * {@link FragmentManager#setFragmentFactory(FragmentFactory)} to control
@@ -178,10 +178,10 @@ public class FragmentNavigator extends Navigator<FragmentNavigator.Destination> 
             ft.setCustomAnimations(enterAnim, exitAnim, popEnterAnim, popExitAnim);
         }
 
-        if(mFragmentManager.getFragments().size()>0){
-            ft.hide(mFragmentManager.getFragments().get(mFragmentManager.getFragments().size()-1));
+        if (mFragmentManager.getFragments().size() > 0) {
+            ft.hide(mFragmentManager.getFragments().get(mFragmentManager.getFragments().size() - 1));
             ft.add(mContainerId, frag);
-        }else {
+        } else {
             ft.replace(mContainerId, frag);
         }
 
@@ -330,6 +330,7 @@ public class FragmentNavigator extends Navigator<FragmentNavigator.Destination> 
 
         /**
          * Set the Fragment class name associated with this destination
+         *
          * @param className The class name of the Fragment to show when you navigate to this
          *                  destination
          * @return this {@link Destination}
@@ -420,8 +421,8 @@ public class FragmentNavigator extends Navigator<FragmentNavigator.Destination> 
              *
              * @param sharedElement A View in the current Fragment to match with a View in the
              *                      Fragment being navigated to.
-             * @param name The transitionName of the View in the Fragment being navigated to that
-             *             should be matched to the shared element.
+             * @param name          The transitionName of the View in the Fragment being navigated to that
+             *                      should be matched to the shared element.
              * @return this {@link Builder}
              * @see FragmentTransaction#addSharedElement(View, String)
              */
