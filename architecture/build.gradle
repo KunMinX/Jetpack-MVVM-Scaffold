@@ -15,6 +15,10 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+
+def theVersionName = "2.8.8"
 
 android {
     compileSdkVersion 29
@@ -24,8 +28,8 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 20808
+        versionName theVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -36,11 +40,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
     }
 
     compileOptions {
@@ -62,7 +61,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha04'
 
     implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
@@ -71,6 +69,22 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
     implementation 'androidx.navigation:navigation-runtime:2.3.0'
-    implementation project(':livedata')
-    implementation project(':navigation')
+    implementation 'com.kunminx.archi:eventlivedata:2.2.0'
+    implementation 'com.kunminx.archi:navigation:2.3.0'
+
+//    implementation project(':livedata')
+//    implementation project(':navigation')
+
 }
+
+publish {
+    userOrg = 'architecture'
+    repoName = 'maven'
+    groupId = 'com.kunminx.archi'
+    artifactId = 'core'
+    publishVersion = theVersionName
+    desc = 'core of Jetpack MVVM Scaffold'
+    licences = ['Apache-2.0']
+    website = 'https://github.com/KunMinX/Jetpack-MVVM-Scaffold'
+}
+
