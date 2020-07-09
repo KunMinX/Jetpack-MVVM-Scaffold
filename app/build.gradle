@@ -50,9 +50,9 @@ dependencies {
     implementation 'com.kunminx.archi:eventlivedata:2.2.0'
     implementation 'com.kunminx.archi:navigation:2.3.0'
     implementation 'com.kunminx.archi:core:2.8.8'
-//    implementation project(':architecture')
-//    compileOnly project(':livedata')
-//    compileOnly project(':navigation')
+    implementation project(':architecture')
+    compileOnly project(':livedata')
+    compileOnly project(':navigation')
     implementation 'com.kunminx.player:player:1.1.6'
 
     compileOnly 'androidx.appcompat:appcompat:1.1.0'

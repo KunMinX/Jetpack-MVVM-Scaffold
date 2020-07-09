@@ -69,11 +69,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
     implementation 'androidx.navigation:navigation-runtime:2.3.0'
-    implementation 'com.kunminx.archi:eventlivedata:2.2.0'
-    implementation 'com.kunminx.archi:navigation:2.3.0'
+//    implementation 'com.kunminx.archi:eventlivedata:2.2.0'
+//    implementation 'com.kunminx.archi:navigation:2.3.0'
 
-//    implementation project(':livedata')
-//    implementation project(':navigation')
+    implementation project(':livedata')
+    implementation project(':navigation')
 
 }
 
