@@ -34,7 +34,8 @@ import java.util.TimerTask;
  * TODO：并创新性地引入了 "延迟清空消息" 的设计，
  * 如此可确保：
  * 1.一条消息能被多个观察者消费
- * 2.延迟期结束，消息能从内存中释放，避免内存溢出等问题
+ * 2.延迟期结束，不再能够收到旧消息的推送
+ * 3.并且旧消息在延迟期结束时能从内存中释放，避免内存溢出等问题
  *
  *
  * <p>
@@ -42,29 +43,33 @@ import java.util.TimerTask;
  */
 public class UnPeekLiveData<T> extends MutableLiveData<T> {
 
-    private boolean hasHandled;
+    private boolean isCleaning;
+    private boolean hasHandled = true;
     private boolean isDelaying;
     private int DELAY_TO_CLEAR_EVENT = 1000;
+    private Timer mTimer = new Timer();
+    private TimerTask mTask;
 
     @Override
     public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super T> observer) {
 
-        if (!hasHandled) {
-            hasHandled = true;
-            isDelaying = true;
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    isDelaying = false;
-                    UnPeekLiveData.super.setValue(null);
-                }
-            };
-            timer.schedule(task, DELAY_TO_CLEAR_EVENT);
-            super.observe(owner, observer);
-        } else if (isDelaying) {
-            super.observe(owner, observer);
-        }
+        super.observe(owner, t -> {
+
+            if (isCleaning) {
+                hasHandled = true;
+                isDelaying = false;
+                isCleaning = false;
+                return;
+            }
+
+            if (!hasHandled) {
+                hasHandled = true;
+                isDelaying = true;
+                observer.onChanged(t);
+            } else if (isDelaying) {
+                observer.onChanged(t);
+            }
+        });
     }
 
     @Override
@@ -72,13 +77,24 @@ public class UnPeekLiveData<T> extends MutableLiveData<T> {
         hasHandled = false;
         isDelaying = false;
         super.setValue(value);
+
+        if (mTask != null) {
+            mTask.cancel();
+            mTimer.purge();
+        }
+
+        mTask = new TimerTask() {
+            @Override
+            public void run() {
+                clear();
+            }
+        };
+        mTimer.schedule(mTask, DELAY_TO_CLEAR_EVENT);
     }
 
-    @Override
-    public void postValue(T value) {
-        hasHandled = false;
-        isDelaying = false;
-        super.postValue(value);
+    private void clear() {
+        isCleaning = true;
+        super.postValue(null);
     }
 
     public static class Builder<T> {
