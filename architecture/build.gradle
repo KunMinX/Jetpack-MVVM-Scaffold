@@ -69,7 +69,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0'
     implementation 'androidx.navigation:navigation-runtime:2.3.0'
-//    implementation 'com.kunminx.archi:unpeeklivedata:2.9.5-beta1'
+//    implementation 'com.kunminx.archi:unpeeklivedata:2.9.6-beta2'
 //    implementation 'com.kunminx.archi:navigation:2.3.0'
 
     implementation project(':livedata')
