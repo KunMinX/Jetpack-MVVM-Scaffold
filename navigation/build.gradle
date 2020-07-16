@@ -47,7 +47,7 @@ publish {
     userOrg = 'architecture'
     repoName = 'maven'
     groupId = 'com.kunminx.archi'
-    artifactId = 'navigation'
+    artifactId = 'smoothnavigation'
     publishVersion = theVersionName
     desc = 'for navigate by show hide'
     licences = ['Apache-2.0']

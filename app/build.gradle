@@ -47,16 +47,16 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-//    implementation 'com.kunminx.archi:unpeeklivedata:2.9.6-beta2'
-//    implementation 'com.kunminx.archi:navigation:2.3.0'
+    compileOnly 'com.kunminx.archi:unpeek-livedata:2.9.7-beta4'
+//    compileOnly 'com.kunminx.archi:smooth-navigation:2.9.7-beta1'
 //    implementation 'com.kunminx.archi:core:2.8.8'
     implementation project(':architecture')
-    compileOnly project(':livedata')
+//    compileOnly project(':livedata')
     compileOnly project(':navigation')
     implementation 'com.kunminx.player:player:1.1.6'
 
     compileOnly 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta8'
     implementation 'com.google.android.material:material:1.3.0-alpha01'
     compileOnly 'androidx.recyclerview:recyclerview:1.2.0-alpha04'
 

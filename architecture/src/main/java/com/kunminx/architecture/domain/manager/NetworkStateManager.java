@@ -23,8 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.kunminx.architecture.ui.callback.UnPeekLiveData;
 import com.kunminx.architecture.utils.Utils;
-import com.kunminx.livedata.event.UnPeekLiveData;
 
 /**
  * Create by KunMinX at 19/10/11

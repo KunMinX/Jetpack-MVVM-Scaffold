@@ -19,7 +19,7 @@ package com.kunminx.puremusic.ui.callback;
 import androidx.databinding.ObservableBoolean;
 import androidx.lifecycle.ViewModel;
 
-import com.kunminx.livedata.event.UnPeekLiveData;
+import com.kunminx.architecture.ui.callback.UnPeekLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
