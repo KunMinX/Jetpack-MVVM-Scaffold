@@ -48,7 +48,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     compileOnly 'com.kunminx.archi:unpeek-livedata:2.9.7-beta4'
-    compileOnly 'com.kunminx.archi:smooth-navigation:2.9.7-beta3'
+    compileOnly 'com.kunminx.archi:smooth-navigation:2.9.7-beta4'
     implementation project(':architecture')
     implementation 'com.kunminx.player:player:1.1.6'
 
