@@ -1,3 +1,2 @@
-//include ':navigation'
 include ':app', ':architecture'
 rootProject.name = 'PureMusic'

@@ -25,11 +25,8 @@ import androidx.navigation.Navigation;
 
 import com.kunminx.architecture.ui.page.BaseActivity;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
-import com.kunminx.puremusic.databinding.FragmentPlayerBinding;
 import com.kunminx.puremusic.ui.callback.SharedViewModel;
 import com.kunminx.puremusic.ui.state.MainActivityViewModel;
-import com.kunminx.puremusic.ui.view.PlayerSlideListener;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 /**
  * Create by KunMinX at 19/10/16
