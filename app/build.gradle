@@ -47,8 +47,11 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    compileOnly 'com.kunminx.archi:unpeek-livedata:2.9.7-beta4'
-    compileOnly 'com.kunminx.archi:smooth-navigation:2.9.7-beta4'
+    compileOnly 'com.kunminx.archi:unpeek-livedata:2.9.9-beta5'
+    implementation 'com.kunminx.archi:smooth-navigation:2.9.7-beta4'
+    compileOnly 'com.kunminx.archi:strict-databinding:3.0.2-beta1'
+    implementation 'com.kunminx.archi:binding-recyclerview:3.0.2-beta2'
+
     implementation project(':architecture')
     implementation 'com.kunminx.player:player:1.1.6'
 
