@@ -44,6 +44,13 @@ public abstract class BaseActivity extends DataBindingActivity {
         super.onCreate(savedInstanceState);
 
         getLifecycle().addObserver(NetworkStateManager.getInstance());
+
+        //TODO tip: DataBinding 严格模式（详见 DataBindingActivity - - - - - ）：
+        // 将 DataBinding 实例限制于 base 页面中，默认不向子类暴露，
+        // 通过这样的方式，来彻底解决 视图调用的一致性问题，
+        // 如此，视图刷新的安全性将和基于函数式编程的 Jetpack Compose 持平。
+
+        // 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
     }
 
     @Override
