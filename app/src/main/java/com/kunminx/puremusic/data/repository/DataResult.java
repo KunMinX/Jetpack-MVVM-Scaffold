@@ -19,6 +19,12 @@
 package com.kunminx.puremusic.data.repository;
 
 /**
+ * TODO: 专用于数据层返回结果给 domain 层或 ViewModel 用，原因如下：
+ * <p>
+ * livedata 是专用于页面开发的、用于解决生命周期安全问题的组件，
+ * 有时候数据并非一定是通过 livedata 来分发给页面，也可能是通过别的组件去通知给非页面的东西，
+ * 这时候 repo 方法中内定通过 livedata 分发就不太合适，不如一开始就规定不在数据层通过 livedata 返回结果。
+ * <p>
  * Create by KunMinX at 2020/7/20
  */
 public class DataResult<T> {
