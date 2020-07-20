@@ -20,9 +20,10 @@ package com.kunminx.puremusic.domain.request;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.kunminx.architecture.data.repository.DataResult;
+import com.kunminx.architecture.domain.request.BaseRequest;
 import com.kunminx.puremusic.data.bean.TestAlbum;
 import com.kunminx.puremusic.data.repository.DataRepository;
-import com.kunminx.puremusic.data.repository.DataResult;
 
 /**
  * 音乐资源  Request
@@ -38,7 +39,7 @@ import com.kunminx.puremusic.data.repository.DataResult;
  * <p>
  * Create by KunMinX at 19/10/29
  */
-public class MusicRequest {
+public class MusicRequest extends BaseRequest {
 
     private MutableLiveData<TestAlbum> mFreeMusicsLiveData;
 
@@ -53,7 +54,7 @@ public class MusicRequest {
     }
 
     public void requestFreeMusics() {
-        DataRepository.getInstance().getFreeMusic(new DataResult<>(testAlbum -> {
+        DataRepository.getInstance().getFreeMusic(new DataResult<>((testAlbum, netState) -> {
             mFreeMusicsLiveData.setValue(testAlbum);
         }));
     }
