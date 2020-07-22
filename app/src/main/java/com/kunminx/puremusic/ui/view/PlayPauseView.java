@@ -56,10 +56,10 @@ public class PlayPauseView extends FrameLayout {
         super(context, attrs);
         setWillNotDraw(false);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PlayPause);
-        isDrawCircle = typedArray.getBoolean(R.styleable.PlayPause_isCircleDraw, true);
-        circleAlpha = typedArray.getInt(R.styleable.PlayPause_circleAlpha, 255);
-        mDrawableColor = typedArray.getInt(R.styleable.PlayPause_drawableColor, Color.WHITE);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PlayPauseView);
+        isDrawCircle = typedArray.getBoolean(R.styleable.PlayPauseView_isCircleDraw, true);
+        circleAlpha = typedArray.getInt(R.styleable.PlayPauseView_circleAlpha, 255);
+        mDrawableColor = typedArray.getInt(R.styleable.PlayPauseView_drawableColor, Color.WHITE);
         typedArray.recycle();
 
         mPaint.setAntiAlias(true);
@@ -90,7 +90,7 @@ public class PlayPauseView extends FrameLayout {
         }
     }
 
-    public void setCircleAlpah(int alpah) {
+    public void setCircleAlpha(int alpah) {
         circleAlpha = alpah;
         invalidate();
     }
@@ -147,7 +147,7 @@ public class PlayPauseView extends FrameLayout {
         }
         mAnimatorSet = new AnimatorSet();
         mIsPlay = true;
-        mDrawable.setmIsPlay(mIsPlay);
+        mDrawable.setIsPlay(mIsPlay);
         final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();
         mAnimatorSet.setInterpolator(new DecelerateInterpolator());
         mAnimatorSet.setDuration(PLAY_PAUSE_ANIMATION_DURATION);
@@ -161,7 +161,7 @@ public class PlayPauseView extends FrameLayout {
 
         mAnimatorSet = new AnimatorSet();
         mIsPlay = false;
-        mDrawable.setmIsPlay(mIsPlay);
+        mDrawable.setIsPlay(mIsPlay);
         final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();
         mAnimatorSet.setInterpolator(new DecelerateInterpolator());
         mAnimatorSet.setDuration(PLAY_PAUSE_ANIMATION_DURATION);
