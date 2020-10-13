@@ -79,7 +79,7 @@
 
 [GitHub - Jetpack开发短视频应用实战 - 重构](https://github.com/zion223/Jetpack-MVVM-PPJoke)
 
-[GitHub - 仿网易云音乐安卓客户端 - 重构](
+[GitHub - 仿网易云音乐安卓客户端 - 重构](https://github.com/zion223/NeteaseCloudMusic-MVVM)
 
 &nbsp;
 
