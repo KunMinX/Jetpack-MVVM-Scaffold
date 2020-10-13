@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.kunminx.scaffold"
         minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 20206
-        versionName "2.2.6"
+        targetSdkVersion 30
+        versionCode 30204
+        versionName "3.2.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

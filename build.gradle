@@ -3,7 +3,7 @@
 buildscript {
     repositories {
         google()
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url "https://maven.aliyun.com/repository/public" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.3'
@@ -21,10 +21,13 @@ buildscript {
 allprojects {
     repositories {
         google()
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        flatDir { dirs 'libs' }
     }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+    rootProject.allprojects {
+        delete(it.buildDir)
+    }
 }
