@@ -1,4 +1,15 @@
 
+## 公告：
+
+刚刚就本项目 "被卖课" 一事，在掘金发表了一期专访 [《开源项目被人拿去做课程卖了 1000 多万是什么体验》](https://juejin.im/post/5ecb4950518825431a669897)
+
+本项目系我为了方便开发者们 **无痛理解** Google 开源的 Jetpack MVVM 中 **每个架构组件的 存在缘由、职责边界**，而 **精心设计的一个又一个高频应用场景**，
+
+与此同时，本项目是作为 [《重学安卓》](https://xiaozhuanlan.com/kunminx)专栏 Jetpack MVVM 系列文章的配套项目而存在，**文章内容和项目中的代码设计均涉及本人对 Jetpack MVVM 的独家理解，本人对此享有著作权**。
+
+任何组织或个人，未经与作者本人沟通，不得将本项目的代码设计和本人对 Jetpack MVVM 的独家理解用于出书和卖课的商业用途。
+
+
 ## 背景
 
 人，不是机器，人注定会犯错。
@@ -73,10 +84,6 @@
 Copyright © 2019-present KunMinX
 
 ![](https://images.xiaozhuanlan.com/photo/2020/8fc6f51263babeb544bb4a7dae6cde59.jpg)
-
-本项目是作为[《重学安卓》](https://xiaozhuanlan.com/kunminx)专栏 Jetpack MVVM 系列文章的配套项目而存在，**文章内容和项目中的代码设计均涉及本人对 Jetpack MVVM 的独家理解，本人对此享有著作权**。
-
-任何组织或个人，未经与作者本人沟通，不得将本项目的代码设计和本人对 Jetpack MVVM 的独家理解用于出书和卖课的商业用途。
 
 &nbsp;
 
