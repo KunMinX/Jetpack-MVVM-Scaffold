@@ -30,7 +30,6 @@ import com.kunminx.architecture.utils.ClickUtils;
 /**
  * Create by KunMinX at 19/9/18
  */
-@SuppressWarnings("unused")
 public class CommonBindingAdapter {
 
     @BindingAdapter(value = {"imageUrl", "placeHolder"}, requireAll = false)
