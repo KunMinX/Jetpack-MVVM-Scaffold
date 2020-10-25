@@ -3,12 +3,12 @@ package com.kunminx.puremusic.domain.request;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.kunminx.architecture.data.repository.DataResult;
 import com.kunminx.architecture.domain.request.BaseRequest;
 import com.kunminx.architecture.domain.usecase.UseCase;
 import com.kunminx.architecture.domain.usecase.UseCaseHandler;
 import com.kunminx.puremusic.data.bean.DownloadFile;
 import com.kunminx.puremusic.data.repository.DataRepository;
-import com.kunminx.architecture.data.repository.DataResult;
 import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
 
 /**

@@ -49,7 +49,7 @@ public class CommonBindingAdapter {
 
     @BindingAdapter(value = {"textColor"}, requireAll = false)
     public static void setTextColor(TextView textView, int textColorRes) {
-        textView.setTextColor(textView.getResources().getColor(textColorRes));
+        textView.setTextColor(textView.getContext().getColor(textColorRes));
     }
 
     @BindingAdapter(value = {"imageRes"}, requireAll = false)
