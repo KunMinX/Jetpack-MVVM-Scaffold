@@ -1,4 +1,3 @@
 include ':domain'
 include ':data'
 include ':app', ':architecture'
-rootProject.name = 'PureMusic'
