@@ -18,7 +18,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 
-def theVersionName = "2.8.8"
+def theVersionName = "2.1.0"
 
 android {
     compileSdkVersion 30
@@ -28,7 +28,7 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 20808
+        versionCode 20100
         versionName theVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -51,6 +51,13 @@ android {
         enabled = true
     }
 
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+    options.encoding = 'UTF-8'
 }
 
 dependencies {
