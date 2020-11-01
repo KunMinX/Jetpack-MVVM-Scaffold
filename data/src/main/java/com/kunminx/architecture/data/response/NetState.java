@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kunminx.architecture.domain.manager;
+package com.kunminx.architecture.data.response;
 
 /**
  * Create by KunMinX at 19/10/11

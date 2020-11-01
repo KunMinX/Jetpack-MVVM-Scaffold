@@ -16,9 +16,7 @@
  *
  */
 
-package com.kunminx.architecture.data.repository;
-
-import com.kunminx.architecture.domain.manager.NetState;
+package com.kunminx.architecture.data.response;
 
 /**
  * TODO: 专用于数据层返回结果给 domain 层或 ViewModel 用，原因如下：
