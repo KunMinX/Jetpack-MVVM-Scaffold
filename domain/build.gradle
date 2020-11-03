@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 
-def theVersionName = "1.0.0"
+def theVersionName = "1.0.1"
 
 android {
     compileSdkVersion 30
@@ -45,7 +45,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     api 'com.kunminx.archi:unpeek-livedata:4.4.1-beta1'
-    implementation project(':data')
+    api 'com.kunminx.archi:data:1.0.1'
+//    implementation project(':data')
 }
 
 publish {
