@@ -19,32 +19,34 @@ package com.kunminx.architecture.data.response;
 /**
  * Create by KunMinX at 19/10/11
  */
-public class NetState {
+public class ResultState {
 
-    private String responseCode;
+    private String responseCode = "";
     private boolean success = true;
+    private Enum source = ResultSource.NETWORK;
 
-    public NetState(String responseCode, boolean success) {
+    public ResultState() {
+    }
+
+    public ResultState(String responseCode, boolean success) {
         this.responseCode = responseCode;
         this.success = success;
     }
 
-    public NetState() {
+    public ResultState(String responseCode, boolean success, Enum source) {
+        this(responseCode, success);
+        this.source = source;
     }
 
     public String getResponseCode() {
         return responseCode;
     }
 
-    public void setResponseCode(String responseCode) {
-        this.responseCode = responseCode;
-    }
-
     public boolean isSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public Enum getSource() {
+        return source;
     }
 }

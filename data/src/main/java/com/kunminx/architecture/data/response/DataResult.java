@@ -33,50 +33,25 @@ package com.kunminx.architecture.data.response;
 public class DataResult<T> {
 
     private T mT;
-    private Result<T> mResult;
-    private NetState mNetState;
+    private ResultState mResultState;
 
     public DataResult() {
     }
 
-    public DataResult(Result<T> result) {
-        mResult = result;
+    public DataResult(T t, ResultState resultState) {
+        mT = t;
+        mResultState = resultState;
     }
 
     public T getResult() {
         return mT;
     }
 
-    public NetState getNetState() {
-        return mNetState;
-    }
-
-    public void setResult(T t, NetState netState) {
-        if (mResult == null) {
-            throw new NullPointerException("Need to instantiate the Result<T> first ...");
-        }
-        if (t == null) {
-            throw new NullPointerException("Need to instantiate the T first ...");
-        }
-        if (netState == null) {
-            throw new NullPointerException("Need to instantiate the NetState first ...");
-        }
-
-        mT = t;
-        mNetState = netState;
-        mResult.onResult(t, netState);
-    }
-
-    public void onObserve(Result<T> result) {
-        if (result == null) {
-            throw new NullPointerException("Need to instantiate the Result<T> first ...");
-        }
-        if (mResult == null) {
-            mResult = result;
-        }
+    public ResultState getResultState() {
+        return mResultState;
     }
 
     public interface Result<T> {
-        void onResult(T t, NetState netState);
+        void onResult(DataResult<T> dataResult);
     }
 }

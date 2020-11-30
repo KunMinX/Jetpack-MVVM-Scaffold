@@ -96,7 +96,7 @@ public class DrawerFragment extends BaseFragment {
     public class ClickProxy {
 
         public void logoClick() {
-            openUrlInBrowser("https://github.com/KunMinX/Jetpack-MVVM-Best-Practice");
+            openUrlInBrowser(getString(R.string.github_project));
         }
     }
 
