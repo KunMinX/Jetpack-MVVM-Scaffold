@@ -48,6 +48,8 @@ public class CanBeStoppedUseCase extends UseCase<CanBeStoppedUseCase.RequestValu
     public void onStop(@NonNull LifecycleOwner owner) {
         if (getRequestValues() != null) {
             mDownloadFile.setForgive(true);
+            mDownloadFile.setProgress(0);
+            mDownloadFile.setFile(null);
             getUseCaseCallback().onError();
         }
     }

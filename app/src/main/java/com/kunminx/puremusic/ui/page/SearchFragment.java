@@ -87,7 +87,7 @@ public class SearchFragment extends BaseFragment {
 
         mState.downloadRequest.getDownloadFileCanBeStoppedLiveData().observe(getViewLifecycleOwner(), dataResult -> {
             if (dataResult.getResultState().isSuccess()) {
-                mState.progress.set(dataResult.getResult().getProgress());
+                mState.progress_cancelable.set(dataResult.getResult().getProgress());
             }
         });
     }
