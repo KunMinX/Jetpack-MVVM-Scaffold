@@ -19,21 +19,21 @@ package com.kunminx.architecture.data.response;
 /**
  * Create by KunMinX at 19/10/11
  */
-public class ResultState {
+public class ResponseStatus {
 
     private String responseCode = "";
     private boolean success = true;
     private Enum source = ResultSource.NETWORK;
 
-    public ResultState() {
+    public ResponseStatus() {
     }
 
-    public ResultState(String responseCode, boolean success) {
+    public ResponseStatus(String responseCode, boolean success) {
         this.responseCode = responseCode;
         this.success = success;
     }
 
-    public ResultState(String responseCode, boolean success, Enum source) {
+    public ResponseStatus(String responseCode, boolean success, Enum source) {
         this(responseCode, success);
         this.source = source;
     }

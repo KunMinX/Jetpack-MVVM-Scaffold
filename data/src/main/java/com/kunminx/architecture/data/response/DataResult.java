@@ -33,22 +33,22 @@ package com.kunminx.architecture.data.response;
 public class DataResult<T> {
 
     private T mT;
-    private ResultState mResultState;
+    private ResponseStatus mResponseStatus;
 
     public DataResult() {
     }
 
-    public DataResult(T t, ResultState resultState) {
+    public DataResult(T t, ResponseStatus responseStatus) {
         mT = t;
-        mResultState = resultState;
+        mResponseStatus = responseStatus;
     }
 
     public T getResult() {
         return mT;
     }
 
-    public ResultState getResultState() {
-        return mResultState;
+    public ResponseStatus getResponseStatus() {
+        return mResponseStatus;
     }
 
     public interface Result<T> {
