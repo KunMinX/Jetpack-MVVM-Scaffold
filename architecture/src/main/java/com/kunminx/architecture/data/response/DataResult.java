@@ -32,19 +32,16 @@ package com.kunminx.architecture.data.response;
  */
 public class DataResult<T> {
 
-    private T mT;
+    private T mEntity;
     private ResponseStatus mResponseStatus;
 
-    public DataResult() {
-    }
-
-    public DataResult(T t, ResponseStatus responseStatus) {
-        mT = t;
+    public DataResult(T entity, ResponseStatus responseStatus) {
+        mEntity = entity;
         mResponseStatus = responseStatus;
     }
 
     public T getResult() {
-        return mT;
+        return mEntity;
     }
 
     public ResponseStatus getResponseStatus() {
