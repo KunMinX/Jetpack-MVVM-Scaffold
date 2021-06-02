@@ -70,6 +70,11 @@ public class LoginFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
         getLifecycle().addObserver(DrawerCoordinateHelper.getInstance());
+
+        //TODO tip：让 accountRequest 可观察页面生命周期，
+        // 从而在页面即将退出、且登录请求由于网络延迟尚未完成时，
+        // 及时通知数据层取消本次请求，以避免资源浪费和一系列不可预期的问题。
+        getLifecycle().addObserver(mState.accountRequest);
     }
 
     @Override
