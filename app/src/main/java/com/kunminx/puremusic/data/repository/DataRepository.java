@@ -32,6 +32,8 @@ import com.kunminx.puremusic.data.bean.LibraryInfo;
 import com.kunminx.puremusic.data.bean.TestAlbum;
 import com.kunminx.puremusic.data.bean.User;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Timer;
@@ -60,7 +62,7 @@ public class DataRepository {
         return S_REQUEST_MANAGER;
     }
 
-    private Retrofit retrofit;
+    private final Retrofit retrofit;
 
     {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -161,7 +163,7 @@ public class DataRepository {
         mUserCall = retrofit.create(AccountService.class).login(user.getName(), user.getPassword());
         mUserCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(@NotNull Call<String> call, @NotNull Response<String> response) {
                 ResponseStatus responseStatus = new ResponseStatus(
                         String.valueOf(response.code()), response.isSuccessful(), ResultSource.NETWORK);
                 result.onResult(new DataResult<>(response.body(), responseStatus));
@@ -169,8 +171,9 @@ public class DataRepository {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                result.onResult(new DataResult<>(null, new ResponseStatus(t.getMessage(), false, ResultSource.NETWORK)));
+            public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
+                result.onResult(new DataResult<>(null,
+                        new ResponseStatus(t.getMessage(), false, ResultSource.NETWORK)));
                 mUserCall = null;
             }
         });
