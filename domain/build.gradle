@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-
 
 def theVersionName = "1.1.0"
 
@@ -24,11 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 tasks.withType(Javadoc) {
@@ -40,18 +33,7 @@ tasks.withType(Javadoc) {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-}
-
-publish {
-    userOrg = 'architecture'
-    repoName = 'maven'
-    groupId = 'com.kunminx.archi'
-    artifactId = 'domain'
-    publishVersion = theVersionName
-    desc = 'domain component of Jetpack MVVM Scaffold'
-    licences = ['Apache-2.0']
-    website = 'https://github.com/KunMinX/Jetpack-MVVM-Scaffold'
 }

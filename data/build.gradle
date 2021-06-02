@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-
 
 def theVersionName = "1.1.2"
 
@@ -35,21 +33,11 @@ tasks.withType(Javadoc) {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-//    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-//    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }
 
-publish {
-    userOrg = 'architecture'
-    repoName = 'maven'
-    groupId = 'com.kunminx.archi'
-    artifactId = 'data'
-    publishVersion = theVersionName
-    desc = 'data component of Jetpack MVVM Scaffold'
-    licences = ['Apache-2.0']
-    website = 'https://github.com/KunMinX/Jetpack-MVVM-Scaffold'
-}
