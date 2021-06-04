@@ -36,13 +36,13 @@ import com.kunminx.puremusic.ui.state.MainActivityViewModel;
 public class MainActivity extends BaseActivity {
 
     private MainActivityViewModel mState;
-    private SharedViewModel mPageCallback;
+    private SharedViewModel mEvent;
     private boolean mIsListened = false;
 
     @Override
     protected void initViewModel() {
         mState = getActivityScopeViewModel(MainActivityViewModel.class);
-        mPageCallback = getApplicationScopeViewModel(SharedViewModel.class);
+        mEvent = getApplicationScopeViewModel(SharedViewModel.class);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPageCallback.isToCloseActivityIfAllowed().observeInActivity(this, aBoolean -> {
+        mEvent.isToCloseActivityIfAllowed().observeInActivity(this, aBoolean -> {
             NavController nav = Navigation.findNavController(this, R.id.main_fragment_host);
             if (nav.getCurrentDestination() != null && nav.getCurrentDestination().getId() != R.id.mainFragment) {
                 nav.navigateUp();
@@ -73,14 +73,14 @@ public class MainActivity extends BaseActivity {
 
                 //TODO 同 tip 2
 
-                mPageCallback.requestToOpenOrCloseDrawer(false);
+                mEvent.requestToOpenOrCloseDrawer(false);
 
             } else {
                 super.onBackPressed();
             }
         });
 
-        mPageCallback.isToOpenOrCloseDrawer().observeInActivity(this, aBoolean -> {
+        mEvent.isToOpenOrCloseDrawer().observeInActivity(this, aBoolean -> {
 
             //TODO yes：同 tip 1: 此处将 drawer 的 open 和 close 都放在 drawerBindingAdapter 中操作，规避了视图调用的一致性问题，
 
@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity {
             // fragment 内部的事情在 fragment 内部消化，不要试图在 Activity 中调用和操纵 Fragment 内部的东西。
             // 因为 fragment 端的处理后续可能会改变，并且可受用于更多的 Activity，而不单单是本 Activity。
 
-            mPageCallback.requestToAddSlideListener(true);
+            mEvent.requestToAddSlideListener(true);
 
             mIsListened = true;
         }
@@ -143,7 +143,7 @@ public class MainActivity extends BaseActivity {
 
         // TODO 同 tip 2
 
-        mPageCallback.requestToCloseSlidePanelIfExpanded(true);
+        mEvent.requestToCloseSlidePanelIfExpanded(true);
     }
 
     public class EventHandler extends DrawerLayout.SimpleDrawerListener {

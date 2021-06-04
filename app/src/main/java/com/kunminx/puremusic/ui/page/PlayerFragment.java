@@ -50,12 +50,12 @@ public class PlayerFragment extends BaseFragment {
     //如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/8204519736
 
     private PlayerViewModel mState;
-    private SharedViewModel mPageCallback;
+    private SharedViewModel mEvent;
 
     @Override
     protected void initViewModel() {
         mState = getFragmentScopeViewModel(PlayerViewModel.class);
-        mPageCallback = getApplicationScopeViewModel(SharedViewModel.class);
+        mEvent = getApplicationScopeViewModel(SharedViewModel.class);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class PlayerFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPageCallback.isToAddSlideListener().observeInFragment(this, aBoolean -> {
+        mEvent.isToAddSlideListener().observeInFragment(this, aBoolean -> {
             if (view.getParent().getParent() instanceof SlidingUpPanelLayout) {
                 SlidingUpPanelLayout sliding = (SlidingUpPanelLayout) view.getParent().getParent();
                 sliding.addPanelSlideListener(new PlayerSlideListener((FragmentPlayerBinding) getBinding(), sliding));
@@ -143,7 +143,7 @@ public class PlayerFragment extends BaseFragment {
             }
         });
 
-        mPageCallback.isToCloseSlidePanelIfExpanded().observeInFragment(this, aBoolean -> {
+        mEvent.isToCloseSlidePanelIfExpanded().observeInFragment(this, aBoolean -> {
 
             // 按下返回键，如果此时 slide 面板是展开的，那么只对面板进行 slide down
 
@@ -167,13 +167,13 @@ public class PlayerFragment extends BaseFragment {
 
                     // TODO: yes:
 
-                    mPageCallback.requestToCloseActivityIfAllowed(true);
+                    mEvent.requestToCloseActivityIfAllowed(true);
 
                     // TODO: do not:
                     // mActivity.finish();
                 }
             } else {
-                mPageCallback.requestToCloseActivityIfAllowed(true);
+                mEvent.requestToCloseActivityIfAllowed(true);
             }
         });
 
@@ -207,7 +207,7 @@ public class PlayerFragment extends BaseFragment {
         }
 
         public void slideDown() {
-            mPageCallback.requestToCloseSlidePanelIfExpanded(true);
+            mEvent.requestToCloseSlidePanelIfExpanded(true);
         }
 
         public void more() {

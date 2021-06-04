@@ -43,13 +43,13 @@ public class MainFragment extends BaseFragment {
     //如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/8204519736
 
     private MainViewModel mState;
-    private SharedViewModel mPageCallback;
+    private SharedViewModel mEvent;
     private PlaylistAdapter mAdapter;
 
     @Override
     protected void initViewModel() {
         mState = getFragmentScopeViewModel(MainViewModel.class);
-        mPageCallback = getApplicationScopeViewModel(SharedViewModel.class);
+        mEvent = getApplicationScopeViewModel(SharedViewModel.class);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class MainFragment extends BaseFragment {
             // Activity 内部的事情在 Activity 内部消化，不要试图在 fragment 中调用和操纵 Activity 内部的东西。
             // 因为 Activity 端的处理后续可能会改变，并且可受用于更多的 fragment，而不单单是本 fragment。
 
-            mPageCallback.requestToOpenOrCloseDrawer(true);
+            mEvent.requestToOpenOrCloseDrawer(true);
         }
 
         public void login() {
