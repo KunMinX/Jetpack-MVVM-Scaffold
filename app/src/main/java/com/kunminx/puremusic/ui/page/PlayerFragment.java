@@ -71,14 +71,14 @@ public class PlayerFragment extends BaseFragment {
 
         return new DataBindingConfig(R.layout.fragment_player, BR.vm, mState)
                 .addBindingParam(BR.click, new ClickProxy())
-                .addBindingParam(BR.event, new EventHandler());
+                .addBindingParam(BR.listener, new ListenerHandler());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mEvent.isToAddSlideListener().observeInFragment(this, aBoolean -> {
+        mEvent.isToAddSlideListener().observe(this, aBoolean -> {
             if (view.getParent().getParent() instanceof SlidingUpPanelLayout) {
                 SlidingUpPanelLayout sliding = (SlidingUpPanelLayout) view.getParent().getParent();
                 sliding.addPanelSlideListener(new PlayerSlideListener((FragmentPlayerBinding) getBinding(), sliding));
@@ -143,7 +143,7 @@ public class PlayerFragment extends BaseFragment {
             }
         });
 
-        mEvent.isToCloseSlidePanelIfExpanded().observeInFragment(this, aBoolean -> {
+        mEvent.isToCloseSlidePanelIfExpanded().observe(this, aBoolean -> {
 
             // 按下返回键，如果此时 slide 面板是展开的，那么只对面板进行 slide down
 
@@ -214,7 +214,7 @@ public class PlayerFragment extends BaseFragment {
         }
     }
 
-    public static class EventHandler implements DefaultInterface.OnSeekBarChangeListener {
+    public static class ListenerHandler implements DefaultInterface.OnSeekBarChangeListener {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {

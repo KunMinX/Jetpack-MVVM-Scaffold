@@ -57,14 +57,14 @@ public class MainActivity extends BaseActivity {
         // 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
 
         return new DataBindingConfig(R.layout.activity_main, BR.vm, mState)
-                .addBindingParam(BR.event, new EventHandler());
+                .addBindingParam(BR.listener, new ListenerHandler());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mEvent.isToCloseActivityIfAllowed().observeInActivity(this, aBoolean -> {
+        mEvent.isToCloseActivityIfAllowed().observe(this, aBoolean -> {
             NavController nav = Navigation.findNavController(this, R.id.main_fragment_host);
             if (nav.getCurrentDestination() != null && nav.getCurrentDestination().getId() != R.id.mainFragment) {
                 nav.navigateUp();
@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mEvent.isToOpenOrCloseDrawer().observeInActivity(this, aBoolean -> {
+        mEvent.isToOpenOrCloseDrawer().observe(this, aBoolean -> {
 
             //TODO yes：同 tip 1: 此处将 drawer 的 open 和 close 都放在 drawerBindingAdapter 中操作，规避了视图调用的一致性问题，
 
@@ -103,7 +103,7 @@ public class MainActivity extends BaseActivity {
             }*/
         });
 
-        DrawerCoordinateHelper.getInstance().isEnableSwipeDrawer().observeInActivity(this, aBoolean -> {
+        DrawerCoordinateHelper.getInstance().isEnableSwipeDrawer().observe(this, aBoolean -> {
 
             //TODO yes: 同 tip 1
 
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity {
         mEvent.requestToCloseSlidePanelIfExpanded(true);
     }
 
-    public class EventHandler extends DrawerLayout.SimpleDrawerListener {
+    public class ListenerHandler extends DrawerLayout.SimpleDrawerListener {
         @Override
         public void onDrawerOpened(View drawerView) {
             super.onDrawerOpened(drawerView);

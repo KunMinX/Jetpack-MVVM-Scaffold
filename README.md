@@ -1,5 +1,4 @@
-![](https://tva1.sinaimg.cn/large/008i3skNly1gpw0wgl2vrj318u0bgt9y.jpg)
-
+![](https://i.loli.net/2021/06/10/ntDCSmTFWGl78pI.png)
 
 
 ## 公告：
