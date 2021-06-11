@@ -82,7 +82,7 @@ public class MainFragment extends BaseFragment {
         // 如此才能确保 消息同步的一致性 和 可靠性，以及 避免 不可预期的 推送和错误。
         // 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/0168753249
 
-        PlayerManager.getInstance().getChangeMusicLiveData().observe(getViewLifecycleOwner(), changeMusic -> {
+        PlayerManager.getInstance().getChangeMusicEvent().observe(getViewLifecycleOwner(), changeMusic -> {
             mAdapter.notifyDataSetChanged();
         });
 
