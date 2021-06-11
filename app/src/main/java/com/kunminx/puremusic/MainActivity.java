@@ -50,8 +50,8 @@ public class MainActivity extends BaseActivity {
 
         //TODO tip 1: DataBinding 严格模式：
         // 将 DataBinding 实例限制于 base 页面中，默认不向子类暴露，
-        // 通过这样的方式，来彻底解决 视图调用的一致性问题，
-        // 如此，视图调用的安全性将和基于函数式编程思想的 Jetpack Compose 持平。
+        // 通过这样的方式，来彻底解决 视图实例 null 安全的一致性问题，
+        // 如此，视图实例 null 安全的安全性将和基于函数式编程思想的 Jetpack Compose 持平。
         // 而 DataBindingConfig 就是在这样的背景下，用于为 base 页面中的 DataBinding 提供绑定项。
 
         // 如果这样说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
@@ -82,9 +82,9 @@ public class MainActivity extends BaseActivity {
 
         mEvent.isToOpenOrCloseDrawer().observe(this, aBoolean -> {
 
-            //TODO yes：同 tip 1: 此处将 drawer 的 open 和 close 都放在 drawerBindingAdapter 中操作，规避了视图调用的一致性问题，
+            //TODO yes：同 tip 1: 此处将 drawer 的 open 和 close 都放在 drawerBindingAdapter 中操作，规避了视图实例 null 安全的一致性问题，
 
-            //因为 横屏布局 根本就没有 drawerLayout。此处如果用传统的视图调用方式，会很容易因疏忽而造成空引用。
+            //因为 横屏布局 根本就没有 drawerLayout。此处如果用传统的视图实例 null 安全方式，会很容易因疏忽而造成空引用。
 
             //TODO 此外，此处为 drawerLayout 绑定的状态 "openDrawer"，使用 LiveData 而不是 ObservableField，主要是考虑到 ObservableField 具有 "防抖" 的特性，不适合该场景。
 
@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity {
 
             mState.openDrawer.setValue(aBoolean);
 
-            //TODO do not:（容易因疏忽 而埋下视图调用的一致性隐患）
+            //TODO do not:（容易因疏忽 而埋下视图实例 null 安全的一致性隐患）
 
             /*if (mBinding.dl != null) {
                 if (aBoolean && !mBinding.dl.isDrawerOpen(GravityCompat.START)) {
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity {
 
             mState.allowDrawerOpen.setValue(aBoolean);
 
-            // TODO do not:（容易因疏忽 而埋下视图调用的一致性隐患）
+            // TODO do not:（容易因疏忽 而埋下视图实例 null 安全的一致性隐患）
 
             /*if (mBinding.dl != null) {
                 mBinding.dl.setDrawerLockMode(aBoolean
