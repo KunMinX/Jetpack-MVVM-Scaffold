@@ -136,7 +136,6 @@
                 initTabAndPage="@{vm.initTabAndPage}"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:fitsSystemWindows="true"
                 app:tabBackground="@color/white"
                 app:tabIndicatorColor="@color/gray"
                 app:tabIndicatorHeight="4dp"

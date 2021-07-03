@@ -40,9 +40,9 @@ import java.util.List;
  */
 public class MainViewModel extends ViewModel {
 
-    public final ObservableBoolean initTabAndPage = new ObservableBoolean();
+    public final ObservableBoolean initTabAndPage = new ObservableBoolean(true);
 
-    public final ObservableField<String> pageAssetPath = new ObservableField<>();
+    public final ObservableField<String> pageAssetPath = new ObservableField<>("summary.html");
 
     //TODO 此处用于绑定的状态，使用 LiveData 而不是 ObservableField，
     // 主要是考虑到 ObservableField 具有防抖的特性，不适合该场景。
@@ -58,10 +58,5 @@ public class MainViewModel extends ViewModel {
     //https://xiaozhuanlan.com/topic/8204519736
 
     public final MusicRequest musicRequest = new MusicRequest();
-
-    {
-        initTabAndPage.set(true);
-        pageAssetPath.set("summary.html");
-    }
 
 }
