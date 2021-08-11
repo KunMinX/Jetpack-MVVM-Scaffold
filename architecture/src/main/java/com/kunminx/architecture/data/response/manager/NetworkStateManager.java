@@ -30,24 +30,24 @@ import com.kunminx.architecture.utils.Utils;
  */
 public class NetworkStateManager implements DefaultLifecycleObserver {
 
-    private static final NetworkStateManager S_MANAGER = new NetworkStateManager();
-    private final NetworkStateReceive mNetworkStateReceive = new NetworkStateReceive();
+  private static final NetworkStateManager S_MANAGER = new NetworkStateManager();
+  private final NetworkStateReceive mNetworkStateReceive = new NetworkStateReceive();
 
-    private NetworkStateManager() {
-    }
+  private NetworkStateManager() {
+  }
 
-    public static NetworkStateManager getInstance() {
-        return S_MANAGER;
-    }
+  public static NetworkStateManager getInstance() {
+    return S_MANAGER;
+  }
 
-    @Override
-    public void onResume(@NonNull LifecycleOwner owner) {
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        Utils.getApp().getApplicationContext().registerReceiver(mNetworkStateReceive, filter);
-    }
+  @Override
+  public void onResume(@NonNull LifecycleOwner owner) {
+    IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+    Utils.getApp().getApplicationContext().registerReceiver(mNetworkStateReceive, filter);
+  }
 
-    @Override
-    public void onPause(@NonNull LifecycleOwner owner) {
-        Utils.getApp().getApplicationContext().unregisterReceiver(mNetworkStateReceive);
-    }
+  @Override
+  public void onPause(@NonNull LifecycleOwner owner) {
+    Utils.getApp().getApplicationContext().unregisterReceiver(mNetworkStateReceive);
+  }
 }

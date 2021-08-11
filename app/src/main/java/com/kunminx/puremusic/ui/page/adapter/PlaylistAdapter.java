@@ -32,15 +32,15 @@ import com.kunminx.puremusic.player.PlayerManager;
  */
 public class PlaylistAdapter extends SimpleDataBindingAdapter<TestAlbum.TestMusic, AdapterPlayItemBinding> {
 
-    public PlaylistAdapter(Context context) {
-        super(context, R.layout.adapter_play_item, DiffUtils.getInstance().getTestMusicItemCallback());
-    }
+  public PlaylistAdapter(Context context) {
+    super(context, R.layout.adapter_play_item, DiffUtils.getInstance().getTestMusicItemCallback());
+  }
 
-    @Override
-    protected void onBindItem(AdapterPlayItemBinding binding, TestAlbum.TestMusic item, RecyclerView.ViewHolder holder) {
-        binding.setAlbum(item);
-        int currentIndex = PlayerManager.getInstance().getAlbumIndex();
-        binding.ivPlayStatus.setColor(currentIndex == holder.getAbsoluteAdapterPosition()
-                ? binding.getRoot().getContext().getColor(R.color.gray) : Color.TRANSPARENT);
-    }
+  @Override
+  protected void onBindItem(AdapterPlayItemBinding binding, TestAlbum.TestMusic item, RecyclerView.ViewHolder holder) {
+    binding.setAlbum(item);
+    int currentIndex = PlayerManager.getInstance().getAlbumIndex();
+    binding.ivPlayStatus.setColor(currentIndex == holder.getAbsoluteAdapterPosition()
+            ? binding.getRoot().getContext().getColor(R.color.gray) : Color.TRANSPARENT);
+  }
 }

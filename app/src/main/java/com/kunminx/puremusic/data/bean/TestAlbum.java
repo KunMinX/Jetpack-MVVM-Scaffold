@@ -25,40 +25,40 @@ import com.kunminx.player.bean.base.BaseMusicItem;
  */
 public class TestAlbum extends BaseAlbumItem<TestAlbum.TestMusic, TestAlbum.TestArtist> {
 
-    private String albumMid;
+  private String albumMid;
 
-    public String getAlbumMid() {
-        return albumMid;
+  public String getAlbumMid() {
+    return albumMid;
+  }
+
+  public void setAlbumMid(String albumMid) {
+    this.albumMid = albumMid;
+  }
+
+  public static class TestMusic extends BaseMusicItem<TestArtist> {
+
+    private String songMid;
+
+    public String getSongMid() {
+      return songMid;
     }
 
-    public void setAlbumMid(String albumMid) {
-        this.albumMid = albumMid;
+    public void setSongMid(String songMid) {
+      this.songMid = songMid;
+    }
+  }
+
+  public static class TestArtist extends BaseArtistItem {
+
+    private String birthday;
+
+    public String getBirthday() {
+      return birthday;
     }
 
-    public static class TestMusic extends BaseMusicItem<TestArtist> {
-
-        private String songMid;
-
-        public String getSongMid() {
-            return songMid;
-        }
-
-        public void setSongMid(String songMid) {
-            this.songMid = songMid;
-        }
+    public void setBirthday(String birthday) {
+      this.birthday = birthday;
     }
-
-    public static class TestArtist extends BaseArtistItem {
-
-        private String birthday;
-
-        public String getBirthday() {
-            return birthday;
-        }
-
-        public void setBirthday(String birthday) {
-            this.birthday = birthday;
-        }
-    }
+  }
 }
 

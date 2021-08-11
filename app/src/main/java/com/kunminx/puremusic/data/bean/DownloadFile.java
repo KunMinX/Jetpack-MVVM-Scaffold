@@ -7,40 +7,40 @@ import java.io.File;
  */
 public class DownloadFile {
 
-    private int progress;
-    private File file;
-    private boolean forgive;
+  private int progress;
+  private File file;
+  private boolean forgive;
 
-    public DownloadFile() {
-    }
+  public DownloadFile() {
+  }
 
-    public DownloadFile(int progress, File file, boolean forgive) {
-        this.progress = progress;
-        this.file = file;
-        this.forgive = forgive;
-    }
+  public DownloadFile(int progress, File file, boolean forgive) {
+    this.progress = progress;
+    this.file = file;
+    this.forgive = forgive;
+  }
 
-    public int getProgress() {
-        return progress;
-    }
+  public int getProgress() {
+    return progress;
+  }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
+  public void setProgress(int progress) {
+    this.progress = progress;
+  }
 
-    public File getFile() {
-        return file;
-    }
+  public File getFile() {
+    return file;
+  }
 
-    public void setFile(File file) {
-        this.file = file;
-    }
+  public void setFile(File file) {
+    this.file = file;
+  }
 
-    public boolean isForgive() {
-        return forgive;
-    }
+  public boolean isForgive() {
+    return forgive;
+  }
 
-    public void setForgive(boolean forgive) {
-        this.forgive = forgive;
-    }
+  public void setForgive(boolean forgive) {
+    this.forgive = forgive;
+  }
 }

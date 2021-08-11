@@ -29,64 +29,64 @@ import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
  */
 public class DownloadRequest extends BaseRequest {
 
-    private final MutableLiveData<DataResult<DownloadFile>> mDownloadFileLiveData = new MutableLiveData<>();
+  private final MutableLiveData<DataResult<DownloadFile>> mDownloadFileLiveData = new MutableLiveData<>();
 
-    private final MutableLiveData<DataResult<DownloadFile>> mDownloadFileCanBeStoppedLiveData = new MutableLiveData<>();
+  private final MutableLiveData<DataResult<DownloadFile>> mDownloadFileCanBeStoppedLiveData = new MutableLiveData<>();
 
-    private final CanBeStoppedUseCase mCanBeStoppedUseCase = new CanBeStoppedUseCase();
+  private final CanBeStoppedUseCase mCanBeStoppedUseCase = new CanBeStoppedUseCase();
 
-    //TODO tip 2：向 ui 层提供的 request LiveData，使用父类 LiveData 而不是 MutableLiveData，
-    //如此达成了 "唯一可信源" 的设计，也即通过访问控制权限实现 "读写分离"（国外称 "单向数据流"），
-    //从而确保了消息分发的一致性和可靠性。
+  //TODO tip 2：向 ui 层提供的 request LiveData，使用父类 LiveData 而不是 MutableLiveData，
+  //如此达成了 "唯一可信源" 的设计，也即通过访问控制权限实现 "读写分离"（国外称 "单向数据流"），
+  //从而确保了消息分发的一致性和可靠性。
 
-    //如果这样说还不理解的话，详见《LiveData 鲜为人知的 身世背景 和 独特使命》中结合实际场合 对"唯一可信源"本质的解析。
-    //https://xiaozhuanlan.com/topic/0168753249
+  //如果这样说还不理解的话，详见《LiveData 鲜为人知的 身世背景 和 独特使命》中结合实际场合 对"唯一可信源"本质的解析。
+  //https://xiaozhuanlan.com/topic/0168753249
 
-    public LiveData<DataResult<DownloadFile>> getDownloadFileLiveData() {
+  public LiveData<DataResult<DownloadFile>> getDownloadFileLiveData() {
 
-        //TODO tip 3：与此同时，为了方便语义上的理解，故而直接将 DataResult 作为 LiveData value 回推给 UI 层，
-        //而不是将 DataResult 的泛型实体拆下来单独回推，如此
-        //一方面使 UI 层有机会基于 DataResult 的 responseStatus 来分别处理 请求成功或失败的情况下的 UI 表现，
-        //另一方面从语义上强调了 该数据是请求得来的结果，是只读的，与 "可变状态" 形成明确的区分，
-        //从而方便团队开发人员自然而然遵循 "唯一可信源"/"单向数据流" 的开发理念，规避消息同步一致性等不可预期的错误。
+    //TODO tip 3：与此同时，为了方便语义上的理解，故而直接将 DataResult 作为 LiveData value 回推给 UI 层，
+    //而不是将 DataResult 的泛型实体拆下来单独回推，如此
+    //一方面使 UI 层有机会基于 DataResult 的 responseStatus 来分别处理 请求成功或失败的情况下的 UI 表现，
+    //另一方面从语义上强调了 该数据是请求得来的结果，是只读的，与 "可变状态" 形成明确的区分，
+    //从而方便团队开发人员自然而然遵循 "唯一可信源"/"单向数据流" 的开发理念，规避消息同步一致性等不可预期的错误。
 
-        //如果这样说还不理解的话，详见《如何让同事爱上架构模式、少写 bug 多注释》中对 "只读数据" 和 "可变状态" 的区分的解析。
-        //https://xiaozhuanlan.com/topic/8204519736
+    //如果这样说还不理解的话，详见《如何让同事爱上架构模式、少写 bug 多注释》中对 "只读数据" 和 "可变状态" 的区分的解析。
+    //https://xiaozhuanlan.com/topic/8204519736
 
-        return mDownloadFileLiveData;
-    }
+    return mDownloadFileLiveData;
+  }
 
-    public LiveData<DataResult<DownloadFile>> getDownloadFileCanBeStoppedLiveData() {
-        return mDownloadFileCanBeStoppedLiveData;
-    }
+  public LiveData<DataResult<DownloadFile>> getDownloadFileCanBeStoppedLiveData() {
+    return mDownloadFileCanBeStoppedLiveData;
+  }
 
-    public CanBeStoppedUseCase getCanBeStoppedUseCase() {
-        return mCanBeStoppedUseCase;
-    }
+  public CanBeStoppedUseCase getCanBeStoppedUseCase() {
+    return mCanBeStoppedUseCase;
+  }
 
-    public void requestDownloadFile() {
+  public void requestDownloadFile() {
 
-        DownloadFile downloadFile = new DownloadFile();
+    DownloadFile downloadFile = new DownloadFile();
 
-        //TODO Tip：lambda 语句只有一行时可简写，具体可结合实际情况选择和使用
+    //TODO Tip：lambda 语句只有一行时可简写，具体可结合实际情况选择和使用
 
         /*DataRepository.getInstance().downloadFile(downloadFile, dataResult -> {
             mDownloadFileLiveData.postValue(dataResult);
         });*/
 
-        DataRepository.getInstance().downloadFile(downloadFile, mDownloadFileLiveData::postValue);
-    }
+    DataRepository.getInstance().downloadFile(downloadFile, mDownloadFileLiveData::postValue);
+  }
 
-    //TODO tip2：
-    // 同样是“下载”，我不是在数据层分别写两个方法，
-    // 而是遵循开闭原则，在 vm 和 数据层之间，插入一个 UseCase，来专门负责可叫停的情况，
-    // 除了开闭原则，使用 UseCase 还有个考虑就是避免内存泄漏，
-    // 具体缘由可详见 https://xiaozhuanlan.com/topic/6257931840 评论区 15 楼
+  //TODO tip2：
+  // 同样是“下载”，我不是在数据层分别写两个方法，
+  // 而是遵循开闭原则，在 vm 和 数据层之间，插入一个 UseCase，来专门负责可叫停的情况，
+  // 除了开闭原则，使用 UseCase 还有个考虑就是避免内存泄漏，
+  // 具体缘由可详见 https://xiaozhuanlan.com/topic/6257931840 评论区 15 楼
 
-    public void requestCanBeStoppedDownloadFile() {
-        UseCaseHandler.getInstance().execute(getCanBeStoppedUseCase(),
-                new CanBeStoppedUseCase.RequestValues(), response -> {
-                    mDownloadFileCanBeStoppedLiveData.setValue(response.getDataResult());
-                });
-    }
+  public void requestCanBeStoppedDownloadFile() {
+    UseCaseHandler.getInstance().execute(getCanBeStoppedUseCase(),
+            new CanBeStoppedUseCase.RequestValues(), response -> {
+              mDownloadFileCanBeStoppedLiveData.setValue(response.getDataResult());
+            });
+  }
 }
