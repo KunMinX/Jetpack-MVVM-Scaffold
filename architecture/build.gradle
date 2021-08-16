@@ -61,12 +61,15 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-livedata:2.3.1'
     api 'androidx.navigation:navigation-runtime:2.3.5'
 
-    api 'com.kunminx.arch:unpeek-livedata:7.0.5-beta1'
+    api 'com.kunminx.arch:unpeek-livedata:7.1.0-beta1'
     api 'com.kunminx.arch:smooth-navigation:3.9.0-beta1'
     api 'com.kunminx.arch:strict-databinding:3.7.0-beta1'
 
     api project(':domain')
     api project(':data')
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+
 }
 
 
