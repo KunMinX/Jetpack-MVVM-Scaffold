@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
+import com.kunminx.architecture.utils.ToastUtils;
 import com.kunminx.player.PlayingInfoManager;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
@@ -138,7 +139,7 @@ public class PlayerFragment extends BaseFragment {
             if (view.getParent().getParent() instanceof SlidingUpPanelLayout) {
                 SlidingUpPanelLayout sliding = (SlidingUpPanelLayout) view.getParent().getParent();
                 if (sliding.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                    showShortToast(tip);
+                    ToastUtils.showShortToast(getApplicationContext(), getString(tip));
                 }
             }
         });
@@ -203,7 +204,7 @@ public class PlayerFragment extends BaseFragment {
         }
 
         public void showPlayList() {
-            showShortToast(R.string.unfinished);
+            ToastUtils.showShortToast(getApplicationContext(), getString(R.string.unfinished));
         }
 
         public void slideDown() {

@@ -10,14 +10,7 @@ buildscript {
         //maven { url "https://maven.aliyun.com/repository/public" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
-    }
-
-    tasks.withType(Javadoc) {
-        options.addStringOption('Xdoclint:none', '-quiet')
-        options.addStringOption('encoding', 'UTF-8')
-        options.addStringOption('charSet', 'UTF-8')
-        options.encoding = 'UTF-8'
+        classpath 'com.android.tools.build:gradle:7.0.1'
     }
 }
 
