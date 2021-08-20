@@ -1,11 +1,10 @@
 package com.kunminx.puremusic.domain.request;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.kunminx.architecture.data.response.DataResult;
 import com.kunminx.architecture.domain.request.BaseRequest;
 import com.kunminx.architecture.domain.usecase.UseCaseHandler;
+import com.kunminx.architecture.ui.callback.ProtectedUnPeekLiveData;
+import com.kunminx.architecture.ui.callback.UnPeekLiveData;
 import com.kunminx.puremusic.data.bean.DownloadFile;
 import com.kunminx.puremusic.data.repository.DataRepository;
 import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
@@ -29,20 +28,21 @@ import com.kunminx.puremusic.domain.usecase.CanBeStoppedUseCase;
  */
 public class DownloadRequest extends BaseRequest {
 
-    private final MutableLiveData<DataResult<DownloadFile>> mDownloadFileLiveData = new MutableLiveData<>();
+    private final UnPeekLiveData<DataResult<DownloadFile>> mDownloadFileLiveData = new UnPeekLiveData<>();
 
-    private final MutableLiveData<DataResult<DownloadFile>> mDownloadFileCanBeStoppedLiveData = new MutableLiveData<>();
+    private final UnPeekLiveData<DataResult<DownloadFile>> mDownloadFileCanBeStoppedLiveData = new UnPeekLiveData<>();
 
     private final CanBeStoppedUseCase mCanBeStoppedUseCase = new CanBeStoppedUseCase();
 
-    //TODO tip 2：向 ui 层提供的 request LiveData，使用父类 LiveData 而不是 MutableLiveData，
-    //如此达成了 "唯一可信源" 的设计，也即通过访问控制权限实现 "读写分离"（国外称 "单向数据流"），
-    //从而确保了消息分发的一致性和可靠性。
+    //TODO tip 2：向 ui 层提供的 request LiveData，使用 "父类的 LiveData" 而不是 "Mutable 的 LiveData"，
+    //如此达成了 "唯一可信源" 的设计，也即通过访问控制权限实现 "读写分离"，
+    //并且进一步地，使用 ProtectedUnPeekLiveData 类，而不是 LiveData 类，
+    //以此来确保消息分发的可靠一致，及 "事件" 场景下的防倒灌特性。
 
-    //如果这样说还不理解的话，详见《LiveData 鲜为人知的 身世背景 和 独特使命》中结合实际场合 对"唯一可信源"本质的解析。
-    //https://xiaozhuanlan.com/topic/0168753249
+    //如果这样说还不理解的话，详见《关于 LiveData 本质，你看到了第几层》的铺垫和解析。
+    //https://xiaozhuanlan.com/topic/6017825943
 
-    public LiveData<DataResult<DownloadFile>> getDownloadFileLiveData() {
+    public ProtectedUnPeekLiveData<DataResult<DownloadFile>> getDownloadFileLiveData() {
 
         //TODO tip 3：与此同时，为了方便语义上的理解，故而直接将 DataResult 作为 LiveData value 回推给 UI 层，
         //而不是将 DataResult 的泛型实体拆下来单独回推，如此
@@ -56,7 +56,7 @@ public class DownloadRequest extends BaseRequest {
         return mDownloadFileLiveData;
     }
 
-    public LiveData<DataResult<DownloadFile>> getDownloadFileCanBeStoppedLiveData() {
+    public ProtectedUnPeekLiveData<DataResult<DownloadFile>> getDownloadFileCanBeStoppedLiveData() {
         return mDownloadFileCanBeStoppedLiveData;
     }
 
