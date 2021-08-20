@@ -32,19 +32,19 @@ import com.kunminx.puremusic.databinding.AdapterLibraryBinding;
  */
 public class DrawerAdapter extends SimpleDataBindingAdapter<LibraryInfo, AdapterLibraryBinding> {
 
-  public DrawerAdapter(Context context) {
-    super(context, R.layout.adapter_library, DiffUtils.getInstance().getLibraryInfoItemCallback());
+    public DrawerAdapter(Context context) {
+        super(context, R.layout.adapter_library, DiffUtils.getInstance().getLibraryInfoItemCallback());
 
-    //TODO item click 回调可以在 adapter 中实现，也可以在外部实现
-    setOnItemClickListener((viewId, item, position) -> {
-      Uri uri = Uri.parse(item.getUrl());
-      Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-      mContext.startActivity(intent);
-    });
-  }
+        //TODO item click 回调可以在 adapter 中实现，也可以在外部实现
+        setOnItemClickListener((viewId, item, position) -> {
+            Uri uri = Uri.parse(item.getUrl());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            mContext.startActivity(intent);
+        });
+    }
 
-  @Override
-  protected void onBindItem(AdapterLibraryBinding binding, LibraryInfo item, RecyclerView.ViewHolder holder) {
-    binding.setInfo(item);
-  }
+    @Override
+    protected void onBindItem(AdapterLibraryBinding binding, LibraryInfo item, RecyclerView.ViewHolder holder) {
+        binding.setInfo(item);
+    }
 }

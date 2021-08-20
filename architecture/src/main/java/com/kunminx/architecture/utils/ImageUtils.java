@@ -85,8 +85,8 @@ public final class ImageUtils {
      */
     public static Bitmap bytes2Bitmap(final byte[] bytes) {
         return (bytes == null || bytes.length == 0)
-                ? null
-                : BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            ? null
+            : BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     /**
@@ -105,15 +105,15 @@ public final class ImageUtils {
         Bitmap bitmap;
         if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1,
-                    drawable.getOpacity() != PixelFormat.OPAQUE
-                            ? Bitmap.Config.ARGB_8888
-                            : Bitmap.Config.RGB_565);
+                drawable.getOpacity() != PixelFormat.OPAQUE
+                    ? Bitmap.Config.ARGB_8888
+                    : Bitmap.Config.RGB_565);
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicHeight(),
-                    drawable.getOpacity() != PixelFormat.OPAQUE
-                            ? Bitmap.Config.ARGB_8888
-                            : Bitmap.Config.RGB_565);
+                drawable.getIntrinsicHeight(),
+                drawable.getOpacity() != PixelFormat.OPAQUE
+                    ? Bitmap.Config.ARGB_8888
+                    : Bitmap.Config.RGB_565);
         }
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -163,8 +163,8 @@ public final class ImageUtils {
             return null;
         }
         Bitmap ret = Bitmap.createBitmap(view.getWidth(),
-                view.getHeight(),
-                Bitmap.Config.ARGB_8888);
+            view.getHeight(),
+            Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(ret);
         Drawable bgDrawable = view.getBackground();
         if (bgDrawable != null) {
@@ -319,8 +319,8 @@ public final class ImageUtils {
         Drawable drawable = ContextCompat.getDrawable(Utils.getApp(), resId);
         Canvas canvas = new Canvas();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(),
-                Bitmap.Config.ARGB_8888);
+            drawable.getIntrinsicHeight(),
+            Bitmap.Config.ARGB_8888);
         canvas.setBitmap(bitmap);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         drawable.draw(canvas);
@@ -661,8 +661,8 @@ public final class ImageUtils {
         try {
             ExifInterface exifInterface = new ExifInterface(filePath);
             int orientation = exifInterface.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL
             );
             switch (orientation) {
                 case ExifInterface.ORIENTATION_ROTATE_90:
@@ -945,7 +945,7 @@ public final class ImageUtils {
         } else {
             int halfBorderSize = borderSize >> 1;
             RectF rectF = new RectF(halfBorderSize, halfBorderSize,
-                    width - halfBorderSize, height - halfBorderSize);
+                width - halfBorderSize, height - halfBorderSize);
             canvas.drawRoundRect(rectF, cornerRadius, cornerRadius, paint);
         }
         return ret;
@@ -982,18 +982,18 @@ public final class ImageUtils {
         Matrix matrix = new Matrix();
         matrix.preScale(1, -1);
         Bitmap reflectionBitmap = Bitmap.createBitmap(src, 0, srcHeight - reflectionHeight,
-                srcWidth, reflectionHeight, matrix, false);
+            srcWidth, reflectionHeight, matrix, false);
         Bitmap ret = Bitmap.createBitmap(srcWidth, srcHeight + reflectionHeight, src.getConfig());
         Canvas canvas = new Canvas(ret);
         canvas.drawBitmap(src, 0, 0, null);
         canvas.drawBitmap(reflectionBitmap, 0, srcHeight + REFLECTION_GAP, null);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         LinearGradient shader = new LinearGradient(
-                0, srcHeight,
-                0, ret.getHeight() + REFLECTION_GAP,
-                0x70FFFFFF,
-                0x00FFFFFF,
-                Shader.TileMode.MIRROR);
+            0, srcHeight,
+            0, ret.getHeight() + REFLECTION_GAP,
+            0x70FFFFFF,
+            0x00FFFFFF,
+            Shader.TileMode.MIRROR);
         paint.setShader(shader);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
         canvas.drawRect(0, srcHeight + REFLECTION_GAP, srcWidth, ret.getHeight(), paint);
@@ -1186,10 +1186,10 @@ public final class ImageUtils {
      */
     public static Bitmap fastBlur(final Bitmap src,
                                   @FloatRange(
-                                          from = 0, to = 1, fromInclusive = false
+                                      from = 0, to = 1, fromInclusive = false
                                   ) final float scale,
                                   @FloatRange(
-                                          from = 0, to = 25, fromInclusive = false
+                                      from = 0, to = 25, fromInclusive = false
                                   ) final float radius) {
         return fastBlur(src, scale, radius, false, false);
     }
@@ -1205,10 +1205,10 @@ public final class ImageUtils {
      */
     public static Bitmap fastBlur(final Bitmap src,
                                   @FloatRange(
-                                          from = 0, to = 1, fromInclusive = false
+                                      from = 0, to = 1, fromInclusive = false
                                   ) final float scale,
                                   @FloatRange(
-                                          from = 0, to = 25, fromInclusive = false
+                                      from = 0, to = 25, fromInclusive = false
                                   ) final float radius,
                                   final boolean recycle) {
         return fastBlur(src, scale, radius, recycle, false);
@@ -1227,10 +1227,10 @@ public final class ImageUtils {
      */
     public static Bitmap fastBlur(final Bitmap src,
                                   @FloatRange(
-                                          from = 0, to = 1, fromInclusive = false
+                                      from = 0, to = 1, fromInclusive = false
                                   ) final float scale,
                                   @FloatRange(
-                                          from = 0, to = 25, fromInclusive = false
+                                      from = 0, to = 25, fromInclusive = false
                                   ) final float radius,
                                   final boolean recycle,
                                   final boolean isReturnScale) {
@@ -1242,11 +1242,11 @@ public final class ImageUtils {
         Matrix matrix = new Matrix();
         matrix.setScale(scale, scale);
         Bitmap scaleBitmap =
-                Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+            Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
         Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
         Canvas canvas = new Canvas();
         PorterDuffColorFilter filter = new PorterDuffColorFilter(
-                Color.TRANSPARENT, PorterDuff.Mode.SRC_ATOP);
+            Color.TRANSPARENT, PorterDuff.Mode.SRC_ATOP);
         paint.setColorFilter(filter);
         canvas.scale(scale, scale);
         canvas.drawBitmap(scaleBitmap, 0, 0, paint);
@@ -1277,7 +1277,7 @@ public final class ImageUtils {
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap renderScriptBlur(final Bitmap src,
                                           @FloatRange(
-                                                  from = 0, to = 25, fromInclusive = false
+                                              from = 0, to = 25, fromInclusive = false
                                           ) final float radius) {
         return renderScriptBlur(src, radius, false);
     }
@@ -1293,7 +1293,7 @@ public final class ImageUtils {
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap renderScriptBlur(final Bitmap src,
                                           @FloatRange(
-                                                  from = 0, to = 25, fromInclusive = false
+                                              from = 0, to = 25, fromInclusive = false
                                           ) final float radius,
                                           final boolean recycle) {
         RenderScript rs = null;
@@ -1302,9 +1302,9 @@ public final class ImageUtils {
             rs = RenderScript.create(Utils.getApp());
             rs.setMessageHandler(new RenderScript.RSMessageHandler());
             Allocation input = Allocation.createFromBitmap(rs,
-                    ret,
-                    Allocation.MipmapControl.MIPMAP_NONE,
-                    Allocation.USAGE_SCRIPT);
+                ret,
+                Allocation.MipmapControl.MIPMAP_NONE,
+                Allocation.USAGE_SCRIPT);
             Allocation output = Allocation.createTyped(rs, input.getType());
             ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
             blurScript.setInput(input);
@@ -1729,27 +1729,27 @@ public final class ImageUtils {
 
     private static boolean isJPEG(final byte[] b) {
         return b.length >= 2
-                && (b[0] == (byte) 0xFF) && (b[1] == (byte) 0xD8);
+            && (b[0] == (byte) 0xFF) && (b[1] == (byte) 0xD8);
     }
 
     private static boolean isGIF(final byte[] b) {
         return b.length >= 6
-                && b[0] == 'G' && b[1] == 'I'
-                && b[2] == 'F' && b[3] == '8'
-                && (b[4] == '7' || b[4] == '9') && b[5] == 'a';
+            && b[0] == 'G' && b[1] == 'I'
+            && b[2] == 'F' && b[3] == '8'
+            && (b[4] == '7' || b[4] == '9') && b[5] == 'a';
     }
 
     private static boolean isPNG(final byte[] b) {
         return b.length >= 8
-                && (b[0] == (byte) 137 && b[1] == (byte) 80
-                && b[2] == (byte) 78 && b[3] == (byte) 71
-                && b[4] == (byte) 13 && b[5] == (byte) 10
-                && b[6] == (byte) 26 && b[7] == (byte) 10);
+            && (b[0] == (byte) 137 && b[1] == (byte) 80
+            && b[2] == (byte) 78 && b[3] == (byte) 71
+            && b[4] == (byte) 13 && b[5] == (byte) 10
+            && b[6] == (byte) 26 && b[7] == (byte) 10);
     }
 
     private static boolean isBMP(final byte[] b) {
         return b.length >= 2
-                && (b[0] == 0x42) && (b[1] == 0x4d);
+            && (b[0] == 0x42) && (b[1] == 0x4d);
     }
 
     private static boolean isEmptyBitmap(final Bitmap src) {

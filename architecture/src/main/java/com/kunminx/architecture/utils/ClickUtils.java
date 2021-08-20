@@ -221,10 +221,10 @@ public class ClickUtils {
 
     private static ColorMatrixColorFilter getDarkColorFilter(float darkAlpha) {
         return new ColorMatrixColorFilter(new ColorMatrix(new float[]{
-                darkAlpha, 0, 0, 0, 0,
-                0, darkAlpha, 0, 0, 0,
-                0, 0, darkAlpha, 0, 0,
-                0, 0, 0, 2, 0
+            darkAlpha, 0, 0, 0, 0,
+            0, darkAlpha, 0, 0, 0,
+            0, 0, darkAlpha, 0, 0,
+            0, 0, 0, 2, 0
         }));
     }
 
@@ -466,7 +466,7 @@ public class ClickUtils {
                 processScale(v, true);
                 processAlpha(v, true);
             } else if (action == MotionEvent.ACTION_UP
-                    || action == MotionEvent.ACTION_CANCEL) {
+                || action == MotionEvent.ACTION_CANCEL) {
                 processScale(v, false);
                 processAlpha(v, false);
             }
@@ -480,10 +480,10 @@ public class ClickUtils {
             }
             float value = isDown ? 1 + (Float) tag : 1;
             view.animate()
-                    .scaleX(value)
-                    .scaleY(value)
-                    .setDuration(200)
-                    .start();
+                .scaleX(value)
+                .scaleY(value)
+                .setDuration(200)
+                .start();
         }
 
         private void processAlpha(final View view, boolean isDown) {

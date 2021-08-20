@@ -1,5 +1,12 @@
 package com.kunminx.architecture.utils;
 
+import static android.Manifest.permission.ACCESS_NETWORK_STATE;
+import static android.Manifest.permission.ACCESS_WIFI_STATE;
+import static android.Manifest.permission.CHANGE_WIFI_STATE;
+import static android.Manifest.permission.INTERNET;
+import static android.Manifest.permission.MODIFY_PHONE_STATE;
+import static android.content.Context.WIFI_SERVICE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -23,13 +30,6 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 
-import static android.Manifest.permission.ACCESS_NETWORK_STATE;
-import static android.Manifest.permission.ACCESS_WIFI_STATE;
-import static android.Manifest.permission.CHANGE_WIFI_STATE;
-import static android.Manifest.permission.INTERNET;
-import static android.Manifest.permission.MODIFY_PHONE_STATE;
-import static android.content.Context.WIFI_SERVICE;
-
 /**
  * <pre>
  *     author: Blankj
@@ -49,8 +49,8 @@ public final class NetworkUtils {
      */
     public static void openWirelessSettings() {
         Utils.getApp().startActivity(
-                new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         );
     }
 
@@ -114,7 +114,7 @@ public final class NetworkUtils {
     public static boolean getMobileDataEnabled() {
         try {
             TelephonyManager tm =
-                    (TelephonyManager) Utils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
+                (TelephonyManager) Utils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
             if (tm == null) {
                 return false;
             }
@@ -123,7 +123,7 @@ public final class NetworkUtils {
             }
             @SuppressLint("PrivateApi")
             Method getMobileDataEnabledMethod =
-                    tm.getClass().getDeclaredMethod("getDataEnabled");
+                tm.getClass().getDeclaredMethod("getDataEnabled");
             if (null != getMobileDataEnabledMethod) {
                 return (boolean) getMobileDataEnabledMethod.invoke(tm);
             }
@@ -145,7 +145,7 @@ public final class NetworkUtils {
     public static boolean setMobileDataEnabled(final boolean enabled) {
         try {
             TelephonyManager tm =
-                    (TelephonyManager) Utils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
+                (TelephonyManager) Utils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
             if (tm == null) {
                 return false;
             }
@@ -154,7 +154,7 @@ public final class NetworkUtils {
                 return false;
             }
             Method setDataEnabledMethod =
-                    tm.getClass().getDeclaredMethod("setDataEnabled", boolean.class);
+                tm.getClass().getDeclaredMethod("setDataEnabled", boolean.class);
             if (null != setDataEnabledMethod) {
                 setDataEnabledMethod.invoke(tm, enabled);
                 return true;
@@ -175,8 +175,8 @@ public final class NetworkUtils {
     public static boolean isMobileData() {
         NetworkInfo info = getActiveNetworkInfo();
         return null != info
-                && info.isAvailable()
-                && info.getType() == ConnectivityManager.TYPE_MOBILE;
+            && info.isAvailable()
+            && info.getType() == ConnectivityManager.TYPE_MOBILE;
     }
 
     /**
@@ -189,8 +189,8 @@ public final class NetworkUtils {
     public static boolean is4G() {
         NetworkInfo info = getActiveNetworkInfo();
         return info != null
-                && info.isAvailable()
-                && info.getSubtype() == TelephonyManager.NETWORK_TYPE_LTE;
+            && info.isAvailable()
+            && info.getSubtype() == TelephonyManager.NETWORK_TYPE_LTE;
     }
 
     /**
@@ -237,7 +237,7 @@ public final class NetworkUtils {
     @RequiresPermission(ACCESS_NETWORK_STATE)
     public static boolean isWifiConnected() {
         ConnectivityManager cm =
-                (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
+            (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
             return false;
         }
@@ -264,7 +264,7 @@ public final class NetworkUtils {
      */
     public static String getNetworkOperatorName() {
         TelephonyManager tm =
-                (TelephonyManager) Utils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
+            (TelephonyManager) Utils.getApp().getSystemService(Context.TELEPHONY_SERVICE);
         if (tm == null) {
             return "";
         }
@@ -324,8 +324,8 @@ public final class NetworkUtils {
                     default:
                         String subtypeName = info.getSubtypeName();
                         if ("TD-SCDMA".equalsIgnoreCase(subtypeName)
-                                || "WCDMA".equalsIgnoreCase(subtypeName)
-                                || "CDMA2000".equalsIgnoreCase(subtypeName)) {
+                            || "WCDMA".equalsIgnoreCase(subtypeName)
+                            || "CDMA2000".equalsIgnoreCase(subtypeName)) {
                             return NetworkType.NETWORK_3G;
                         }
                 }
@@ -344,7 +344,7 @@ public final class NetworkUtils {
     @RequiresPermission(ACCESS_NETWORK_STATE)
     private static boolean isEthernet() {
         final ConnectivityManager cm =
-                (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
+            (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
             return false;
         }
@@ -362,7 +362,7 @@ public final class NetworkUtils {
     @RequiresPermission(ACCESS_NETWORK_STATE)
     private static NetworkInfo getActiveNetworkInfo() {
         ConnectivityManager cm =
-                (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
+            (ConnectivityManager) Utils.getApp().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
             return null;
         }
@@ -404,8 +404,8 @@ public final class NetworkUtils {
                         if (!isIPv4) {
                             int index = hostAddress.indexOf('%');
                             return index < 0
-                                    ? hostAddress.toUpperCase()
-                                    : hostAddress.substring(0, index).toUpperCase();
+                                ? hostAddress.toUpperCase()
+                                : hostAddress.substring(0, index).toUpperCase();
                         }
                     }
                 }

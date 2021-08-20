@@ -32,7 +32,7 @@ public final class FileUtils {
 
     private static final String LINE_SEP = System.getProperty("line.separator");
     private static final char[] HEX_DIGITS =
-            {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     private FileUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -106,7 +106,7 @@ public final class FileUtils {
         File newFile = new File(file.getParent() + File.separator + newName);
         // the new name of file exists then return false
         return !newFile.exists()
-                && file.renameTo(newFile);
+            && file.renameTo(newFile);
     }
 
     /**
@@ -535,7 +535,7 @@ public final class FileUtils {
         }
         try {
             return writeFileFromIS(destFile, new FileInputStream(srcFile))
-                    && !(isMove && !deleteFile(srcFile));
+                && !(isMove && !deleteFile(srcFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;

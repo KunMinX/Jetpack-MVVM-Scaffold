@@ -34,12 +34,12 @@ import com.kunminx.puremusic.player.PlayerManager;
  */
 public class App extends BaseApplication {
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-    Utils.init(this);
-    PlayerManager.getInstance().init(this);
-  }
+        Utils.init(this);
+        PlayerManager.getInstance().init(this);
+    }
 
 }

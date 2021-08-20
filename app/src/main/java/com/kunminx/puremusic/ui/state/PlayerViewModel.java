@@ -45,33 +45,33 @@ import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
  */
 public class PlayerViewModel extends ViewModel {
 
-  public final ObservableField<String> title = new ObservableField<>();
+    public final ObservableField<String> title = new ObservableField<>();
 
-  public final ObservableField<String> artist = new ObservableField<>();
+    public final ObservableField<String> artist = new ObservableField<>();
 
-  public final ObservableField<String> coverImg = new ObservableField<>();
+    public final ObservableField<String> coverImg = new ObservableField<>();
 
-  public final ObservableField<Drawable> placeHolder = new ObservableField<>();
+    public final ObservableField<Drawable> placeHolder = new ObservableField<>();
 
-  public final ObservableInt maxSeekDuration = new ObservableInt();
+    public final ObservableInt maxSeekDuration = new ObservableInt();
 
-  public final ObservableInt currentSeekPosition = new ObservableInt();
+    public final ObservableInt currentSeekPosition = new ObservableInt();
 
-  public final ObservableBoolean isPlaying = new ObservableBoolean();
+    public final ObservableBoolean isPlaying = new ObservableBoolean();
 
-  public final ObservableField<MaterialDrawableBuilder.IconValue> playModeIcon = new ObservableField<>();
+    public final ObservableField<MaterialDrawableBuilder.IconValue> playModeIcon = new ObservableField<>();
 
-  {
-    title.set(Utils.getApp().getString(R.string.app_name));
-    artist.set(Utils.getApp().getString(R.string.app_name));
-    placeHolder.set(ContextCompat.getDrawable(Utils.getApp(), R.drawable.bg_album_default));
+    {
+        title.set(Utils.getApp().getString(R.string.app_name));
+        artist.set(Utils.getApp().getString(R.string.app_name));
+        placeHolder.set(ContextCompat.getDrawable(Utils.getApp(), R.drawable.bg_album_default));
 
-    if (PlayerManager.getInstance().getRepeatMode() == PlayingInfoManager.RepeatMode.LIST_CYCLE) {
-      playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT);
-    } else if (PlayerManager.getInstance().getRepeatMode() == PlayingInfoManager.RepeatMode.SINGLE_CYCLE) {
-      playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT_ONCE);
-    } else {
-      playModeIcon.set(MaterialDrawableBuilder.IconValue.SHUFFLE);
+        if (PlayerManager.getInstance().getRepeatMode() == PlayingInfoManager.RepeatMode.LIST_CYCLE) {
+            playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT);
+        } else if (PlayerManager.getInstance().getRepeatMode() == PlayingInfoManager.RepeatMode.SINGLE_CYCLE) {
+            playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT_ONCE);
+        } else {
+            playModeIcon.set(MaterialDrawableBuilder.IconValue.SHUFFLE);
+        }
     }
-  }
 }

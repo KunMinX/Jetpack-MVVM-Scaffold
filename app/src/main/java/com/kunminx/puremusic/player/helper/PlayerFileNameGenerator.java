@@ -22,9 +22,9 @@ import com.danikula.videocache.file.FileNameGenerator;
  * Create by KunMinX at 18/9/24
  */
 public class PlayerFileNameGenerator implements FileNameGenerator {
-  @Override
-  public String generate(String url) {
-    String[] split = url.split("/");
-    return split[split.length - 1];
-  }
+    @Override
+    public String generate(String url) {
+        String[] split = url.split("/");
+        return split[split.length - 1];
+    }
 }

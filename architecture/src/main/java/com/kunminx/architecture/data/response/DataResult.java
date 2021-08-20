@@ -32,23 +32,23 @@ package com.kunminx.architecture.data.response;
  */
 public class DataResult<T> {
 
-  private T mEntity;
-  private ResponseStatus mResponseStatus;
+    private T mEntity;
+    private ResponseStatus mResponseStatus;
 
-  public DataResult(T entity, ResponseStatus responseStatus) {
-    mEntity = entity;
-    mResponseStatus = responseStatus;
-  }
+    public DataResult(T entity, ResponseStatus responseStatus) {
+        mEntity = entity;
+        mResponseStatus = responseStatus;
+    }
 
-  public T getResult() {
-    return mEntity;
-  }
+    public T getResult() {
+        return mEntity;
+    }
 
-  public ResponseStatus getResponseStatus() {
-    return mResponseStatus;
-  }
+    public ResponseStatus getResponseStatus() {
+        return mResponseStatus;
+    }
 
-  public interface Result<T> {
-    void onResult(DataResult<T> dataResult);
-  }
+    public interface Result<T> {
+        void onResult(DataResult<T> dataResult);
+    }
 }

@@ -535,7 +535,7 @@ public final class FileIOUtils {
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             } else {
                 reader = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(file), charsetName)
+                    new InputStreamReader(new FileInputStream(file), charsetName)
                 );
             }
             while ((line = reader.readLine()) != null) {

@@ -44,48 +44,48 @@ import java.util.List;
  */
 public class DrawerCoordinateHelper implements DefaultLifecycleObserver {
 
-  private static final DrawerCoordinateHelper S_HELPER = new DrawerCoordinateHelper();
+    private static final DrawerCoordinateHelper S_HELPER = new DrawerCoordinateHelper();
 
-  private DrawerCoordinateHelper() {
-  }
-
-  public static DrawerCoordinateHelper getInstance() {
-    return S_HELPER;
-  }
-
-  private final List<String> tagOfSecondaryPages = new ArrayList<>();
-
-  private final UnPeekLiveData<Boolean> enableSwipeDrawer = new UnPeekLiveData<>();
-
-  public ProtectedUnPeekLiveData<Boolean> isEnableSwipeDrawer() {
-    return enableSwipeDrawer;
-  }
-
-  public void requestToUpdateDrawerMode(boolean pageOpened, String pageName) {
-    if (pageOpened) {
-      tagOfSecondaryPages.add(pageName);
-    } else {
-      tagOfSecondaryPages.remove(pageName);
+    private DrawerCoordinateHelper() {
     }
-    enableSwipeDrawer.setValue(tagOfSecondaryPages.size() == 0);
-  }
 
-  @Override
-  public void onCreate(@NonNull LifecycleOwner owner) {
+    public static DrawerCoordinateHelper getInstance() {
+        return S_HELPER;
+    }
 
-    tagOfSecondaryPages.add(owner.getClass().getSimpleName());
+    private final List<String> tagOfSecondaryPages = new ArrayList<>();
 
-    enableSwipeDrawer.setValue(tagOfSecondaryPages.size() == 0);
+    private final UnPeekLiveData<Boolean> enableSwipeDrawer = new UnPeekLiveData<>();
 
-  }
+    public ProtectedUnPeekLiveData<Boolean> isEnableSwipeDrawer() {
+        return enableSwipeDrawer;
+    }
 
-  @Override
-  public void onDestroy(@NonNull LifecycleOwner owner) {
+    public void requestToUpdateDrawerMode(boolean pageOpened, String pageName) {
+        if (pageOpened) {
+            tagOfSecondaryPages.add(pageName);
+        } else {
+            tagOfSecondaryPages.remove(pageName);
+        }
+        enableSwipeDrawer.setValue(tagOfSecondaryPages.size() == 0);
+    }
 
-    tagOfSecondaryPages.remove(owner.getClass().getSimpleName());
+    @Override
+    public void onCreate(@NonNull LifecycleOwner owner) {
 
-    enableSwipeDrawer.setValue(tagOfSecondaryPages.size() == 0);
+        tagOfSecondaryPages.add(owner.getClass().getSimpleName());
 
-  }
+        enableSwipeDrawer.setValue(tagOfSecondaryPages.size() == 0);
+
+    }
+
+    @Override
+    public void onDestroy(@NonNull LifecycleOwner owner) {
+
+        tagOfSecondaryPages.remove(owner.getClass().getSimpleName());
+
+        enableSwipeDrawer.setValue(tagOfSecondaryPages.size() == 0);
+
+    }
 
 }

@@ -32,13 +32,13 @@ import java.util.Objects;
  */
 public class NetworkStateReceive extends BroadcastReceiver {
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-    if (Objects.equals(intent.getAction(), ConnectivityManager.CONNECTIVITY_ACTION)) {
-      if (!NetworkUtils.isConnected()) {
-        Toast.makeText(context, context.getString(R.string.network_not_good), Toast.LENGTH_SHORT).show();
-      }
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (Objects.equals(intent.getAction(), ConnectivityManager.CONNECTIVITY_ACTION)) {
+            if (!NetworkUtils.isConnected()) {
+                Toast.makeText(context, context.getString(R.string.network_not_good), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
-  }
 
 }

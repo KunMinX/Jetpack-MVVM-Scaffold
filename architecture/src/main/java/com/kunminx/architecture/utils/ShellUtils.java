@@ -84,8 +84,8 @@ public final class ShellUtils {
                                         final boolean isRooted,
                                         final boolean isNeedResultMsg) {
         return execCmd(commands == null ? null : commands.toArray(new String[]{}),
-                isRooted,
-                isNeedResultMsg);
+            isRooted,
+            isNeedResultMsg);
     }
 
     /**
@@ -127,10 +127,10 @@ public final class ShellUtils {
                 successMsg = new StringBuilder();
                 errorMsg = new StringBuilder();
                 successResult = new BufferedReader(
-                        new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8)
+                    new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8)
                 );
                 errorResult = new BufferedReader(
-                        new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8)
+                    new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8)
                 );
                 String line;
                 if ((line = successResult.readLine()) != null) {
@@ -175,9 +175,9 @@ public final class ShellUtils {
             }
         }
         return new CommandResult(
-                result,
-                successMsg == null ? "" : successMsg.toString(),
-                errorMsg == null ? "" : errorMsg.toString()
+            result,
+            successMsg == null ? "" : successMsg.toString(),
+            errorMsg == null ? "" : errorMsg.toString()
         );
     }
 
@@ -199,8 +199,8 @@ public final class ShellUtils {
         @NonNull
         public String toString() {
             return "result: " + result + "\n" +
-                    "successMsg: " + successMsg + "\n" +
-                    "errorMsg: " + errorMsg;
+                "successMsg: " + successMsg + "\n" +
+                "errorMsg: " + errorMsg;
         }
     }
 }

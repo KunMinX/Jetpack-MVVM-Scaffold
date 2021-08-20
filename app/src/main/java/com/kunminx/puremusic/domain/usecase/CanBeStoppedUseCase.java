@@ -40,44 +40,44 @@ import com.kunminx.puremusic.data.repository.DataRepository;
  * Create by KunMinX at 19/11/25
  */
 public class CanBeStoppedUseCase extends UseCase<CanBeStoppedUseCase.RequestValues,
-        CanBeStoppedUseCase.ResponseValue> implements DefaultLifecycleObserver {
+    CanBeStoppedUseCase.ResponseValue> implements DefaultLifecycleObserver {
 
-  private DownloadFile mDownloadFile = new DownloadFile();
+    private DownloadFile mDownloadFile = new DownloadFile();
 
-  @Override
-  public void onStop(@NonNull LifecycleOwner owner) {
-    if (getRequestValues() != null) {
-      mDownloadFile.setForgive(true);
-      mDownloadFile.setProgress(0);
-      mDownloadFile.setFile(null);
-      getUseCaseCallback().onError();
-    }
-  }
-
-  @Override
-  protected void executeUseCase(RequestValues requestValues) {
-
-    //访问数据层资源，在 UseCase 中处理带叫停性质的业务
-
-    DataRepository.getInstance().downloadFile(mDownloadFile, dataResult -> {
-      getUseCaseCallback().onSuccess(new ResponseValue(dataResult));
-    });
-  }
-
-  public static final class RequestValues implements UseCase.RequestValues {
-
-  }
-
-  public static final class ResponseValue implements UseCase.ResponseValue {
-
-    private DataResult<DownloadFile> mDataResult;
-
-    public ResponseValue(DataResult<DownloadFile> dataResult) {
-      mDataResult = dataResult;
+    @Override
+    public void onStop(@NonNull LifecycleOwner owner) {
+        if (getRequestValues() != null) {
+            mDownloadFile.setForgive(true);
+            mDownloadFile.setProgress(0);
+            mDownloadFile.setFile(null);
+            getUseCaseCallback().onError();
+        }
     }
 
-    public DataResult<DownloadFile> getDataResult() {
-      return mDataResult;
+    @Override
+    protected void executeUseCase(RequestValues requestValues) {
+
+        //访问数据层资源，在 UseCase 中处理带叫停性质的业务
+
+        DataRepository.getInstance().downloadFile(mDownloadFile, dataResult -> {
+            getUseCaseCallback().onSuccess(new ResponseValue(dataResult));
+        });
     }
-  }
+
+    public static final class RequestValues implements UseCase.RequestValues {
+
+    }
+
+    public static final class ResponseValue implements UseCase.ResponseValue {
+
+        private DataResult<DownloadFile> mDataResult;
+
+        public ResponseValue(DataResult<DownloadFile> dataResult) {
+            mDataResult = dataResult;
+        }
+
+        public DataResult<DownloadFile> getDataResult() {
+            return mDataResult;
+        }
+    }
 }
