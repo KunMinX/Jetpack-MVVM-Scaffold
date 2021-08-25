@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.ui.helper;
+package com.kunminx.puremusic.domain.message;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
@@ -42,14 +42,14 @@ import java.util.List;
  * <p>
  * Create by KunMinX at 19/11/3
  */
-public class DrawerCoordinateHelper implements DefaultLifecycleObserver {
+public class DrawerCoordinateManager implements DefaultLifecycleObserver {
 
-    private static final DrawerCoordinateHelper S_HELPER = new DrawerCoordinateHelper();
+    private static final DrawerCoordinateManager S_HELPER = new DrawerCoordinateManager();
 
-    private DrawerCoordinateHelper() {
+    private DrawerCoordinateManager() {
     }
 
-    public static DrawerCoordinateHelper getInstance() {
+    public static DrawerCoordinateManager getInstance() {
         return S_HELPER;
     }
 
