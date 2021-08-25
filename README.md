@@ -31,7 +31,7 @@
 
 该项目主要包含 表现层、领域层、数据层 三层：
 
-![](https://images.xiaozhuanlan.com/photo/2021/1fc3f3cefb1d8e6755dea55ac828874d.png)
+![](https://images.xiaozhuanlan.com/photo/2021/7e6ef95879f2b727b89e6467bdd5ad32.png)
 
 脚手架项目有 3 宝。考虑到 “按需” 选用的原则，现已抽取为 “依赖库” 独立维护。
 
