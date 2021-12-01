@@ -16,6 +16,7 @@
 
 package com.kunminx.puremusic;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,11 +24,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.kunminx.architecture.ui.page.BaseActivity;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
-import com.kunminx.puremusic.domain.message.SharedViewModel;
 import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
+import com.kunminx.puremusic.domain.message.SharedViewModel;
 import com.kunminx.puremusic.ui.state.MainActivityViewModel;
+
+import java.util.List;
 
 /**
  * Create by KunMinX at 19/10/16
@@ -64,6 +70,28 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //TODO tip：Android 12 部分权限的处理
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            XXPermissions.with(this)
+                .permission(Permission.READ_PHONE_STATE)
+                .request(new OnPermissionCallback() {
+                    @Override
+                    public void onGranted(List<String> permissions, boolean all) {
+                        init();
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissions, boolean never) {
+                        finish();
+                    }
+                });
+        } else {
+            init();
+        }
+    }
+
+    private void init() {
         mEvent.isToCloseActivityIfAllowed().observe(this, aBoolean -> {
             NavController nav = Navigation.findNavController(this, R.id.main_fragment_host);
             if (nav.getCurrentDestination() != null && nav.getCurrentDestination().getId() != R.id.mainFragment) {
