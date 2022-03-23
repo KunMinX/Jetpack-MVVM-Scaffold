@@ -4,7 +4,7 @@ buildscript {
         appMinSdk = 23
         appVersionCode = 30204
         appVersionName = "3.2.4"
-        lifecycleVersion = "2.4.0"
+        lifecycleVersion = "2.4.1"
         navigationVersion = "2.3.5"
         retrofitVersion = "2.9.0"
         okHttpVersion = "4.9.3"
@@ -20,7 +20,7 @@ buildscript {
         //maven { url "https://maven.aliyun.com/repository/public" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.android.tools.build:gradle:7.0.4'
     }
 }
 
