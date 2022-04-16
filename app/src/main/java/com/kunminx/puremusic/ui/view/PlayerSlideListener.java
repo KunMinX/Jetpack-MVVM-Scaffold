@@ -25,6 +25,7 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
@@ -91,6 +92,9 @@ public class PlayerSlideListener implements SlidingUpPanelLayout.PanelSlideListe
 
     @Override
     public void onPanelSlide(View panel, float slideOffset) {
+
+        calculateTitleAndArtist();
+
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mBinding.albumArt.getLayoutParams();
 
         //animate albumImage
@@ -105,7 +109,7 @@ public class PlayerSlideListener implements SlidingUpPanelLayout.PanelSlideListe
         mBinding.artist.setTranslationY(floatEvaluator.evaluate(slideOffset, 0, artistNormalEndTranslationY));
         mBinding.summary.setTranslationY(floatEvaluator.evaluate(slideOffset, 0, contentNormalEndTranslationY));
 
-        //aniamte icons
+        //animate icons
         mBinding.playPause.setX(intEvaluator.evaluate(slideOffset, playPauseStartX, playPauseEndX));
         mBinding.playPause.setCircleAlpha(intEvaluator.evaluate(slideOffset, 0, 255));
         mBinding.playPause.setDrawableColor((int) colorEvaluator.evaluate(slideOffset, playPauseDrawableColor, nowPlayingCardColor));
@@ -167,22 +171,13 @@ public class PlayerSlideListener implements SlidingUpPanelLayout.PanelSlideListe
 
     }
 
-    private void calculateTitleAndArtist() {
-        Rect titleBounds = new Rect();
-        mBinding.title.getPaint().getTextBounds(mBinding.title.getText().toString(), 0,
-            mBinding.title.getText().length(), titleBounds);
-        int titleWidth = titleBounds.width();
-
-        Rect artistBounds = new Rect();
-        mBinding.artist.getPaint().getTextBounds(mBinding.artist.getText().toString(), 0,
-            mBinding.artist.getText().length(), artistBounds);
-        int artistWidth = artistBounds.width();
+    public void calculateTitleAndArtist() {
+        int titleWidth = getTextWidth(mBinding.title);
+        int artistWidth = getTextWidth(mBinding.artist);
 
         titleEndTranslationX = (screenWidth / 2) - (titleWidth / 2) - DisplayUtils.dp2px(67);
-
         artistEndTranslationX = (screenWidth / 2) - (artistWidth / 2) - DisplayUtils.dp2px(67);
         artistNormalEndTranslationY = DisplayUtils.dp2px(12);
-
         contentNormalEndTranslationY = screenWidth + DisplayUtils.dp2px(32);
 
         if (mStatus == Status.COLLAPSED) {
@@ -232,6 +227,13 @@ public class PlayerSlideListener implements SlidingUpPanelLayout.PanelSlideListe
             });
             mBinding.customToolbar.startAnimation(animation);
         });
+    }
+
+    private int getTextWidth(TextView textView) {
+        Rect artistBounds = new Rect();
+        textView.getPaint().getTextBounds(textView.getText().toString(), 0,
+            textView.getText().length(), artistBounds);
+        return artistBounds.width();
     }
 
 }
