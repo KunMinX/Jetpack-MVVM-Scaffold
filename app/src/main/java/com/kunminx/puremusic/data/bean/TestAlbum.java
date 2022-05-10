@@ -22,6 +22,10 @@ import com.kunminx.player.bean.base.BaseMusicItem;
 
 /**
  * Create by KunMinX at 19/10/31
+ * <p>
+ * bean，原始数据，只读
+ * Java 我们通过移除 setter
+ * kotlin 直接将字段设为 val 即可
  */
 public class TestAlbum extends BaseAlbumItem<TestAlbum.TestMusic, TestAlbum.TestArtist> {
 
@@ -31,20 +35,12 @@ public class TestAlbum extends BaseAlbumItem<TestAlbum.TestMusic, TestAlbum.Test
         return albumMid;
     }
 
-    public void setAlbumMid(String albumMid) {
-        this.albumMid = albumMid;
-    }
-
     public static class TestMusic extends BaseMusicItem<TestArtist> {
 
         private String songMid;
 
         public String getSongMid() {
             return songMid;
-        }
-
-        public void setSongMid(String songMid) {
-            this.songMid = songMid;
         }
     }
 
@@ -54,10 +50,6 @@ public class TestAlbum extends BaseAlbumItem<TestAlbum.TestMusic, TestAlbum.Test
 
         public String getBirthday() {
             return birthday;
-        }
-
-        public void setBirthday(String birthday) {
-            this.birthday = birthday;
         }
     }
 }
