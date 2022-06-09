@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity {
             if (nav.getCurrentDestination() != null && nav.getCurrentDestination().getId() != R.id.mainFragment) {
                 nav.navigateUp();
 
-            } else if (mStates.isDrawerOpened.get()) {
+            } else if (Boolean.TRUE.equals(mStates.isDrawerOpened.get())) {
 
                 //TODO 同 tip 3
 
