@@ -23,6 +23,7 @@ import androidx.lifecycle.LiveData;
 
 import com.danikula.videocache.HttpProxyCacheServer;
 import com.kunminx.player.PlayerController;
+import com.kunminx.player.PlayingInfoManager;
 import com.kunminx.player.bean.dto.ChangeMusic;
 import com.kunminx.player.bean.dto.PlayingMusic;
 import com.kunminx.player.contract.ICacheProxy;
@@ -38,11 +39,11 @@ import java.util.List;
 /**
  * Create by KunMinX at 19/10/31
  */
-public class PlayerManager implements IPlayController<TestAlbum, TestAlbum.TestMusic> {
+public class PlayerManager implements IPlayController<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist> {
 
     private static final PlayerManager sManager = new PlayerManager();
 
-    private final PlayerController<TestAlbum, TestAlbum.TestMusic> mController;
+    private final PlayerController<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist> mController;
 
     private PlayerManager() {
         mController = new PlayerController<>();
@@ -187,25 +188,25 @@ public class PlayerManager implements IPlayController<TestAlbum, TestAlbum.TestM
         return mController.getAlbumIndex();
     }
 
-    public LiveData<ChangeMusic> getChangeMusicEvent() {
-        return mController.getChangeMusicEvent();
+    public LiveData<ChangeMusic<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist>> getChangeMusicResult() {
+        return mController.getChangeMusicResult();
     }
 
-    public LiveData<PlayingMusic> getPlayingMusicEvent() {
-        return mController.getPlayingMusicEvent();
+    public LiveData<PlayingMusic<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist>> getPlayingMusicResult() {
+        return mController.getPlayingMusicResult();
     }
 
-    public LiveData<Boolean> getPauseEvent() {
-        return mController.getPauseEvent();
-    }
-
-    @Override
-    public LiveData<Enum> getPlayModeEvent() {
-        return mController.getPlayModeEvent();
+    public LiveData<Boolean> getPauseResult() {
+        return mController.getPauseResult();
     }
 
     @Override
-    public Enum getRepeatMode() {
+    public LiveData<Enum<PlayingInfoManager.RepeatMode>> getPlayModeResult() {
+        return mController.getPlayModeResult();
+    }
+
+    @Override
+    public Enum<PlayingInfoManager.RepeatMode> getRepeatMode() {
         return mController.getRepeatMode();
     }
 

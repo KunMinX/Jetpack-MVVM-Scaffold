@@ -16,6 +16,7 @@
 
 package com.kunminx.puremusic.ui.page;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,6 +35,7 @@ import com.kunminx.puremusic.domain.request.MusicRequester;
 import com.kunminx.puremusic.player.PlayerManager;
 import com.kunminx.puremusic.ui.page.adapter.PlaylistAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,6 +82,7 @@ public class MainFragment extends BaseFragment {
             .addBindingParam(BR.adapter, mAdapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -89,7 +92,7 @@ public class MainFragment extends BaseFragment {
 
         // 如这么说无体会，详见 https://xiaozhuanlan.com/topic/0168753249
 
-        PlayerManager.getInstance().getChangeMusicEvent().observe(getViewLifecycleOwner(), changeMusic -> {
+        PlayerManager.getInstance().getChangeMusicResult().observe(getViewLifecycleOwner(), changeMusic -> {
             mAdapter.notifyDataSetChanged();
         });
 
@@ -100,7 +103,7 @@ public class MainFragment extends BaseFragment {
         // 也即，在 fragment 场景下，请使用 getViewLifeCycleOwner 作为 liveData 观察者。
         // Activity 则不用改变。
 
-        mMusicRequester.getFreeMusicsEvent().observe(getViewLifecycleOwner(), dataResult -> {
+        mMusicRequester.getFreeMusicsResult().observe(getViewLifecycleOwner(), dataResult -> {
             if (!dataResult.getResponseStatus().isSuccess()) return;
 
             TestAlbum musicAlbum = dataResult.getResult();
@@ -174,7 +177,7 @@ public class MainFragment extends BaseFragment {
 
         public final State<String> pageAssetPath = new State<>("summary.html");
 
-        public final State<List<TestAlbum.TestMusic>> list = new State<>();
+        public final State<List<TestAlbum.TestMusic>> list = new State<>(new ArrayList<>());
 
     }
 

@@ -31,7 +31,7 @@
 
 该项目包含 表现层、领域层、数据层 三层：
 
-![](https://images.xiaozhuanlan.com/photo/2022/bf560a27a1f22d35cbb8c3ea40f5ed59.png)
+![](https://images.xiaozhuanlan.com/photo/2022/33a9028660b35e8d9d7839f36e2edb7a.png)
 
 脚手架项目有 3 宝。考虑到 “按需” 选用原则，现已抽取为 “依赖库” 独立维护。
 
@@ -39,7 +39,7 @@
 
 > [GitHub：Strict-DataBinding](https://github.com/KunMinX/Strict-DataBinding)
 
-- 福利 2：UnPeekLiveData 发送一次性事件
+- 福利 2：UnPeekLiveData 回推一次性消息
 
 > [GitHub：UnPeek-LiveData](https://github.com/KunMinX/UnPeek-LiveData)
 
