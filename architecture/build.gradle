@@ -44,7 +44,7 @@ dependencies {
     api 'com.kunminx.arch:unpeek-livedata:7.6.0'
     api 'com.kunminx.arch:smooth-navigation:4.0.0-beta1'
     api 'com.kunminx.arch:strict-databinding:5.1.0-beta1'
-
+    api 'com.kunminx.arch:mvi-dispatch:4.2.0-beta'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
 
 }

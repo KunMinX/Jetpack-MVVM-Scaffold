@@ -30,6 +30,7 @@ import com.kunminx.architecture.ui.page.State;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.data.bean.TestAlbum;
+import com.kunminx.puremusic.domain.message.Messages;
 import com.kunminx.puremusic.domain.message.PageMessenger;
 import com.kunminx.puremusic.domain.request.MusicRequester;
 import com.kunminx.puremusic.player.PlayerManager;
@@ -71,7 +72,7 @@ public class MainFragment extends BaseFragment {
 
         //TODO tip 2: DataBinding 严格模式：
         // 将 DataBinding 实例限制于 base 页面中，默认不向子类暴露，
-        // 通过这样方式，彻底解决 View 实例 Null 安全一致性问题，
+        // 通过这方式，彻底解决 View 实例 Null 安全一致性问题，
         // 如此，View 实例 Null 安全性将和基于函数式编程思想的 Jetpack Compose 持平。
         // 而 DataBindingConfig 就是在这样背景下，用于为 base 页面 DataBinding 提供绑定项。
 
@@ -148,7 +149,7 @@ public class MainFragment extends BaseFragment {
             // Activity 内部事情在 Activity 内部消化，不要试图在 fragment 中调用和操纵 Activity 内部东西。
             // 因为 Activity 端的处理后续可能会改变，且可受用于更多 fragment，而不单单是本 fragment。
 
-            mMessenger.requestToOpenOrCloseDrawer(true);
+            mMessenger.input(new Messages(Messages.EVENT_OPEN_DRAWER));
         }
 
         public void login() {
