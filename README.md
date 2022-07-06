@@ -47,6 +47,10 @@
 
 > [GitHub：Smooth-Navigation](https://github.com/KunMinX/Smooth-Navigation)
 
+- 福利 4：MVI-Dispatcher 自动消除 mutable 样板代码 + 支持 LiveData 连发 + 规避 setValue 滥用
+
+> [GitHub：MVI-Dispatcher](https://github.com/KunMinX/MVI-Dispatcher)
+
 - 通过 Request 来复用转发逻辑
 
 - 通过 UseCase 管理可叫停业务
