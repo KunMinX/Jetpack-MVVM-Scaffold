@@ -36,7 +36,7 @@ import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.databinding.FragmentPlayerBinding;
 import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
-import com.kunminx.puremusic.domain.message.Messages;
+import com.kunminx.puremusic.domain.event.Messages;
 import com.kunminx.puremusic.domain.message.PageMessenger;
 import com.kunminx.puremusic.player.PlayerManager;
 import com.kunminx.puremusic.ui.page.helper.DefaultInterface;
@@ -85,6 +85,10 @@ public class PlayerFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //TODO tip 8: 此处演示使用 "唯一可信源" MVI-Dispatcher input-output 接口完成消息收发
+
+        //如这么说无体会，详见《领域层设计》篇拆解 https://juejin.cn/post/7117498113983512589
 
         mMessenger.output(this, messages -> {
             switch (messages.eventId) {
@@ -213,6 +217,10 @@ public class PlayerFragment extends BaseFragment {
         public void showPlayList() {
             ToastUtils.showShortToast(getApplicationContext(), getString(R.string.unfinished));
         }
+
+        //TODO tip 8: 此处演示使用 "唯一可信源" MVI-Dispatcher input-output 接口完成消息收发
+
+        //如这么说无体会，详见《领域层设计》篇拆解 https://juejin.cn/post/7117498113983512589
 
         public void slideDown() {
             mMessenger.input(new Messages(Messages.EVENT_CLOSE_SLIDE_PANEL_IF_EXPANDED));

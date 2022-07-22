@@ -28,6 +28,8 @@ import com.kunminx.architecture.ui.page.DataBindingConfig;
 import com.kunminx.architecture.ui.page.State;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
+import com.kunminx.puremusic.data.bean.DownloadState;
+import com.kunminx.puremusic.domain.event.DownloadEvent;
 import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
 import com.kunminx.puremusic.domain.request.DownloadRequester;
 
@@ -75,26 +77,32 @@ public class SearchFragment extends BaseFragment {
         getLifecycle().addObserver(DrawerCoordinateManager.getInstance());
 
         //TODO tip 3：绑定跟随视图控制器生命周期、可叫停、单独放在 UseCase 中处理的业务
-        getLifecycle().addObserver(mDownloadRequester.getCanBeStoppedUseCase());
+        getLifecycle().addObserver(mDownloadRequester);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mGlobalDownloadRequester.getDownloadFileResult()
-            .observe(getViewLifecycleOwner(), dataResult -> {
-                if (dataResult.getResponseStatus().isSuccess()) {
-                    mStates.progress.set(dataResult.getResult().progress);
-                }
-            });
+        //TODO tip 8: 此处演示使用 "唯一可信源" MVI-Dispatcher input-output 接口完成数据请求响应
 
-        mDownloadRequester.getDownloadFileCanBeStoppedResult()
-            .observe(getViewLifecycleOwner(), dataResult -> {
-                if (dataResult.getResponseStatus().isSuccess()) {
-                    mStates.progress_cancelable.set(dataResult.getResult().progress);
-                }
-            });
+        //如这么说无体会，详见《领域层设计》篇拆解 https://juejin.cn/post/7117498113983512589
+
+        mDownloadRequester.output(this, downloadEvent -> {
+            if (downloadEvent.eventId == DownloadEvent.EVENT_DOWNLOAD) {
+                DownloadState state = downloadEvent.result.downloadState;
+                mStates.progress_cancelable.set(state.progress);
+                mStates.enableDownload.set(state.progress == 100 || state.progress == 0);
+            }
+        });
+
+        mGlobalDownloadRequester.output(this, downloadEvent -> {
+            if (downloadEvent.eventId == DownloadEvent.EVENT_DOWNLOAD_GLOBAL) {
+                DownloadState state = downloadEvent.result.downloadState;
+                mStates.progress.set(state.progress);
+                mStates.enableGlobalDownload.set(state.progress == 100 || state.progress == 0);
+            }
+        });
     }
 
     // TODO tip 4：此处通过 DataBinding 规避 setOnClickListener 时存在的 View 实例 Null 安全一致性问题，
@@ -116,14 +124,18 @@ public class SearchFragment extends BaseFragment {
             openUrlInBrowser(getString(R.string.article_navigation));
         }
 
+        //TODO tip 8: 此处演示使用 "唯一可信源" MVI-Dispatcher input-output 接口完成数据请求响应
+
+        //如这么说无体会，详见《领域层设计》篇拆解 https://juejin.cn/post/7117498113983512589
+
         public void testDownload() {
-            mGlobalDownloadRequester.requestDownloadFile();
+            mGlobalDownloadRequester.input(new DownloadEvent(DownloadEvent.EVENT_DOWNLOAD_GLOBAL));
         }
 
         //TODO tip 5: 在 UseCase 中 执行可跟随生命周期中止的下载任务
 
         public void testLifecycleDownload() {
-            mDownloadRequester.requestCanBeStoppedDownloadFile();
+            mDownloadRequester.input(new DownloadEvent(DownloadEvent.EVENT_DOWNLOAD));
         }
     }
 
@@ -143,5 +155,8 @@ public class SearchFragment extends BaseFragment {
 
         public final State<Integer> progress_cancelable = new State<>(0);
 
+        public final State<Boolean> enableDownload = new State<>(true);
+
+        public final State<Boolean> enableGlobalDownload = new State<>(true);
     }
 }

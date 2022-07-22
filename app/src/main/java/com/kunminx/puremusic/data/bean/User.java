@@ -24,12 +24,8 @@ package com.kunminx.puremusic.data.bean;
  * kotlin 直接将字段设为 val 即可
  */
 public class User {
-
-    private String name;
-    private String password;
-
-    public User() {
-    }
+    public final String name;
+    public final String password;
 
     public User(String name, String password) {
         this.name = name;
