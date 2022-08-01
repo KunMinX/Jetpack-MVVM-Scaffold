@@ -18,6 +18,7 @@ package com.kunminx.puremusic.ui.page;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 
@@ -35,8 +36,8 @@ import com.kunminx.player.PlayingInfoManager;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.databinding.FragmentPlayerBinding;
-import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
 import com.kunminx.puremusic.domain.event.Messages;
+import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
 import com.kunminx.puremusic.domain.message.PageMessenger;
 import com.kunminx.puremusic.player.PlayerManager;
 import com.kunminx.puremusic.ui.page.helper.DefaultInterface;
@@ -44,6 +45,8 @@ import com.kunminx.puremusic.ui.view.PlayerSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
+
+import java.util.Objects;
 
 /**
  * Create by KunMinX at 19/10/29
@@ -57,12 +60,14 @@ public class PlayerFragment extends BaseFragment {
     // 如这么说无体会，详见 https://xiaozhuanlan.com/topic/8204519736
 
     private PlayerViewModel mStates;
+    private PlayerSlideListener.SlideAnimatorStates mAnimatorStates;
     private PageMessenger mMessenger;
     private PlayerSlideListener mListener;
 
     @Override
     protected void initViewModel() {
         mStates = getFragmentScopeViewModel(PlayerViewModel.class);
+        mAnimatorStates = getFragmentScopeViewModel(PlayerSlideListener.SlideAnimatorStates.class);
         mMessenger = getApplicationScopeViewModel(PageMessenger.class);
     }
 
@@ -78,6 +83,7 @@ public class PlayerFragment extends BaseFragment {
         // 如这么说无体会，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
 
         return new DataBindingConfig(R.layout.fragment_player, BR.vm, mStates)
+            .addBindingParam(BR.panelVm, mAnimatorStates)
             .addBindingParam(BR.click, new ClickProxy())
             .addBindingParam(BR.listener, new ListenerHandler());
     }
@@ -95,7 +101,14 @@ public class PlayerFragment extends BaseFragment {
                 case Messages.EVENT_ADD_SLIDE_LISTENER:
                     if (view.getParent().getParent() instanceof SlidingUpPanelLayout) {
                         SlidingUpPanelLayout sliding = (SlidingUpPanelLayout) view.getParent().getParent();
-                        sliding.addPanelSlideListener(mListener = new PlayerSlideListener((FragmentPlayerBinding) getBinding(), sliding));
+
+                        //TODO tip 9: 警惕使用。非必要情况下，尽可能不在子类中拿到 binding 实例乃至获取 view 实例。使用即埋下隐患。
+                        // 目前方案是于 debug 模式，对获取实例情况给予提示。
+
+                        // 如这么说无体会，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
+
+                        mListener = new PlayerSlideListener((FragmentPlayerBinding) getBinding(), mAnimatorStates, sliding);
+                        sliding.addPanelSlideListener(mListener);
                         sliding.addPanelSlideListener(new DefaultInterface.PanelSlideListener() {
                             @Override
                             public void onPanelStateChanged(
@@ -256,13 +269,13 @@ public class PlayerFragment extends BaseFragment {
 
         public final State<String> coverImg = new State<>("");
 
-        public final State<Drawable> placeHolder = new State<>(ContextCompat.getDrawable(Utils.getApp(), R.drawable.bg_album_default));
+        public final State<Drawable> placeHolder = new State<>(Objects.requireNonNull(ContextCompat.getDrawable(Utils.getApp(), R.drawable.bg_album_default)));
 
         public final State<Integer> maxSeekDuration = new State<>(0);
 
         public final State<Integer> currentSeekPosition = new State<>(0);
 
-        public final State<Boolean> isPlaying = new State<>(false, false);
+        public final State<Boolean> isPlaying = new State<>(false, true);
 
         public final State<MaterialDrawableBuilder.IconValue> playModeIcon = new State<>(MaterialDrawableBuilder.IconValue.REPEAT);
 
