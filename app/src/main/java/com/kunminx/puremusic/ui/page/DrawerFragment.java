@@ -21,11 +21,10 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
-import com.kunminx.architecture.ui.page.StateCache;
+import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
@@ -72,7 +71,7 @@ public class DrawerFragment extends BaseFragment {
     }
   }
 
-  public static class DrawerStates extends StateCache {
+  public static class DrawerStates extends StateHolder {
     public final State<List<LibraryInfo>> list = new State<>(new ArrayList<>());
   }
 }

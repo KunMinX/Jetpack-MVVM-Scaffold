@@ -24,11 +24,10 @@ import android.widget.SeekBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
-import com.kunminx.architecture.ui.page.StateCache;
+import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.architecture.utils.ToastUtils;
 import com.kunminx.architecture.utils.Utils;
@@ -187,7 +186,7 @@ public class PlayerFragment extends BaseFragment {
     }
   }
 
-  public static class PlayerStates extends StateCache {
+  public static class PlayerStates extends StateHolder {
     public final State<String> title = new State<>(Utils.getApp().getString(R.string.app_name));
     public final State<String> artist = new State<>(Utils.getApp().getString(R.string.app_name));
     public final State<String> coverImg = new State<>("");

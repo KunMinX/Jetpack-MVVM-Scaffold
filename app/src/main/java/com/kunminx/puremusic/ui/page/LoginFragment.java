@@ -22,11 +22,10 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
-import com.kunminx.architecture.ui.page.StateCache;
+import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.architecture.utils.SPUtils;
 import com.kunminx.architecture.utils.ToastUtils;
@@ -98,7 +97,7 @@ public class LoginFragment extends BaseFragment {
     }
   }
 
-  public static class LoginStates extends StateCache {
+  public static class LoginStates extends StateHolder {
     public final State<String> name = new State<>("");
     public final State<String> password = new State<>("");
     public final State<Boolean> loadingVisible = new State<>(false);

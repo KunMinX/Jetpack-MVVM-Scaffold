@@ -20,13 +20,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.kunminx.architecture.ui.page.BaseActivity;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
-import com.kunminx.architecture.ui.page.StateCache;
+import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.puremusic.domain.event.Messages;
 import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
@@ -108,7 +107,7 @@ public class MainActivity extends BaseActivity {
     }
   }
 
-  public static class MainActivityStates extends StateCache {
+  public static class MainActivityStates extends StateHolder {
     public final State<Boolean> isDrawerOpened = new State<>(false);
     public final State<Boolean> openDrawer = new State<>(false);
     public final State<Boolean> allowDrawerOpen = new State<>(true);
