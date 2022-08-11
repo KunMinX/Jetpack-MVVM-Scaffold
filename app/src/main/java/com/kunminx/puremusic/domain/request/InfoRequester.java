@@ -39,6 +39,7 @@ public class InfoRequester extends ViewModel {
   }
 
   public void requestLibraryInfo() {
-    DataRepository.getInstance().getLibraryInfo(mLibraryResult::setValue);
+    if (mLibraryResult.getValue() == null)
+      DataRepository.getInstance().getLibraryInfo(mLibraryResult::setValue);
   }
 }

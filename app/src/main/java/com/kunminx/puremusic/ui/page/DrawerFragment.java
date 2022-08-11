@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
+import com.kunminx.architecture.ui.page.StateCache;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
@@ -60,14 +61,9 @@ public class DrawerFragment extends BaseFragment {
     super.onViewCreated(view, savedInstanceState);
     mInfoRequester.getLibraryResult().observe(getViewLifecycleOwner(), dataResult -> {
       if (!dataResult.getResponseStatus().isSuccess()) return;
-
-      if (dataResult.getResult() != null) {
-        mStates.list.set(dataResult.getResult());
-      }
+      if (dataResult.getResult() != null) mStates.list.set(dataResult.getResult());
     });
-    if (mInfoRequester.getLibraryResult().getValue() == null) {
-      mInfoRequester.requestLibraryInfo();
-    }
+    mInfoRequester.requestLibraryInfo();
   }
 
   public class ClickProxy {
@@ -76,7 +72,7 @@ public class DrawerFragment extends BaseFragment {
     }
   }
 
-  public static class DrawerStates extends ViewModel {
+  public static class DrawerStates extends StateCache {
     public final State<List<LibraryInfo>> list = new State<>(new ArrayList<>());
   }
 }

@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
+import com.kunminx.architecture.ui.page.StateCache;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
@@ -111,7 +112,7 @@ public class MainFragment extends BaseFragment {
     }
   }
 
-  public static class MainStates extends ViewModel {
+  public static class MainStates extends StateCache {
     public final State<Boolean> initTabAndPage = new State<>(true);
     public final State<String> pageAssetPath = new State<>("summary.html");
     public final State<List<TestAlbum.TestMusic>> list = new State<>(new ArrayList<>());

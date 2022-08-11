@@ -26,6 +26,7 @@ import androidx.navigation.Navigation;
 
 import com.kunminx.architecture.ui.page.BaseActivity;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
+import com.kunminx.architecture.ui.page.StateCache;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.puremusic.domain.event.Messages;
 import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
@@ -55,10 +56,6 @@ public class MainActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    init();
-  }
-
-  private void init() {
     mMessenger.output(this, messages -> {
       switch (messages.eventId) {
         case Messages.EVENT_CLOSE_ACTIVITY_IF_ALLOWED:
@@ -111,7 +108,7 @@ public class MainActivity extends BaseActivity {
     }
   }
 
-  public static class MainActivityStates extends ViewModel {
+  public static class MainActivityStates extends StateCache {
     public final State<Boolean> isDrawerOpened = new State<>(false);
     public final State<Boolean> openDrawer = new State<>(false);
     public final State<Boolean> allowDrawerOpen = new State<>(true);

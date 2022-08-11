@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
+import com.kunminx.architecture.ui.page.StateCache;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.architecture.utils.SPUtils;
 import com.kunminx.architecture.utils.ToastUtils;
@@ -97,7 +98,7 @@ public class LoginFragment extends BaseFragment {
     }
   }
 
-  public static class LoginStates extends ViewModel {
+  public static class LoginStates extends StateCache {
     public final State<String> name = new State<>("");
     public final State<String> password = new State<>("");
     public final State<Boolean> loadingVisible = new State<>(false);
