@@ -31,7 +31,6 @@ import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.architecture.utils.ToastUtils;
 import com.kunminx.architecture.utils.Utils;
-import com.kunminx.player.PlayingInfoManager;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.databinding.FragmentPlayerBinding;
@@ -126,18 +125,8 @@ public class PlayerFragment extends BaseFragment {
     });
 
     PlayerManager.getInstance().getPlayModeResult().observe(getViewLifecycleOwner(), anEnum -> {
-      mStates.playModeIcon.set(getModeIcon((PlayingInfoManager.RepeatMode) anEnum));
+      mStates.playModeIcon.set(PlayerManager.getInstance().getModeIcon(anEnum));
     });
-  }
-
-  private static MaterialDrawableBuilder.IconValue getModeIcon(PlayingInfoManager.RepeatMode mode) {
-    if (mode == PlayingInfoManager.RepeatMode.LIST_CYCLE) {
-      return MaterialDrawableBuilder.IconValue.REPEAT;
-    } else if (mode == PlayingInfoManager.RepeatMode.SINGLE_CYCLE) {
-      return MaterialDrawableBuilder.IconValue.REPEAT_ONCE;
-    } else {
-      return MaterialDrawableBuilder.IconValue.SHUFFLE;
-    }
   }
 
   public class ClickProxy {
@@ -184,6 +173,6 @@ public class PlayerFragment extends BaseFragment {
     public final State<Integer> maxSeekDuration = new State<>(0);
     public final State<Integer> currentSeekPosition = new State<>(0);
     public final State<Boolean> isPlaying = new State<>(false, true);
-    public final State<MaterialDrawableBuilder.IconValue> playModeIcon = new State<>(getModeIcon((PlayingInfoManager.RepeatMode) PlayerManager.getInstance().getRepeatMode()));
+    public final State<MaterialDrawableBuilder.IconValue> playModeIcon = new State<>(PlayerManager.getInstance().getModeIcon());
   }
 }
