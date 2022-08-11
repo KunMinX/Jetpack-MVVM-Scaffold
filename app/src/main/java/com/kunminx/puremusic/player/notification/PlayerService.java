@@ -50,157 +50,157 @@ import java.io.File;
  */
 public class PlayerService extends Service {
 
-    public static final String NOTIFY_PREVIOUS = "pure_music.kunminx.previous";
-    public static final String NOTIFY_CLOSE = "pure_music.kunminx.close";
-    public static final String NOTIFY_PAUSE = "pure_music.kunminx.pause";
-    public static final String NOTIFY_PLAY = "pure_music.kunminx.play";
-    public static final String NOTIFY_NEXT = "pure_music.kunminx.next";
-    private static final String GROUP_ID = "group_001";
-    private static final String CHANNEL_ID = "channel_001";
-    private DownloadUseCase mDownloadUseCase;
+  public static final String NOTIFY_PREVIOUS = "pure_music.kunminx.previous";
+  public static final String NOTIFY_CLOSE = "pure_music.kunminx.close";
+  public static final String NOTIFY_PAUSE = "pure_music.kunminx.pause";
+  public static final String NOTIFY_PLAY = "pure_music.kunminx.play";
+  public static final String NOTIFY_NEXT = "pure_music.kunminx.next";
+  private static final String GROUP_ID = "group_001";
+  private static final String CHANNEL_ID = "channel_001";
+  private DownloadUseCase mDownloadUseCase;
 
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        TestAlbum.TestMusic results = PlayerManager.getInstance().getCurrentPlayingMusic();
-        if (results == null) {
-            stopSelf();
-            return START_NOT_STICKY;
-        }
-
-        createNotification(results);
-        return START_NOT_STICKY;
+  @Override
+  public int onStartCommand(Intent intent, int flags, int startId) {
+    TestAlbum.TestMusic results = PlayerManager.getInstance().getCurrentPlayingMusic();
+    if (results == null) {
+      stopSelf();
+      return START_NOT_STICKY;
     }
 
-    private void createNotification(TestAlbum.TestMusic testMusic) {
-        try {
-            String title = testMusic.getTitle();
-            TestAlbum album = PlayerManager.getInstance().getAlbum();
-            String summary = album.getSummary();
+    createNotification(results);
+    return START_NOT_STICKY;
+  }
 
-            RemoteViews simpleContentView = new RemoteViews(
-                getApplicationContext().getPackageName(), R.layout.notify_player_small);
+  private void createNotification(TestAlbum.TestMusic testMusic) {
+    try {
+      String title = testMusic.getTitle();
+      TestAlbum album = PlayerManager.getInstance().getAlbum();
+      String summary = album.getSummary();
 
-            RemoteViews expandedView;
-            expandedView = new RemoteViews(
-                getApplicationContext().getPackageName(), R.layout.notify_player_big);
+      RemoteViews simpleContentView = new RemoteViews(
+        getApplicationContext().getPackageName(), R.layout.notify_player_small);
 
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.setAction("showPlayer");
+      RemoteViews expandedView;
+      expandedView = new RemoteViews(
+        getApplicationContext().getPackageName(), R.layout.notify_player_big);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent,
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : 0);
+      Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+      intent.setAction("showPlayer");
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                NotificationManager notificationManager = (NotificationManager)
-                    getSystemService(Context.NOTIFICATION_SERVICE);
+      PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent,
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : 0);
 
-                NotificationChannelGroup playGroup = new NotificationChannelGroup(GROUP_ID, getString(R.string.play));
-                notificationManager.createNotificationChannelGroup(playGroup);
+      if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        NotificationManager notificationManager = (NotificationManager)
+          getSystemService(Context.NOTIFICATION_SERVICE);
 
-                NotificationChannel playChannel = new NotificationChannel(CHANNEL_ID,
-                    getString(R.string.notify_of_play), NotificationManager.IMPORTANCE_DEFAULT);
-                playChannel.setGroup(GROUP_ID);
-                notificationManager.createNotificationChannel(playChannel);
-            }
+        NotificationChannelGroup playGroup = new NotificationChannelGroup(GROUP_ID, getString(R.string.play));
+        notificationManager.createNotificationChannelGroup(playGroup);
 
-            Notification notification = new NotificationCompat.Builder(
-                getApplicationContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_player)
-                .setContentIntent(contentIntent)
-                .setOnlyAlertOnce(true)
-                .setContentTitle(title).build();
+        NotificationChannel playChannel = new NotificationChannel(CHANNEL_ID,
+          getString(R.string.notify_of_play), NotificationManager.IMPORTANCE_DEFAULT);
+        playChannel.setGroup(GROUP_ID);
+        notificationManager.createNotificationChannel(playChannel);
+      }
 
-            notification.contentView = simpleContentView;
-            notification.bigContentView = expandedView;
+      Notification notification = new NotificationCompat.Builder(
+        getApplicationContext(), CHANNEL_ID)
+        .setSmallIcon(R.drawable.ic_player)
+        .setContentIntent(contentIntent)
+        .setOnlyAlertOnce(true)
+        .setContentTitle(title).build();
 
-            setListeners(simpleContentView);
-            setListeners(expandedView);
+      notification.contentView = simpleContentView;
+      notification.bigContentView = expandedView;
 
-            notification.contentView.setViewVisibility(R.id.player_progress_bar, View.GONE);
-            notification.contentView.setViewVisibility(R.id.player_next, View.VISIBLE);
-            notification.contentView.setViewVisibility(R.id.player_previous, View.VISIBLE);
-            notification.bigContentView.setViewVisibility(R.id.player_next, View.VISIBLE);
-            notification.bigContentView.setViewVisibility(R.id.player_previous, View.VISIBLE);
-            notification.bigContentView.setViewVisibility(R.id.player_progress_bar, View.GONE);
+      setListeners(simpleContentView);
+      setListeners(expandedView);
 
-            boolean isPaused = PlayerManager.getInstance().isPaused();
-            notification.contentView.setViewVisibility(R.id.player_pause, isPaused ? View.GONE : View.VISIBLE);
-            notification.contentView.setViewVisibility(R.id.player_play, isPaused ? View.VISIBLE : View.GONE);
-            notification.bigContentView.setViewVisibility(R.id.player_pause, isPaused ? View.GONE : View.VISIBLE);
-            notification.bigContentView.setViewVisibility(R.id.player_play, isPaused ? View.VISIBLE : View.GONE);
+      notification.contentView.setViewVisibility(R.id.player_progress_bar, View.GONE);
+      notification.contentView.setViewVisibility(R.id.player_next, View.VISIBLE);
+      notification.contentView.setViewVisibility(R.id.player_previous, View.VISIBLE);
+      notification.bigContentView.setViewVisibility(R.id.player_next, View.VISIBLE);
+      notification.bigContentView.setViewVisibility(R.id.player_previous, View.VISIBLE);
+      notification.bigContentView.setViewVisibility(R.id.player_progress_bar, View.GONE);
 
-            notification.contentView.setTextViewText(R.id.player_song_name, title);
-            notification.contentView.setTextViewText(R.id.player_author_name, summary);
-            notification.bigContentView.setTextViewText(R.id.player_song_name, title);
-            notification.bigContentView.setTextViewText(R.id.player_author_name, summary);
-            notification.flags |= Notification.FLAG_ONGOING_EVENT;
+      boolean isPaused = PlayerManager.getInstance().isPaused();
+      notification.contentView.setViewVisibility(R.id.player_pause, isPaused ? View.GONE : View.VISIBLE);
+      notification.contentView.setViewVisibility(R.id.player_play, isPaused ? View.VISIBLE : View.GONE);
+      notification.bigContentView.setViewVisibility(R.id.player_pause, isPaused ? View.GONE : View.VISIBLE);
+      notification.bigContentView.setViewVisibility(R.id.player_play, isPaused ? View.VISIBLE : View.GONE);
 
-            String coverPath = Configs.COVER_PATH + File.separator + testMusic.getMusicId() + ".jpg";
-            Bitmap bitmap = ImageUtils.getBitmap(coverPath);
+      notification.contentView.setTextViewText(R.id.player_song_name, title);
+      notification.contentView.setTextViewText(R.id.player_author_name, summary);
+      notification.bigContentView.setTextViewText(R.id.player_song_name, title);
+      notification.bigContentView.setTextViewText(R.id.player_author_name, summary);
+      notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
-            if (bitmap != null) {
-                notification.contentView.setImageViewBitmap(R.id.player_album_art, bitmap);
-                notification.bigContentView.setImageViewBitmap(R.id.player_album_art, bitmap);
-            } else {
-                requestAlbumCover(testMusic.getCoverImg(), testMusic.getMusicId());
-                notification.contentView.setImageViewResource(R.id.player_album_art, R.drawable.bg_album_default);
-                notification.bigContentView.setImageViewResource(R.id.player_album_art, R.drawable.bg_album_default);
-            }
+      String coverPath = Configs.COVER_PATH + File.separator + testMusic.getMusicId() + ".jpg";
+      Bitmap bitmap = ImageUtils.getBitmap(coverPath);
 
-            startForeground(5, notification);
+      if (bitmap != null) {
+        notification.contentView.setImageViewBitmap(R.id.player_album_art, bitmap);
+        notification.bigContentView.setImageViewBitmap(R.id.player_album_art, bitmap);
+      } else {
+        requestAlbumCover(testMusic.getCoverImg(), testMusic.getMusicId());
+        notification.contentView.setImageViewResource(R.id.player_album_art, R.drawable.bg_album_default);
+        notification.bigContentView.setImageViewResource(R.id.player_album_art, R.drawable.bg_album_default);
+      }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+      startForeground(5, notification);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @SuppressLint("UnspecifiedImmutableFlag")
+  public void setListeners(RemoteViews view) {
+    int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+      ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE
+      : PendingIntent.FLAG_UPDATE_CURRENT;
+    try {
+      PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+        0, new Intent(NOTIFY_PREVIOUS).setPackage(getPackageName()), flags);
+      view.setOnClickPendingIntent(R.id.player_previous, pendingIntent);
+      pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+        0, new Intent(NOTIFY_CLOSE).setPackage(getPackageName()), flags);
+      view.setOnClickPendingIntent(R.id.player_close, pendingIntent);
+      pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+        0, new Intent(NOTIFY_PAUSE).setPackage(getPackageName()), flags);
+      view.setOnClickPendingIntent(R.id.player_pause, pendingIntent);
+      pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+        0, new Intent(NOTIFY_NEXT).setPackage(getPackageName()), flags);
+      view.setOnClickPendingIntent(R.id.player_next, pendingIntent);
+      pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+        0, new Intent(NOTIFY_PLAY).setPackage(getPackageName()), flags);
+      view.setOnClickPendingIntent(R.id.player_play, pendingIntent);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void requestAlbumCover(String coverUrl, String musicId) {
+    if (mDownloadUseCase == null) {
+      mDownloadUseCase = new DownloadUseCase();
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
-    public void setListeners(RemoteViews view) {
-        int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-            ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE
-            : PendingIntent.FLAG_UPDATE_CURRENT;
-        try {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                0, new Intent(NOTIFY_PREVIOUS).setPackage(getPackageName()), flags);
-            view.setOnClickPendingIntent(R.id.player_previous, pendingIntent);
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                0, new Intent(NOTIFY_CLOSE).setPackage(getPackageName()), flags);
-            view.setOnClickPendingIntent(R.id.player_close, pendingIntent);
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                0, new Intent(NOTIFY_PAUSE).setPackage(getPackageName()), flags);
-            view.setOnClickPendingIntent(R.id.player_pause, pendingIntent);
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                0, new Intent(NOTIFY_NEXT).setPackage(getPackageName()), flags);
-            view.setOnClickPendingIntent(R.id.player_next, pendingIntent);
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                0, new Intent(NOTIFY_PLAY).setPackage(getPackageName()), flags);
-            view.setOnClickPendingIntent(R.id.player_play, pendingIntent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    UseCaseHandler.getInstance().execute(mDownloadUseCase,
+      new DownloadUseCase.RequestValues(coverUrl, musicId + ".jpg"),
+      response -> startService(new Intent(getApplicationContext(), PlayerService.class)));
+  }
 
-    private void requestAlbumCover(String coverUrl, String musicId) {
-        if (mDownloadUseCase == null) {
-            mDownloadUseCase = new DownloadUseCase();
-        }
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+  }
 
-        UseCaseHandler.getInstance().execute(mDownloadUseCase,
-            new DownloadUseCase.RequestValues(coverUrl, musicId + ".jpg"),
-            response -> startService(new Intent(getApplicationContext(), PlayerService.class)));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+  @Nullable
+  @Override
+  public IBinder onBind(Intent intent) {
+    return null;
+  }
 
 
 }

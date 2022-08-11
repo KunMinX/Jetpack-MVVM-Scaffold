@@ -15,8 +15,8 @@
   -->
 
 <resources>
-    <dimen name="sliding_up_header">55dp</dimen>
-    <dimen name="sliding_up_header_land">200dp</dimen>
+  <dimen name="sliding_up_header">55dp</dimen>
+  <dimen name="sliding_up_header_land">200dp</dimen>
 
 
 </resources>

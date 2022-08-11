@@ -10,11 +10,11 @@ import retrofit2.http.POST;
  */
 public interface AccountService {
 
-    @POST("xxx/login")
-    @FormUrlEncoded
-    Call<String> login(
-        @Field("username") String username,
-        @Field("password") String password
-    );
+  @POST("xxx/login")
+  @FormUrlEncoded
+  Call<String> login(
+    @Field("username") String username,
+    @Field("password") String password
+  );
 
 }

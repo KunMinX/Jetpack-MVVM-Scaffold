@@ -15,14 +15,14 @@
   -->
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_drawer"
-    app:startDestination="@id/drawerFragment">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/nav_drawer"
+  app:startDestination="@id/drawerFragment">
 
-    <fragment
-        android:id="@+id/drawerFragment"
-        android:name="com.kunminx.puremusic.ui.page.DrawerFragment"
-        android:label="fragment_drawer"
-        tools:layout="@layout/fragment_drawer" />
+  <fragment
+    android:id="@+id/drawerFragment"
+    android:name="com.kunminx.puremusic.ui.page.DrawerFragment"
+    android:label="fragment_drawer"
+    tools:layout="@layout/fragment_drawer" />
 </navigation>

@@ -15,8 +15,8 @@
   -->
 
 <resources>
-    <string name="app_name">architecture</string>
+  <string name="app_name">architecture</string>
 
-    <string name="network_not_good">网络不给力</string>
+  <string name="network_not_good">网络不给力</string>
 
 </resources>

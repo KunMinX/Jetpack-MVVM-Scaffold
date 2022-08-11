@@ -18,34 +18,30 @@ package com.kunminx.puremusic.data.bean;
 
 /**
  * Create by KunMinX at 19/11/2
- * <p>
- * bean，原始数据，只读，
- * Java 我们通过移除 setter
- * kotlin 直接将字段设为 val 即可
  */
 public class LibraryInfo {
-    public String title;
-    public String summary;
-    public String url;
+  public String title;
+  public String summary;
+  public String url;
 
-    public LibraryInfo() {
-    }
+  public LibraryInfo() {
+  }
 
-    public LibraryInfo(String title, String summary, String url) {
-        this.title = title;
-        this.summary = summary;
-        this.url = url;
-    }
+  public LibraryInfo(String title, String summary, String url) {
+    this.title = title;
+    this.summary = summary;
+    this.url = url;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public String getSummary() {
-        return summary;
-    }
+  public String getSummary() {
+    return summary;
+  }
 
-    public String getUrl() {
-        return url;
-    }
+  public String getUrl() {
+    return url;
+  }
 }

@@ -41,182 +41,180 @@ import java.util.List;
  */
 public class PlayerManager implements IPlayController<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist> {
 
-    private static final PlayerManager sManager = new PlayerManager();
+  private static final PlayerManager sManager = new PlayerManager();
 
-    private final PlayerController<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist> mController;
+  private final PlayerController<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist> mController;
 
-    private PlayerManager() {
-        mController = new PlayerController<>();
-    }
+  private PlayerManager() {
+    mController = new PlayerController<>();
+  }
 
-    public static PlayerManager getInstance() {
-        return sManager;
-    }
+  public static PlayerManager getInstance() {
+    return sManager;
+  }
 
-    private HttpProxyCacheServer mProxy;
+  private HttpProxyCacheServer mProxy;
 
-    public void init(Context context) {
-        init(context, null, null);
-    }
+  public void init(Context context) {
+    init(context, null, null);
+  }
 
-    @Override
-    public void init(Context context, IServiceNotifier iServiceNotifier, ICacheProxy iCacheProxy) {
-        Context context1 = context.getApplicationContext();
+  @Override
+  public void init(Context context, IServiceNotifier iServiceNotifier, ICacheProxy iCacheProxy) {
+    Context context1 = context.getApplicationContext();
 
-        mProxy = new HttpProxyCacheServer.Builder(context1)
-            .fileNameGenerator(new PlayerFileNameGenerator())
-            .maxCacheSize(2147483648L) // 2GB
-            .build();
+    mProxy = new HttpProxyCacheServer.Builder(context1)
+      .fileNameGenerator(new PlayerFileNameGenerator())
+      .maxCacheSize(2147483648L)
+      .build();
+    List<String> extraFormats = new ArrayList<>();
+    extraFormats.add(".flac");
+    extraFormats.add(".ape");
 
-        //添加额外的音乐格式
-        List<String> extraFormats = new ArrayList<>();
-        extraFormats.add(".flac");
-        extraFormats.add(".ape");
+    mController.init(context1, extraFormats, startOrStop -> {
+      Intent intent = new Intent(context1, PlayerService.class);
+      if (startOrStop) {
+        context1.startService(intent);
+      } else {
+        context1.stopService(intent);
+      }
+    }, url -> mProxy.getProxyUrl(url));
+  }
 
-        mController.init(context1, extraFormats, startOrStop -> {
-            Intent intent = new Intent(context1, PlayerService.class);
-            if (startOrStop) {
-                context1.startService(intent);
-            } else {
-                context1.stopService(intent);
-            }
-        }, url -> mProxy.getProxyUrl(url));
-    }
+  @Override
+  public void loadAlbum(TestAlbum musicAlbum) {
+    mController.loadAlbum(musicAlbum);
+  }
 
-    @Override
-    public void loadAlbum(TestAlbum musicAlbum) {
-        mController.loadAlbum(musicAlbum);
-    }
+  @Override
+  public void loadAlbum(TestAlbum musicAlbum, int playIndex) {
+    mController.loadAlbum(musicAlbum, playIndex);
+  }
 
-    @Override
-    public void loadAlbum(TestAlbum musicAlbum, int playIndex) {
-        mController.loadAlbum(musicAlbum, playIndex);
-    }
+  @Override
+  public void playAudio() {
+    mController.playAudio();
+  }
 
-    @Override
-    public void playAudio() {
-        mController.playAudio();
-    }
+  @Override
+  public void playAudio(int albumIndex) {
+    mController.playAudio(albumIndex);
+  }
 
-    @Override
-    public void playAudio(int albumIndex) {
-        mController.playAudio(albumIndex);
-    }
+  @Override
+  public void playNext() {
+    mController.playNext();
+  }
 
-    @Override
-    public void playNext() {
-        mController.playNext();
-    }
+  @Override
+  public void playPrevious() {
+    mController.playPrevious();
+  }
 
-    @Override
-    public void playPrevious() {
-        mController.playPrevious();
-    }
+  @Override
+  public void playAgain() {
+    mController.playAgain();
+  }
 
-    @Override
-    public void playAgain() {
-        mController.playAgain();
-    }
+  @Override
+  public void pauseAudio() {
+    mController.pauseAudio();
+  }
 
-    @Override
-    public void pauseAudio() {
-        mController.pauseAudio();
-    }
+  @Override
+  public void resumeAudio() {
+    mController.resumeAudio();
+  }
 
-    @Override
-    public void resumeAudio() {
-        mController.resumeAudio();
-    }
+  @Override
+  public void clear() {
+    mController.clear();
+  }
 
-    @Override
-    public void clear() {
-        mController.clear();
-    }
+  @Override
+  public void changeMode() {
+    mController.changeMode();
+  }
 
-    @Override
-    public void changeMode() {
-        mController.changeMode();
-    }
+  @Override
+  public boolean isPlaying() {
+    return mController.isPlaying();
+  }
 
-    @Override
-    public boolean isPlaying() {
-        return mController.isPlaying();
-    }
+  @Override
+  public boolean isPaused() {
+    return mController.isPaused();
+  }
 
-    @Override
-    public boolean isPaused() {
-        return mController.isPaused();
-    }
+  @Override
+  public boolean isInit() {
+    return mController.isInit();
+  }
 
-    @Override
-    public boolean isInit() {
-        return mController.isInit();
-    }
+  @Override
+  public void requestLastPlayingInfo() {
+    mController.requestLastPlayingInfo();
+  }
 
-    @Override
-    public void requestLastPlayingInfo() {
-        mController.requestLastPlayingInfo();
-    }
+  @Override
+  public void setSeek(int progress) {
+    mController.setSeek(progress);
+  }
 
-    @Override
-    public void setSeek(int progress) {
-        mController.setSeek(progress);
-    }
+  @Override
+  public String getTrackTime(int progress) {
+    return mController.getTrackTime(progress);
+  }
 
-    @Override
-    public String getTrackTime(int progress) {
-        return mController.getTrackTime(progress);
-    }
+  @Override
+  public TestAlbum getAlbum() {
+    return mController.getAlbum();
+  }
 
-    @Override
-    public TestAlbum getAlbum() {
-        return mController.getAlbum();
-    }
+  @Override
+  public List<TestAlbum.TestMusic> getAlbumMusics() {
+    return mController.getAlbumMusics();
+  }
 
-    @Override
-    public List<TestAlbum.TestMusic> getAlbumMusics() {
-        return mController.getAlbumMusics();
-    }
+  @Override
+  public void setChangingPlayingMusic(boolean changingPlayingMusic) {
+    mController.setChangingPlayingMusic(changingPlayingMusic);
+  }
 
-    @Override
-    public void setChangingPlayingMusic(boolean changingPlayingMusic) {
-        mController.setChangingPlayingMusic(changingPlayingMusic);
-    }
+  @Override
+  public int getAlbumIndex() {
+    return mController.getAlbumIndex();
+  }
 
-    @Override
-    public int getAlbumIndex() {
-        return mController.getAlbumIndex();
-    }
+  public LiveData<ChangeMusic<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist>> getChangeMusicResult() {
+    return mController.getChangeMusicResult();
+  }
 
-    public LiveData<ChangeMusic<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist>> getChangeMusicResult() {
-        return mController.getChangeMusicResult();
-    }
+  public LiveData<PlayingMusic<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist>> getPlayingMusicResult() {
+    return mController.getPlayingMusicResult();
+  }
 
-    public LiveData<PlayingMusic<TestAlbum, TestAlbum.TestMusic, TestAlbum.TestArtist>> getPlayingMusicResult() {
-        return mController.getPlayingMusicResult();
-    }
+  public LiveData<Boolean> getPauseResult() {
+    return mController.getPauseResult();
+  }
 
-    public LiveData<Boolean> getPauseResult() {
-        return mController.getPauseResult();
-    }
+  @Override
+  public LiveData<Enum<PlayingInfoManager.RepeatMode>> getPlayModeResult() {
+    return mController.getPlayModeResult();
+  }
 
-    @Override
-    public LiveData<Enum<PlayingInfoManager.RepeatMode>> getPlayModeResult() {
-        return mController.getPlayModeResult();
-    }
+  @Override
+  public Enum<PlayingInfoManager.RepeatMode> getRepeatMode() {
+    return mController.getRepeatMode();
+  }
 
-    @Override
-    public Enum<PlayingInfoManager.RepeatMode> getRepeatMode() {
-        return mController.getRepeatMode();
-    }
+  @Override
+  public void togglePlay() {
+    mController.togglePlay();
+  }
 
-    @Override
-    public void togglePlay() {
-        mController.togglePlay();
-    }
-
-    @Override
-    public TestAlbum.TestMusic getCurrentPlayingMusic() {
-        return mController.getCurrentPlayingMusic();
-    }
+  @Override
+  public TestAlbum.TestMusic getCurrentPlayingMusic() {
+    return mController.getCurrentPlayingMusic();
+  }
 }

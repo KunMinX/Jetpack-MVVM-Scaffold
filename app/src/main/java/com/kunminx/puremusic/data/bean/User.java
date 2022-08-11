@@ -18,26 +18,22 @@ package com.kunminx.puremusic.data.bean;
 
 /**
  * Create by KunMinX at 20/04/26
- * <p>
- * bean，原始数据，只读
- * Java 我们通过移除 setter
- * kotlin 直接将字段设为 val 即可
  */
 public class User {
-    public final String name;
-    public final String password;
+  public final String name;
+  public final String password;
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
+  public User(String name, String password) {
+    this.name = name;
+    this.password = password;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getPassword() {
+    return password;
+  }
 
 }

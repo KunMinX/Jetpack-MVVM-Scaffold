@@ -15,20 +15,20 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
-        <shape android:shape="rectangle">
-            <solid android:color="#40ffffff" />
-        </shape>
-    </item>
-    <item android:state_focused="true">
-        <shape android:shape="rectangle">
-            <solid android:color="#40ffffff" />
-        </shape>
-    </item>
-    <item android:state_selected="true">
-        <shape android:shape="rectangle">
-            <solid android:color="#40ffffff" />
-        </shape>
-    </item>
-    <item android:drawable="@color/transparent" />
+  <item android:state_pressed="true">
+    <shape android:shape="rectangle">
+      <solid android:color="#40ffffff" />
+    </shape>
+  </item>
+  <item android:state_focused="true">
+    <shape android:shape="rectangle">
+      <solid android:color="#40ffffff" />
+    </shape>
+  </item>
+  <item android:state_selected="true">
+    <shape android:shape="rectangle">
+      <solid android:color="#40ffffff" />
+    </shape>
+  </item>
+  <item android:drawable="@color/transparent" />
 </selector>

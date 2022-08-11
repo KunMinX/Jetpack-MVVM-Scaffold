@@ -28,29 +28,29 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
  */
 public class DefaultInterface {
 
-    public interface OnSeekBarChangeListener extends SeekBar.OnSeekBarChangeListener {
-        @Override
-        default void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        }
-
-        @Override
-        default void onStartTrackingTouch(SeekBar seekBar) {
-        }
-
-        @Override
-        default void onStopTrackingTouch(SeekBar seekBar) {
-        }
+  public interface OnSeekBarChangeListener extends SeekBar.OnSeekBarChangeListener {
+    @Override
+    default void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
     }
 
-    public interface PanelSlideListener extends SlidingUpPanelLayout.PanelSlideListener {
-        @Override
-        default void onPanelSlide(View panel, float slideOffset) {
-        }
-
-        @Override
-        default void onPanelStateChanged(View panel,
-                                         SlidingUpPanelLayout.PanelState previousState,
-                                         SlidingUpPanelLayout.PanelState newState) {
-        }
+    @Override
+    default void onStartTrackingTouch(SeekBar seekBar) {
     }
+
+    @Override
+    default void onStopTrackingTouch(SeekBar seekBar) {
+    }
+  }
+
+  public interface PanelSlideListener extends SlidingUpPanelLayout.PanelSlideListener {
+    @Override
+    default void onPanelSlide(View panel, float slideOffset) {
+    }
+
+    @Override
+    default void onPanelStateChanged(View panel,
+                                     SlidingUpPanelLayout.PanelState previousState,
+                                     SlidingUpPanelLayout.PanelState newState) {
+    }
+  }
 }

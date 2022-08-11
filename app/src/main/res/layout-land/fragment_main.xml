@@ -15,96 +15,87 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-        <variable
-            name="click"
-            type="com.kunminx.puremusic.ui.page.MainFragment.ClickProxy" />
+    <variable
+      name="click"
+      type="com.kunminx.puremusic.ui.page.MainFragment.ClickProxy" />
 
-        <variable
-            name="vm"
-            type="com.kunminx.puremusic.ui.page.MainFragment.MainStates" />
+    <variable
+      name="vm"
+      type="com.kunminx.puremusic.ui.page.MainFragment.MainStates" />
 
-        <variable
-            name="adapter"
-            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
+    <variable
+      name="adapter"
+      type="androidx.recyclerview.widget.RecyclerView.Adapter" />
 
-    </data>
+  </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:overScrollMode="never">
+
+    <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/appbar_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fitsSystemWindows="true"
+      android:theme="@style/AppTheme">
+
+      <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        initTabAndPage="@{vm.initTabAndPage}"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        app:tabBackground="@color/white"
+        app:tabIndicatorColor="@color/gray"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="4dp"
+        app:tabSelectedTextColor="@color/gray"
+        app:tabTextColor="@color/light_gray">
+
+        <com.google.android.material.tabs.TabItem
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/recently" />
+
+        <com.google.android.material.tabs.TabItem
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/best_practice" />
+
+      </com.google.android.material.tabs.TabLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+      android:id="@+id/view_pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        adapter="@{adapter}"
+        submitList="@{vm.list}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:overScrollMode="never">
+        android:clipToPadding="false"
+        app:layoutManager="com.kunminx.binding_recyclerview.layout_manager.WrapContentLinearLayoutManager" />
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme">
+      <WebView
+        android:id="@+id/web_view"
+        pageAssetPath="@{vm.pageAssetPath}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                initTabAndPage="@{vm.initTabAndPage}"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@color/white"
-                app:tabBackground="@color/white"
-                app:tabIndicatorColor="@color/gray"
-                app:tabIndicatorFullWidth="true"
-                app:tabIndicatorHeight="4dp"
-                app:tabSelectedTextColor="@color/gray"
-                app:tabTextColor="@color/light_gray">
+    </androidx.viewpager.widget.ViewPager>
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/recently" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/best_practice" />
-
-            </com.google.android.material.tabs.TabLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <!-- TODO 以下 adapter 和 sumbitList 属性皆乃 BindingAdapter 中定义的属性，
-            旨在将 ViewModel 中的数据绑定到 BindingAdapter，
-            以便可以间接通知布局中存在的视图实例，避免空指针安全问题，
-            如果这样说还不理解的话，可参考 DataBinding 篇的解析
-            https://xiaozhuanlan.com/topic/9816742350 -->
-
-            <!-- TODO 该 BindingAdapter 现已抽到 Strict-DataBinding 开源库中独立维护
-            可在本项目中搜索 RecyclerViewBindingAdapter 找到-->
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv"
-                adapter="@{adapter}"
-                submitList="@{vm.list}"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                app:layoutManager="com.kunminx.binding_recyclerview.layout_manager.WrapContentLinearLayoutManager" />
-
-            <WebView
-                android:id="@+id/web_view"
-                pageAssetPath="@{vm.pageAssetPath}"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false" />
-
-        </androidx.viewpager.widget.ViewPager>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -23,126 +23,126 @@ import com.kunminx.puremusic.R;
 
 public class PlayPauseView extends FrameLayout {
 
-    private static final long PLAY_PAUSE_ANIMATION_DURATION = 200;
-    public final boolean isDrawCircle;
-    private final PlayPauseDrawable mDrawable;
-    private final Paint mPaint = new Paint();
-    public int circleAlpha;
-    private int mDrawableColor;
-    private AnimatorSet mAnimatorSet;
-    private int mBackgroundColor;
-    private int mWidth;
-    private int mHeight;
-    private boolean mIsPlay;
+  private static final long PLAY_PAUSE_ANIMATION_DURATION = 200;
+  public final boolean isDrawCircle;
+  private final PlayPauseDrawable mDrawable;
+  private final Paint mPaint = new Paint();
+  public int circleAlpha;
+  private int mDrawableColor;
+  private AnimatorSet mAnimatorSet;
+  private int mBackgroundColor;
+  private int mWidth;
+  private int mHeight;
+  private boolean mIsPlay;
 
-    public PlayPauseView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setWillNotDraw(false);
+  public PlayPauseView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    setWillNotDraw(false);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PlayPauseView);
-        isDrawCircle = typedArray.getBoolean(R.styleable.PlayPauseView_isCircleDraw, true);
-        circleAlpha = typedArray.getInt(R.styleable.PlayPauseView_circleAlpha, 255);
-        mDrawableColor = typedArray.getInt(R.styleable.PlayPauseView_drawableColor, Color.WHITE);
-        typedArray.recycle();
+    TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PlayPauseView);
+    isDrawCircle = typedArray.getBoolean(R.styleable.PlayPauseView_isCircleDraw, true);
+    circleAlpha = typedArray.getInt(R.styleable.PlayPauseView_circleAlpha, 255);
+    mDrawableColor = typedArray.getInt(R.styleable.PlayPauseView_drawableColor, Color.WHITE);
+    typedArray.recycle();
 
-        mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setAlpha(circleAlpha);
-        mPaint.setColor(mBackgroundColor);
-        mDrawable = new PlayPauseDrawable(mDrawableColor);
-        mDrawable.setCallback(this);
+    mPaint.setAntiAlias(true);
+    mPaint.setStyle(Paint.Style.FILL);
+    mPaint.setAlpha(circleAlpha);
+    mPaint.setColor(mBackgroundColor);
+    mDrawable = new PlayPauseDrawable(mDrawableColor);
+    mDrawable.setCallback(this);
 
+  }
+
+  @Override
+  protected void onSizeChanged(final int w, final int h, int oldw, int oldh) {
+    super.onSizeChanged(w, h, oldw, oldh);
+    mDrawable.setBounds(0, 0, w, h);
+    mWidth = w;
+    mHeight = h;
+
+    setOutlineProvider(new ViewOutlineProvider() {
+      @Override
+      public void getOutline(View view, Outline outline) {
+        outline.setOval(0, 0, view.getWidth(), view.getHeight());
+      }
+    });
+    setClipToOutline(true);
+  }
+
+  public void setCircleAlpha(int alpah) {
+    circleAlpha = alpah;
+    invalidate();
+  }
+
+  private int getCircleColor() {
+    return mBackgroundColor;
+  }
+
+  public void setCircleColor(@ColorInt int color) {
+    mBackgroundColor = color;
+    invalidate();
+  }
+
+  public int getDrawableColor() {
+    return mDrawableColor;
+  }
+
+  public void setDrawableColor(@ColorInt int color) {
+    mDrawableColor = color;
+    mDrawable.setDrawableColor(color);
+    invalidate();
+  }
+
+  @Override
+  protected boolean verifyDrawable(@NonNull Drawable who) {
+    return who == mDrawable || super.verifyDrawable(who);
+  }
+
+  @Override
+  public boolean hasOverlappingRendering() {
+    return false;
+  }
+
+  @Override
+  protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+    mPaint.setColor(mBackgroundColor);
+    final float radius = Math.min(mWidth, mHeight) / 2f;
+    if (isDrawCircle) {
+      mPaint.setColor(mBackgroundColor);
+      mPaint.setAlpha(circleAlpha);
+      canvas.drawCircle(mWidth / 2f, mHeight / 2f, radius, mPaint);
     }
+    mDrawable.draw(canvas);
+  }
 
-    @Override
-    protected void onSizeChanged(final int w, final int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        mDrawable.setBounds(0, 0, w, h);
-        mWidth = w;
-        mHeight = h;
+  public boolean isPlay() {
+    return mIsPlay;
+  }
 
-        setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                outline.setOval(0, 0, view.getWidth(), view.getHeight());
-            }
-        });
-        setClipToOutline(true);
+  public void play() {
+    if (mAnimatorSet != null) {
+      mAnimatorSet.cancel();
     }
+    mAnimatorSet = new AnimatorSet();
+    mDrawable.setIsPlay(mIsPlay = true);
+    final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();
+    mAnimatorSet.setInterpolator(new DecelerateInterpolator());
+    mAnimatorSet.setDuration(PLAY_PAUSE_ANIMATION_DURATION);
+    pausePlayAnim.start();
+  }
 
-    public void setCircleAlpha(int alpah) {
-        circleAlpha = alpah;
-        invalidate();
+  public void pause() {
+    if (mAnimatorSet != null) {
+      mAnimatorSet.cancel();
     }
-
-    private int getCircleColor() {
-        return mBackgroundColor;
-    }
-
-    public void setCircleColor(@ColorInt int color) {
-        mBackgroundColor = color;
-        invalidate();
-    }
-
-    public int getDrawableColor() {
-        return mDrawableColor;
-    }
-
-    public void setDrawableColor(@ColorInt int color) {
-        mDrawableColor = color;
-        mDrawable.setDrawableColor(color);
-        invalidate();
-    }
-
-    @Override
-    protected boolean verifyDrawable(@NonNull Drawable who) {
-        return who == mDrawable || super.verifyDrawable(who);
-    }
-
-    @Override
-    public boolean hasOverlappingRendering() {
-        return false;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        mPaint.setColor(mBackgroundColor);
-        final float radius = Math.min(mWidth, mHeight) / 2f;
-        if (isDrawCircle) {
-            mPaint.setColor(mBackgroundColor);
-            mPaint.setAlpha(circleAlpha);
-            canvas.drawCircle(mWidth / 2f, mHeight / 2f, radius, mPaint);
-        }
-        mDrawable.draw(canvas);
-    }
-
-    public boolean isPlay() {
-        return mIsPlay;
-    }
-
-    public void play() {
-        if (mAnimatorSet != null) {
-            mAnimatorSet.cancel();
-        }
-        mAnimatorSet = new AnimatorSet();
-        mDrawable.setIsPlay(mIsPlay = true);
-        final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();
-        mAnimatorSet.setInterpolator(new DecelerateInterpolator());
-        mAnimatorSet.setDuration(PLAY_PAUSE_ANIMATION_DURATION);
-        pausePlayAnim.start();
-    }
-
-    public void pause() {
-        if (mAnimatorSet != null) {
-            mAnimatorSet.cancel();
-        }
-        mAnimatorSet = new AnimatorSet();
-        mDrawable.setIsPlay(mIsPlay = false);
-        final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();
-        mAnimatorSet.setInterpolator(new DecelerateInterpolator());
-        mAnimatorSet.setDuration(PLAY_PAUSE_ANIMATION_DURATION);
-        pausePlayAnim.start();
-    }
+    mAnimatorSet = new AnimatorSet();
+    mDrawable.setIsPlay(mIsPlay = false);
+    final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();
+    mAnimatorSet.setInterpolator(new DecelerateInterpolator());
+    mAnimatorSet.setDuration(PLAY_PAUSE_ANIMATION_DURATION);
+    pausePlayAnim.start();
+  }
 
 }

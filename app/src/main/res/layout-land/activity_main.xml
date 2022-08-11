@@ -15,43 +15,43 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-        <variable
-            name="vm"
-            type="com.kunminx.puremusic.MainActivity.MainActivityStates" />
+    <variable
+      name="vm"
+      type="com.kunminx.puremusic.MainActivity.MainActivityStates" />
 
-    </data>
+  </data>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal">
 
-        <fragment
-            android:id="@+id/main_fragment_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="-25dp"
-            android:layout_weight="1"
-            android:fitsSystemWindows="true"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_main" />
+    <fragment
+      android:id="@+id/main_fragment_host"
+      android:name="androidx.navigation.fragment.NavHostFragment"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_marginTop="-25dp"
+      android:layout_weight="1"
+      android:fitsSystemWindows="true"
+      app:defaultNavHost="true"
+      app:navGraph="@navigation/nav_main" />
 
-        <fragment
-            android:id="@+id/slide_fragment_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fitsSystemWindows="true"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_slide" />
+    <fragment
+      android:id="@+id/slide_fragment_host"
+      android:name="androidx.navigation.fragment.NavHostFragment"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:fitsSystemWindows="true"
+      app:defaultNavHost="true"
+      app:navGraph="@navigation/nav_slide" />
 
-    </LinearLayout>
+  </LinearLayout>
 </layout>

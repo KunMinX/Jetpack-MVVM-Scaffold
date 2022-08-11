@@ -15,104 +15,95 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-        <variable
-            name="vm"
-            type="com.kunminx.puremusic.ui.page.DrawerFragment.DrawerStates" />
+    <variable
+      name="vm"
+      type="com.kunminx.puremusic.ui.page.DrawerFragment.DrawerStates" />
 
-        <variable
-            name="click"
-            type="com.kunminx.puremusic.ui.page.DrawerFragment.ClickProxy" />
+    <variable
+      name="click"
+      type="com.kunminx.puremusic.ui.page.DrawerFragment.ClickProxy" />
 
-        <variable
-            name="adapter"
-            type="androidx.recyclerview.widget.RecyclerView.Adapter" />
-    </data>
+    <variable
+      name="adapter"
+      type="androidx.recyclerview.widget.RecyclerView.Adapter" />
+  </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="40dp"
-            android:onClick="@{()->click.logoClick()}"
-            android:src="@drawable/ic_launcher"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatImageView
+      android:id="@+id/iv_logo"
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_marginTop="40dp"
+      android:onClick="@{()->click.logoClick()}"
+      android:src="@drawable/ic_launcher"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_app"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:onClick="@{()->click.logoClick()}"
-            android:text="@string/app_name"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+    <TextView
+      android:id="@+id/tv_app"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:background="?attr/selectableItemBackground"
+      android:onClick="@{()->click.logoClick()}"
+      android:text="@string/app_name"
+      android:textColor="@color/black"
+      android:textSize="20sp"
+      android:textStyle="bold"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
-        <TextView
-            android:id="@+id/tv_summary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="?attr/selectableItemBackground"
-            android:onClick="@{()->click.logoClick()}"
-            android:text="@string/app_summary"
-            android:textColor="@color/light_gray"
-            android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_app" />
+    <TextView
+      android:id="@+id/tv_summary"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:background="?attr/selectableItemBackground"
+      android:onClick="@{()->click.logoClick()}"
+      android:text="@string/app_summary"
+      android:textColor="@color/light_gray"
+      android:textSize="12sp"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_app" />
 
-        <!-- TODO 以下 adapter 和 sumbitList 属性皆乃 BindingAdapter 中定义的属性，
-            旨在将 ViewModel 中的数据绑定到 BindingAdapter，
-            以便可以间接通知布局中存在的视图实例，避免空指针安全问题，
-            如果这样说还不理解的话，可参考 DataBinding 篇的解析
-            https://xiaozhuanlan.com/topic/9816742350 -->
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv"
+      adapter="@{adapter}"
+      submitList="@{vm.list}"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginTop="24dp"
+      app:layoutManager="com.kunminx.binding_recyclerview.layout_manager.WrapContentLinearLayoutManager"
+      app:layout_constraintBottom_toTopOf="@+id/tv_copyright"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_summary" />
 
-        <!-- TODO 该 BindingAdapter 现已抽到 Strict-DataBinding 开源库中独立维护
-        可在本项目中搜索 RecyclerViewBindingAdapter 找到-->
+    <TextView
+      android:id="@+id/tv_copyright"
+      android:layout_width="0dp"
+      android:layout_height="48dp"
+      android:background="?attr/selectableItemBackground"
+      android:gravity="center"
+      android:onClick="@{()->click.logoClick()}"
+      android:text="@string/Copyright"
+      android:textColor="@color/light_gray"
+      android:textSize="12sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/rv" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
-            adapter="@{adapter}"
-            submitList="@{vm.list}"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            app:layoutManager="com.kunminx.binding_recyclerview.layout_manager.WrapContentLinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/tv_copyright"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_summary" />
-
-        <TextView
-            android:id="@+id/tv_copyright"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:onClick="@{()->click.logoClick()}"
-            android:text="@string/Copyright"
-            android:textColor="@color/light_gray"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

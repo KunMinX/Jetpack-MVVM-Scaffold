@@ -15,46 +15,46 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+  <data>
 
-        <variable
-            name="info"
-            type="com.kunminx.puremusic.data.bean.LibraryInfo" />
+    <variable
+      name="info"
+      type="com.kunminx.puremusic.data.bean.LibraryInfo" />
 
-    </data>
+  </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:orientation="vertical">
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:text="@{info.title}"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="@string/project_title" />
+    <TextView
+      android:id="@+id/tv_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="12dp"
+      android:text="@{info.title}"
+      android:textColor="@color/black"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      tools:text="@string/project_title" />
 
-        <TextView
-            android:id="@+id/tv_summary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp"
-            android:text="@{info.summary}"
-            android:textColor="@color/light_gray"
-            android:textSize="13sp"
-            tools:text="@string/app_summary" />
+    <TextView
+      android:id="@+id/tv_summary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="4dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="12dp"
+      android:text="@{info.summary}"
+      android:textColor="@color/light_gray"
+      android:textSize="13sp"
+      tools:text="@string/app_summary" />
 
-    </LinearLayout>
+  </LinearLayout>
 </layout>
