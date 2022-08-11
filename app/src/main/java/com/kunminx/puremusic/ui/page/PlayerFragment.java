@@ -113,10 +113,7 @@ public class PlayerFragment extends BaseFragment {
       mStates.title.set(changeMusic.getTitle());
       mStates.artist.set(changeMusic.getSummary());
       mStates.coverImg.set(changeMusic.getImg());
-
-      if (mListener != null) {
-        view.post(mListener::calculateTitleAndArtist);
-      }
+      if (mListener != null) view.post(mListener::calculateTitleAndArtist);
     });
 
     PlayerManager.getInstance().getPlayingMusicResult().observe(getViewLifecycleOwner(), playingMusic -> {
@@ -129,24 +126,18 @@ public class PlayerFragment extends BaseFragment {
     });
 
     PlayerManager.getInstance().getPlayModeResult().observe(getViewLifecycleOwner(), anEnum -> {
-      int tip;
-      if (anEnum == PlayingInfoManager.RepeatMode.LIST_CYCLE) {
-        mStates.playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT);
-        tip = R.string.play_repeat;
-      } else if (anEnum == PlayingInfoManager.RepeatMode.SINGLE_CYCLE) {
-        mStates.playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT_ONCE);
-        tip = R.string.play_repeat_once;
-      } else {
-        mStates.playModeIcon.set(MaterialDrawableBuilder.IconValue.SHUFFLE);
-        tip = R.string.play_shuffle;
-      }
-      if (view.getParent().getParent() instanceof SlidingUpPanelLayout) {
-        SlidingUpPanelLayout sliding = (SlidingUpPanelLayout) view.getParent().getParent();
-        if (sliding.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-          ToastUtils.showShortToast(getApplicationContext(), getString(tip));
-        }
-      }
+      mStates.playModeIcon.set(getModeIcon((PlayingInfoManager.RepeatMode) anEnum));
     });
+  }
+
+  private static MaterialDrawableBuilder.IconValue getModeIcon(PlayingInfoManager.RepeatMode mode) {
+    if (mode == PlayingInfoManager.RepeatMode.LIST_CYCLE) {
+      return MaterialDrawableBuilder.IconValue.REPEAT;
+    } else if (mode == PlayingInfoManager.RepeatMode.SINGLE_CYCLE) {
+      return MaterialDrawableBuilder.IconValue.REPEAT_ONCE;
+    } else {
+      return MaterialDrawableBuilder.IconValue.SHUFFLE;
+    }
   }
 
   public class ClickProxy {
@@ -179,7 +170,6 @@ public class PlayerFragment extends BaseFragment {
   }
 
   public static class ListenerHandler implements DefaultInterface.OnSeekBarChangeListener {
-
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
       PlayerManager.getInstance().setSeek(seekBar.getProgress());
@@ -194,16 +184,6 @@ public class PlayerFragment extends BaseFragment {
     public final State<Integer> maxSeekDuration = new State<>(0);
     public final State<Integer> currentSeekPosition = new State<>(0);
     public final State<Boolean> isPlaying = new State<>(false, true);
-    public final State<MaterialDrawableBuilder.IconValue> playModeIcon = new State<>(MaterialDrawableBuilder.IconValue.REPEAT);
-
-    {
-      if (PlayerManager.getInstance().getRepeatMode() == PlayingInfoManager.RepeatMode.LIST_CYCLE) {
-        playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT);
-      } else if (PlayerManager.getInstance().getRepeatMode() == PlayingInfoManager.RepeatMode.SINGLE_CYCLE) {
-        playModeIcon.set(MaterialDrawableBuilder.IconValue.REPEAT_ONCE);
-      } else {
-        playModeIcon.set(MaterialDrawableBuilder.IconValue.SHUFFLE);
-      }
-    }
+    public final State<MaterialDrawableBuilder.IconValue> playModeIcon = new State<>(getModeIcon((PlayingInfoManager.RepeatMode) PlayerManager.getInstance().getRepeatMode()));
   }
 }
