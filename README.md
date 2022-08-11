@@ -51,6 +51,10 @@
 
 > [GitHub：MVI-Dispatcher](https://github.com/KunMinX/MVI-Dispatcher)
 
+- 福利 5：KeyValueX 消除 KV 样板代码，让 key、value、get、put、init 缩减为一，不再 KV 爆炸。
+
+> [Github: KeyValueX](https://github.com/KunMinX/KeyValueX)
+
 - 通过 Request 来复用转发逻辑
 
 - 通过 UseCase 管理可叫停业务
