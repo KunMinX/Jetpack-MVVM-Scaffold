@@ -40,13 +40,6 @@ import com.kunminx.puremusic.domain.request.AccountRequester;
  * Create by KunMinX at 20/04/26
  */
 public class LoginFragment extends BaseFragment {
-
-  //TODO tip 1：基于 "单一职责原则"，应将 ViewModel 划分为 state-ViewModel 和 event-ViewModel，
-  // state-ViewModel 职责仅限于托管、保存和恢复本页面 state，
-  // event-ViewModel 职责仅限于 "消息分发" 场景承担 "唯一可信源"。
-
-  // 如这么说无体会，详见 https://xiaozhuanlan.com/topic/8204519736
-
   private LoginStates mStates;
   private AccountRequester mAccountRequester;
 
@@ -58,15 +51,6 @@ public class LoginFragment extends BaseFragment {
 
   @Override
   protected DataBindingConfig getDataBindingConfig() {
-
-    //TODO tip 2: DataBinding 严格模式：
-    // 将 DataBinding 实例限制于 base 页面中，默认不向子类暴露，
-    // 通过这方式，彻底解决 View 实例 Null 安全一致性问题，
-    // 如此，View 实例 Null 安全性将和基于函数式编程思想的 Jetpack Compose 持平。
-    // 而 DataBindingConfig 就是在这样背景下，用于为 base 页面 DataBinding 提供绑定项。
-
-    // 如这么说无体会，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
-
     return new DataBindingConfig(R.layout.fragment_login, BR.vm, mStates)
       .addBindingParam(BR.click, new ClickProxy());
   }
@@ -74,25 +58,13 @@ public class LoginFragment extends BaseFragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     getLifecycle().addObserver(DrawerCoordinateManager.getInstance());
-
-    //TODO tip 3：让 accountRequest 可观察页面生命周期，
-    // 从而在页面即将退出、且登录请求由于网络延迟尚未完成时，
-    // 及时通知数据层取消本次请求，以避免资源浪费和一系列不可预期问题。
     getLifecycle().addObserver(mAccountRequester);
   }
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-
-    //TODO tip 4: 从唯一可信源 Requester 通过 immutable Result 获取请求结果的只读数据，set 给 mutable State，
-    //而非 Result、State 不分，直接在页面 set Result，
-
-    //如这么说无体会，详见《吃透 LiveData 本质，享用可靠消息鉴权机制》解析。
-    //https://xiaozhuanlan.com/topic/6017825943
-
     mAccountRequester.getTokenResult().observe(getViewLifecycleOwner(), dataResult -> {
       if (!dataResult.getResponseStatus().isSuccess()) {
         mStates.loadingVisible.set(false);
@@ -105,25 +77,16 @@ public class LoginFragment extends BaseFragment {
 
       SPUtils.getInstance().put(Configs.TOKEN, s);
       mStates.loadingVisible.set(false);
-
-      //TODO 登录成功后进行的下一步操作...
       nav().navigateUp();
     });
   }
 
   public class ClickProxy {
-
     public void back() {
       nav().navigateUp();
     }
 
     public void login() {
-
-      //TODO tip 5：通过双向绑定，使能通过 state-ViewModel 中与 xml 控件发生绑定的"可观察数据" 拿到控件数据，
-      // 避免直接接触控件实例而埋下 Null 安全一致性隐患。
-
-      //如这么说无体会，详见 https://xiaozhuanlan.com/topic/9816742350
-
       if (TextUtils.isEmpty(mStates.name.get()) || TextUtils.isEmpty(mStates.password.get())) {
         ToastUtils.showLongToast(getApplicationContext(), getString(R.string.username_or_pwd_incomplete));
         return;
@@ -134,24 +97,9 @@ public class LoginFragment extends BaseFragment {
     }
   }
 
-  //TODO tip 6：每个页面都需单独准备一个 state-ViewModel，托管 DataBinding 绑定的 State，
-  // 此外，state-ViewModel 职责仅限于状态托管和保存恢复，不建议在此处理 UI 逻辑，
-  // UI 逻辑只适合在 Activity/Fragment 等视图控制器中完成，是 “数据驱动” 一部分，将来升级到 Jetpack Compose 更是如此。
-
-  //如这么说无体会，详见 https://xiaozhuanlan.com/topic/9816742350
-
   public static class LoginStates extends ViewModel {
-
-    //TODO tip 7：此处我们使用 "去除防抖特性" 的 ObservableField 子类 State，用以代替 MutableLiveData，
-
-    //如这么说无体会，详见 https://xiaozhuanlan.com/topic/9816742350
-
     public final State<String> name = new State<>("");
-
     public final State<String> password = new State<>("");
-
     public final State<Boolean> loadingVisible = new State<>(false);
-
   }
-
 }
