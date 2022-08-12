@@ -31,6 +31,8 @@ import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
 import com.kunminx.architecture.utils.ToastUtils;
 import com.kunminx.architecture.utils.Utils;
+import com.kunminx.player.PlayingInfoManager;
+import com.kunminx.player.domain.PlayerEvent;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.databinding.FragmentPlayerBinding;
@@ -108,24 +110,26 @@ public class PlayerFragment extends BaseFragment {
       }
     });
 
-    PlayerManager.getInstance().getChangeMusicResult().observe(getViewLifecycleOwner(), changeMusic -> {
-      mStates.title.set(changeMusic.getTitle());
-      mStates.artist.set(changeMusic.getSummary());
-      mStates.coverImg.set(changeMusic.getImg());
-      if (mListener != null) view.post(mListener::calculateTitleAndArtist);
-    });
-
-    PlayerManager.getInstance().getPlayingMusicResult().observe(getViewLifecycleOwner(), playingMusic -> {
-      mStates.maxSeekDuration.set(playingMusic.getDuration());
-      mStates.currentSeekPosition.set(playingMusic.getPlayerPosition());
-    });
-
-    PlayerManager.getInstance().getPauseResult().observe(getViewLifecycleOwner(), aBoolean -> {
-      mStates.isPlaying.set(!aBoolean);
-    });
-
-    PlayerManager.getInstance().getPlayModeResult().observe(getViewLifecycleOwner(), anEnum -> {
-      mStates.playModeIcon.set(PlayerManager.getInstance().getModeIcon(anEnum));
+    PlayerManager.getInstance().getDispatcher().output(this, playerEvent -> {
+      switch (playerEvent.eventId) {
+        case PlayerEvent.EVENT_CHANGE_MUSIC:
+          mStates.title.set(playerEvent.param.changeMusic.getTitle());
+          mStates.artist.set(playerEvent.param.changeMusic.getSummary());
+          mStates.coverImg.set(playerEvent.param.changeMusic.getImg());
+          if (mListener != null) view.post(mListener::calculateTitleAndArtist);
+          break;
+        case PlayerEvent.EVENT_PROGRESS:
+          mStates.maxSeekDuration.set(playerEvent.param.playingMusic.getDuration());
+          mStates.currentSeekPosition.set(playerEvent.param.playingMusic.getPlayerPosition());
+          break;
+        case PlayerEvent.EVENT_PLAY_STATUS:
+          mStates.isPlaying.set(!playerEvent.param.toPause);
+          break;
+        case PlayerEvent.EVENT_REPEAT_MODE:
+          Enum<PlayingInfoManager.RepeatMode> mode = playerEvent.param.repeatMode;
+          mStates.playModeIcon.set(PlayerManager.getInstance().getModeIcon(mode));
+          break;
+      }
     });
   }
 
