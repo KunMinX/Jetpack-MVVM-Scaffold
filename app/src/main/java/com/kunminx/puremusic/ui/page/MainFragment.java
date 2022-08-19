@@ -104,11 +104,9 @@ public class MainFragment extends BaseFragment {
     public void openMenu() {
       mMessenger.input(new Messages(Messages.EVENT_OPEN_DRAWER));
     }
-
     public void login() {
       nav().navigate(R.id.action_mainFragment_to_loginFragment);
     }
-
     public void search() {
       nav().navigate(R.id.action_mainFragment_to_searchFragment);
     }

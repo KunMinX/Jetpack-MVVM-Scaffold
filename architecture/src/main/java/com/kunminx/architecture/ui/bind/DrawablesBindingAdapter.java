@@ -29,7 +29,6 @@ public class DrawablesBindingAdapter {
   private static final int INVALID = 0;
   private static final int[] TMP_PADDING = new int[4];
 
-
   // normal, checked, checkable, enabled, focused, pressed, selected
   @BindingAdapter(value = {
     "drawable_shapeMode",
@@ -920,7 +919,6 @@ public class DrawablesBindingAdapter {
     final float scale = Resources.getSystem().getDisplayMetrics().density;
     return (int) (dipValue * scale + .5f);
   }
-
 
   @IntDef({
     ShapeMode.RECTANGLE,

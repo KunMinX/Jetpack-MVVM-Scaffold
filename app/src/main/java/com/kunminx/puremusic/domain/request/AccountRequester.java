@@ -16,7 +16,6 @@
 
 package com.kunminx.puremusic.domain.request;
 
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;

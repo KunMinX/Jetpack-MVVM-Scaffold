@@ -16,24 +16,20 @@
 
 package com.kunminx.puremusic.data.config;
 
-import android.os.Environment;
-
 import com.kunminx.architecture.data.config.keyvalue.KeyValueBoolean;
 import com.kunminx.architecture.data.config.keyvalue.KeyValueInteger;
 import com.kunminx.architecture.data.config.keyvalue.KeyValueSerializable;
 import com.kunminx.architecture.data.config.keyvalue.KeyValueString;
-import com.kunminx.architecture.utils.Utils;
+import com.kunminx.keyvalue.annotation.KeyValueX;
 import com.kunminx.puremusic.data.bean.User;
 
 /**
  * Create by KunMinX at 18/9/28
  */
-public class Configs {
-  public static final String COVER_PATH = Utils.getApp().getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath();
-  public static final String TOKEN = "token";
-
-  public static final KeyValueString accountId = new KeyValueString("accountId");
-  public static final KeyValueBoolean isLogin = new KeyValueBoolean("isLogin");
-  public static final KeyValueInteger alive = new KeyValueInteger("alive");
-  public static final KeyValueSerializable<User> user = new KeyValueSerializable<>("user");
+@KeyValueX
+public interface Configs {
+  KeyValueString token();
+  KeyValueBoolean isLogin();
+  KeyValueInteger alive();
+  KeyValueSerializable<User> user();
 }

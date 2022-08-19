@@ -137,27 +137,21 @@ public class PlayerFragment extends BaseFragment {
     public void playMode() {
       PlayerManager.getInstance().changeMode();
     }
-
     public void previous() {
       PlayerManager.getInstance().playPrevious();
     }
-
     public void togglePlay() {
       PlayerManager.getInstance().togglePlay();
     }
-
     public void next() {
       PlayerManager.getInstance().playNext();
     }
-
     public void showPlayList() {
       ToastUtils.showShortToast(getApplicationContext(), getString(R.string.unfinished));
     }
-
     public void slideDown() {
       mMessenger.input(new Messages(Messages.EVENT_CLOSE_SLIDE_PANEL_IF_EXPANDED));
     }
-
     public void more() {
     }
   }

@@ -16,7 +16,6 @@
 
 package com.kunminx.puremusic.domain.request;
 
-
 import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.data.response.DataResult;

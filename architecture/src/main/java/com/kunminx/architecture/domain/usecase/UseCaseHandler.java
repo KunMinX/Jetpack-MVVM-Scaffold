@@ -1,6 +1,5 @@
 package com.kunminx.architecture.domain.usecase;
 
-
 /**
  * Runs {@link UseCase}s using a {@link UseCaseScheduler}.
  */

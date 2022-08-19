@@ -85,19 +85,15 @@ public class SearchFragment extends BaseFragment {
     public void back() {
       nav().navigateUp();
     }
-
     public void testNav() {
       openUrlInBrowser(getString(R.string.article_navigation));
     }
-
     public void subscribe() {
       openUrlInBrowser(getString(R.string.article_navigation));
     }
-
     public void testDownload() {
       mGlobalDownloadRequester.input(new DownloadEvent(DownloadEvent.EVENT_DOWNLOAD_GLOBAL));
     }
-
     public void testLifecycleDownload() {
       mDownloadRequester.input(new DownloadEvent(DownloadEvent.EVENT_DOWNLOAD));
     }
