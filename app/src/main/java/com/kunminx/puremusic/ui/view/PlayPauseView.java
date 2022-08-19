@@ -50,7 +50,6 @@ public class PlayPauseView extends FrameLayout {
     mPaint.setColor(mBackgroundColor);
     mDrawable = new PlayPauseDrawable(mDrawableColor);
     mDrawable.setCallback(this);
-
   }
 
   @Override
@@ -121,9 +120,7 @@ public class PlayPauseView extends FrameLayout {
   }
 
   public void play() {
-    if (mAnimatorSet != null) {
-      mAnimatorSet.cancel();
-    }
+    if (mAnimatorSet != null) mAnimatorSet.cancel();
     mAnimatorSet = new AnimatorSet();
     mDrawable.setIsPlay(mIsPlay = true);
     final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();
@@ -133,9 +130,7 @@ public class PlayPauseView extends FrameLayout {
   }
 
   public void pause() {
-    if (mAnimatorSet != null) {
-      mAnimatorSet.cancel();
-    }
+    if (mAnimatorSet != null) mAnimatorSet.cancel();
     mAnimatorSet = new AnimatorSet();
     mDrawable.setIsPlay(mIsPlay = false);
     final Animator pausePlayAnim = mDrawable.getPausePlayAnimator();

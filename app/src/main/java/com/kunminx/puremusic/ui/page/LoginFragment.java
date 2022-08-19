@@ -69,7 +69,7 @@ public class LoginFragment extends BaseFragment {
     mAccountRequester.getTokenResult().observe(getViewLifecycleOwner(), dataResult -> {
       if (!dataResult.getResponseStatus().isSuccess()) {
         mStates.loadingVisible.set(false);
-        ToastUtils.showLongToast(getApplicationContext(), getString(R.string.network_state_retry));
+        ToastUtils.showLongToast(getString(R.string.network_state_retry));
         return;
       }
 
@@ -90,7 +90,7 @@ public class LoginFragment extends BaseFragment {
     }
     public void login() {
       if (TextUtils.isEmpty(mStates.name.get()) || TextUtils.isEmpty(mStates.password.get())) {
-        ToastUtils.showLongToast(getApplicationContext(), getString(R.string.username_or_pwd_incomplete));
+        ToastUtils.showLongToast(getString(R.string.username_or_pwd_incomplete));
         return;
       }
       User user = new User(mStates.name.get(), mStates.password.get());

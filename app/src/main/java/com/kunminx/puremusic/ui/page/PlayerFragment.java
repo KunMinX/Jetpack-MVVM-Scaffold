@@ -147,7 +147,7 @@ public class PlayerFragment extends BaseFragment {
       PlayerManager.getInstance().playNext();
     }
     public void showPlayList() {
-      ToastUtils.showShortToast(getApplicationContext(), getString(R.string.unfinished));
+      ToastUtils.showShortToast(getString(R.string.unfinished));
     }
     public void slideDown() {
       mMessenger.input(new Messages(Messages.EVENT_CLOSE_SLIDE_PANEL_IF_EXPANDED));
