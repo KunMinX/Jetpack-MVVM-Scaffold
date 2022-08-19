@@ -85,19 +85,11 @@ public class MainFragment extends BaseFragment {
       TestAlbum musicAlbum = dataResult.getResult();
       if (musicAlbum != null && musicAlbum.getMusics() != null) {
         mStates.list.set(musicAlbum.getMusics());
-
-        if (PlayerManager.getInstance().getAlbum() == null ||
-          !PlayerManager.getInstance().getAlbum().getAlbumId().equals(musicAlbum.getAlbumId())) {
-          PlayerManager.getInstance().loadAlbum(musicAlbum);
-        }
+        PlayerManager.getInstance().loadAlbum(musicAlbum);
       }
     });
 
-    if (PlayerManager.getInstance().getAlbum() == null) {
-      mMusicRequester.requestFreeMusics();
-    } else {
-      mStates.list.set(PlayerManager.getInstance().getAlbum().getMusics());
-    }
+    if (PlayerManager.getInstance().getAlbum() == null) mMusicRequester.requestFreeMusics();
   }
 
   public class ClickProxy {
