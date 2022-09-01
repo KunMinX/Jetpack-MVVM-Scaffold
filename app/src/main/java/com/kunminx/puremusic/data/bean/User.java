@@ -20,8 +20,8 @@ package com.kunminx.puremusic.data.bean;
  * Create by KunMinX at 20/04/26
  */
 public class User {
-  public final String name;
-  public final String password;
+  private final String name;
+  private final String password;
 
   public User(String name, String password) {
     this.name = name;

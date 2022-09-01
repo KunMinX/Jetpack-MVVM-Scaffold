@@ -20,12 +20,9 @@ package com.kunminx.puremusic.data.bean;
  * Create by KunMinX at 19/11/2
  */
 public class LibraryInfo {
-  public String title;
-  public String summary;
-  public String url;
-
-  public LibraryInfo() {
-  }
+  private final String title;
+  private final String summary;
+  private final String url;
 
   public LibraryInfo(String title, String summary, String url) {
     this.title = title;

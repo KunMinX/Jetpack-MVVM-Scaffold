@@ -102,20 +102,24 @@ public class DataRepository {
   }
 
   @SuppressLint("CheckResult")
-  public void downloadFile(DownloadState downloadState, DataResult.Result<DownloadState> result) {
+  public void downloadFile(DataResult.Result<DownloadState> result) {
+    final DownloadState[] originState = {new DownloadState()};
     Observable.interval(100, TimeUnit.MILLISECONDS)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(aLong -> {
-        if (downloadState.isForgive || downloadState.progress == 100) {
+        DownloadState newState = new DownloadState();
+        if (originState[0].isForgive || originState[0].progress == 100) {
           return;
         }
-        if (downloadState.progress < 100) {
-          downloadState.progress = downloadState.progress + 1;
-          Log.d("---", "下载进度 " + downloadState.progress + "%");
+
+        if (originState[0].progress < 100) {
+          newState = new DownloadState(false, originState[0].progress + 1, null);
+          originState[0] = newState;
+          Log.d("---", "下载进度 " + originState[0].progress + "%");
         }
 
-        result.onResult(new DataResult<>(downloadState, new ResponseStatus()));
+        result.onResult(new DataResult<>(newState, new ResponseStatus()));
         Log.d("---", "回推状态");
       });
   }
