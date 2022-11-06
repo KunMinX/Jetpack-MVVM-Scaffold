@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kunminx.puremusic.player;
+package com.kunminx.puremusic.domain.proxy;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +27,7 @@ import com.kunminx.player.contract.IPlayController;
 import com.kunminx.player.contract.IServiceNotifier;
 import com.kunminx.player.domain.PlayerInfoDispatcher;
 import com.kunminx.puremusic.data.bean.TestAlbum;
-import com.kunminx.puremusic.player.helper.PlayerFileNameGenerator;
-import com.kunminx.puremusic.player.notification.PlayerService;
+import com.kunminx.puremusic.ui.widget.PlayerService;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
 
@@ -60,7 +59,10 @@ public class PlayerManager implements IPlayController<TestAlbum, TestAlbum.TestM
     Context context1 = context.getApplicationContext();
 
     HttpProxyCacheServer proxy = new HttpProxyCacheServer.Builder(context1)
-      .fileNameGenerator(new PlayerFileNameGenerator())
+      .fileNameGenerator(url -> {
+        String[] split = url.split("/");
+        return split[split.length - 1];
+      })
       .maxCacheSize(2147483648L)
       .build();
 

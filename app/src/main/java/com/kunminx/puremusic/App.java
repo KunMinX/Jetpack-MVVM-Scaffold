@@ -19,7 +19,7 @@ package com.kunminx.puremusic;
 import android.app.Application;
 
 import com.kunminx.architecture.utils.Utils;
-import com.kunminx.puremusic.player.PlayerManager;
+import com.kunminx.puremusic.domain.proxy.PlayerManager;
 
 /**
  * Create by KunMinX at 19/10/29
