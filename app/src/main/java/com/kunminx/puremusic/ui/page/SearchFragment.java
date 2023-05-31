@@ -101,8 +101,8 @@ public class SearchFragment extends BaseFragment {
   }
 
   public static class SearchStates extends StateHolder {
-    public final State<Integer> progress = new State<>(0);
-    public final State<Integer> progress_cancelable = new State<>(0);
+    public final State<Integer> progress = new State<>(1);
+    public final State<Integer> progress_cancelable = new State<>(1);
     public final State<Boolean> enableDownload = new State<>(true);
     public final State<Boolean> enableGlobalDownload = new State<>(true);
   }
