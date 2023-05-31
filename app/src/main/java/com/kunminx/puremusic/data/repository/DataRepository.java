@@ -98,19 +98,21 @@ public class DataRepository {
 
   @SuppressLint("CheckResult")
   public ObservableOnSubscribe<Integer> downloadFile() {
-    return emitter -> {
-      byte[] bytes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
-      try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-           ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-        int b;
-        while ((b = bis.read()) != -1) {
-          Thread.sleep(100);
-          emitter.onNext(b);
+    synchronized (this) {
+      return emitter -> {
+        byte[] bytes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+             ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+          int b;
+          while ((b = bis.read()) != -1) {
+            Thread.sleep(500);
+            emitter.onNext(b);
+          }
+        } catch (IOException | InterruptedException e) {
+          e.printStackTrace();
         }
-      } catch (IOException | InterruptedException e) {
-        e.printStackTrace();
-      }
-    };
+      };
+    }
   }
 
   public DataResult<String> login(User user) {
