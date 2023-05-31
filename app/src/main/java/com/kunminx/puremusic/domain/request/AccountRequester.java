@@ -22,12 +22,21 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.data.response.DataResult;
+import com.kunminx.architecture.data.response.ResponseStatus;
+import com.kunminx.architecture.data.response.ResultSource;
 import com.kunminx.architecture.domain.message.MutableResult;
 import com.kunminx.architecture.domain.message.Result;
 import com.kunminx.puremusic.data.bean.User;
 import com.kunminx.puremusic.data.repository.DataRepository;
 
 import org.jetbrains.annotations.NotNull;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by KunMinX at 20/04/26
@@ -40,12 +49,39 @@ public class AccountRequester extends ViewModel implements DefaultLifecycleObser
     return tokenResult;
   }
 
+  private Disposable mDisposable;
+
   public void requestLogin(User user) {
-    DataRepository.getInstance().login(user, tokenResult::postValue);
+    Observable.create((ObservableOnSubscribe<DataResult<String>>) emitter -> {
+        emitter.onNext(DataRepository.getInstance().login(user));
+      }).subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Observer<DataResult<String>>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+          mDisposable = d;
+        }
+        @Override
+        public void onNext(DataResult<String> dataResult) {
+          tokenResult.postValue(dataResult);
+        }
+        @Override
+        public void onError(Throwable e) {
+          tokenResult.postValue(new DataResult<>(null,
+            new ResponseStatus(e.getMessage(), false, ResultSource.NETWORK)));
+        }
+        @Override
+        public void onComplete() {
+          mDisposable = null;
+        }
+      });
   }
 
-  private void cancelLogin() {
-    DataRepository.getInstance().cancelLogin();
+  public void cancelLogin() {
+    if (mDisposable != null && !mDisposable.isDisposed()) {
+      mDisposable.dispose();
+      mDisposable = null;
+    }
   }
 
   @Override

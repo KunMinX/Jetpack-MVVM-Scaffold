@@ -33,8 +33,7 @@ import com.kunminx.puremusic.data.bean.LibraryInfo;
 import com.kunminx.puremusic.data.bean.TestAlbum;
 import com.kunminx.puremusic.data.bean.User;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +44,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -83,7 +81,6 @@ public class DataRepository {
   }
 
   public void getFreeMusic(DataResult.Result<TestAlbum> result) {
-
     Gson gson = new Gson();
     Type type = new TypeToken<TestAlbum>() {
     }.getType();
@@ -112,45 +109,27 @@ public class DataRepository {
         if (originState[0].isForgive || originState[0].progress == 100) {
           return;
         }
-
         if (originState[0].progress < 100) {
           newState = new DownloadState(false, originState[0].progress + 1, null);
           originState[0] = newState;
           Log.d("---", "下载进度 " + originState[0].progress + "%");
         }
-
         result.onResult(new DataResult<>(newState, new ResponseStatus()));
         Log.d("---", "回推状态");
       });
   }
 
-  private Call<String> mUserCall;
-
-  public void login(User user, DataResult.Result<String> result) {
-    mUserCall = retrofit.create(AccountService.class).login(user.getName(), user.getPassword());
-    mUserCall.enqueue(new Callback<String>() {
-      @Override
-      public void onResponse(@NotNull Call<String> call, @NotNull Response<String> response) {
-        ResponseStatus responseStatus = new ResponseStatus(
-          String.valueOf(response.code()), response.isSuccessful(), ResultSource.NETWORK);
-        result.onResult(new DataResult<>(response.body(), responseStatus));
-        mUserCall = null;
-      }
-
-      @Override
-      public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
-        result.onResult(new DataResult<>(null,
-          new ResponseStatus(t.getMessage(), false, ResultSource.NETWORK)));
-        mUserCall = null;
-      }
-    });
-  }
-
-  public void cancelLogin() {
-    if (mUserCall != null && !mUserCall.isCanceled()) {
-      mUserCall.cancel();
-      mUserCall = null;
+  public DataResult<String> login(User user) {
+    Call<String> call = retrofit.create(AccountService.class).login(user.getName(), user.getPassword());
+    Response<String> response;
+    try {
+      response = call.execute();
+      ResponseStatus responseStatus = new ResponseStatus(
+        String.valueOf(response.code()), response.isSuccessful(), ResultSource.NETWORK);
+      return new DataResult<>(response.body(), responseStatus);
+    } catch (IOException e) {
+      return new DataResult<>(null,
+        new ResponseStatus(e.getMessage(), false, ResultSource.NETWORK));
     }
   }
-
 }

@@ -26,6 +26,13 @@ import com.kunminx.puremusic.data.repository.DataRepository;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Create by KunMinX at 19/11/2
  */
@@ -39,6 +46,27 @@ public class InfoRequester extends ViewModel {
 
   public void requestLibraryInfo() {
     if (mLibraryResult.getValue() == null)
-      DataRepository.getInstance().getLibraryInfo(mLibraryResult::setValue);
+      Observable.create((ObservableOnSubscribe<DataResult<List<LibraryInfo>>>) emitter -> {
+          DataRepository.getInstance().getLibraryInfo(emitter::onNext);
+        }).subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer<DataResult<List<LibraryInfo>>>() {
+          @Override
+          public void onSubscribe(Disposable d) {
+
+          }
+          @Override
+          public void onNext(DataResult<List<LibraryInfo>> testAlbumDataResult) {
+            mLibraryResult.setValue(testAlbumDataResult);
+          }
+          @Override
+          public void onError(Throwable e) {
+
+          }
+          @Override
+          public void onComplete() {
+
+          }
+        });
   }
 }

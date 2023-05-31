@@ -24,6 +24,13 @@ import com.kunminx.architecture.domain.message.Result;
 import com.kunminx.puremusic.data.bean.TestAlbum;
 import com.kunminx.puremusic.data.repository.DataRepository;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Create by KunMinX at 19/10/29
  */
@@ -36,6 +43,27 @@ public class MusicRequester extends ViewModel {
   }
 
   public void requestFreeMusics() {
-    DataRepository.getInstance().getFreeMusic(mFreeMusicsResult::setValue);
+    Observable.create((ObservableOnSubscribe<DataResult<TestAlbum>>) emitter -> {
+        DataRepository.getInstance().getFreeMusic(emitter::onNext);
+      }).subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Observer<DataResult<TestAlbum>>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+
+        }
+        @Override
+        public void onNext(DataResult<TestAlbum> testAlbumDataResult) {
+          mFreeMusicsResult.setValue(testAlbumDataResult);
+        }
+        @Override
+        public void onError(Throwable e) {
+
+        }
+        @Override
+        public void onComplete() {
+
+        }
+      });
   }
 }
