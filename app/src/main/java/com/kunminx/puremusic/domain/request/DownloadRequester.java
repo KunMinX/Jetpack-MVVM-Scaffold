@@ -8,42 +8,62 @@ import com.kunminx.puremusic.data.bean.DownloadState;
 import com.kunminx.puremusic.data.repository.DataRepository;
 import com.kunminx.puremusic.domain.event.DownloadEvent;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Create by KunMinX at 20/03/18
  */
 public class DownloadRequester extends MviDispatcher<DownloadEvent> {
 
-  private boolean pageStopped;
+  private Disposable mDisposable;
 
   @Override
   protected void onHandle(DownloadEvent event) {
     switch (event.eventId) {
       case DownloadEvent.EVENT_DOWNLOAD:
-        DataRepository.getInstance().downloadFile(dataResult -> {
-          if (pageStopped) {
-            sendResult(event.copy(new DownloadState(true, 0, null)));
-          } else {
-            sendResult(event.copy(dataResult.getResult()));
-          }
-        });
+        Observable.create(DataRepository.getInstance().downloadFile())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+              mDisposable = d;
+            }
+            @Override
+            public void onNext(Integer integer) {
+              sendResult(event.copy(new DownloadState(true, integer)));
+            }
+            @Override
+            public void onError(Throwable e) {
+
+            }
+            @Override
+            public void onComplete() {
+
+            }
+          });
         break;
       case DownloadEvent.EVENT_DOWNLOAD_GLOBAL:
-        DataRepository.getInstance().downloadFile(dataResult -> {
-          sendResult(event.copy(dataResult.getResult()));
-        });
+        Observable.create(DataRepository.getInstance().downloadFile())
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(integer -> {
+            sendResult(event.copy(new DownloadState(true, integer)));
+          });
         break;
     }
   }
 
   @Override
-  public void onCreate(@NonNull LifecycleOwner owner) {
-    super.onCreate(owner);
-    pageStopped = false;
-  }
-
-  @Override
   public void onStop(@NonNull LifecycleOwner owner) {
     super.onStop(owner);
-    pageStopped = true;
+    if (mDisposable != null && !mDisposable.isDisposed()) {
+      mDisposable.dispose();
+      mDisposable = null;
+    }
   }
 }

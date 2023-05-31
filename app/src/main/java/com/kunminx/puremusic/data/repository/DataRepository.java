@@ -17,7 +17,6 @@
 package com.kunminx.puremusic.data.repository;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,19 +27,18 @@ import com.kunminx.architecture.utils.Utils;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.data.api.APIs;
 import com.kunminx.puremusic.data.api.AccountService;
-import com.kunminx.puremusic.data.bean.DownloadState;
 import com.kunminx.puremusic.data.bean.LibraryInfo;
 import com.kunminx.puremusic.data.bean.TestAlbum;
 import com.kunminx.puremusic.data.bean.User;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.ObservableOnSubscribe;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -99,24 +97,20 @@ public class DataRepository {
   }
 
   @SuppressLint("CheckResult")
-  public void downloadFile(DataResult.Result<DownloadState> result) {
-    final DownloadState[] originState = {new DownloadState()};
-    Observable.interval(100, TimeUnit.MILLISECONDS)
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe(aLong -> {
-        DownloadState newState = new DownloadState();
-        if (originState[0].isForgive || originState[0].progress == 100) {
-          return;
+  public ObservableOnSubscribe<Integer> downloadFile() {
+    return emitter -> {
+      byte[] bytes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+      try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+           ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+        int b;
+        while ((b = bis.read()) != -1) {
+          Thread.sleep(100);
+          emitter.onNext(b);
         }
-        if (originState[0].progress < 100) {
-          newState = new DownloadState(false, originState[0].progress + 1, null);
-          originState[0] = newState;
-          Log.d("---", "下载进度 " + originState[0].progress + "%");
-        }
-        result.onResult(new DataResult<>(newState, new ResponseStatus()));
-        Log.d("---", "回推状态");
-      });
+      } catch (IOException | InterruptedException e) {
+        e.printStackTrace();
+      }
+    };
   }
 
   public DataResult<String> login(User user) {

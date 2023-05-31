@@ -16,6 +16,8 @@
 
 package com.kunminx.puremusic.domain.request;
 
+import android.annotation.SuppressLint;
+
 import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.data.response.DataResult;
@@ -44,29 +46,13 @@ public class InfoRequester extends ViewModel {
     return mLibraryResult;
   }
 
+  @SuppressLint("CheckResult")
   public void requestLibraryInfo() {
     if (mLibraryResult.getValue() == null)
       Observable.create((ObservableOnSubscribe<DataResult<List<LibraryInfo>>>) emitter -> {
           DataRepository.getInstance().getLibraryInfo(emitter::onNext);
         }).subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Observer<DataResult<List<LibraryInfo>>>() {
-          @Override
-          public void onSubscribe(Disposable d) {
-
-          }
-          @Override
-          public void onNext(DataResult<List<LibraryInfo>> testAlbumDataResult) {
-            mLibraryResult.setValue(testAlbumDataResult);
-          }
-          @Override
-          public void onError(Throwable e) {
-
-          }
-          @Override
-          public void onComplete() {
-
-          }
-        });
+        .subscribe(mLibraryResult::setValue);
   }
 }
