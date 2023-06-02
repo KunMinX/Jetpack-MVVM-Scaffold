@@ -38,6 +38,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -78,28 +79,30 @@ public class DataRepository {
       .build();
   }
 
-  public void getFreeMusic(DataResult.Result<TestAlbum> result) {
-    Gson gson = new Gson();
-    Type type = new TypeToken<TestAlbum>() {
-    }.getType();
-    TestAlbum testAlbum = gson.fromJson(Utils.getApp().getString(R.string.free_music_json), type);
-
-    result.onResult(new DataResult<>(testAlbum, new ResponseStatus()));
+  public Observable<DataResult<TestAlbum>> getFreeMusic() {
+    return Observable.create((ObservableOnSubscribe<DataResult<TestAlbum>>) emitter -> {
+      Gson gson = new Gson();
+      Type type = new TypeToken<TestAlbum>() {
+      }.getType();
+      TestAlbum testAlbum = gson.fromJson(Utils.getApp().getString(R.string.free_music_json), type);
+      emitter.onNext(new DataResult<>(testAlbum, new ResponseStatus()));
+    });
   }
 
-  public void getLibraryInfo(DataResult.Result<List<LibraryInfo>> result) {
-    Gson gson = new Gson();
-    Type type = new TypeToken<List<LibraryInfo>>() {
-    }.getType();
-    List<LibraryInfo> list = gson.fromJson(Utils.getApp().getString(R.string.library_json), type);
-
-    result.onResult(new DataResult<>(list, new ResponseStatus()));
+  public Observable<DataResult<List<LibraryInfo>>> getLibraryInfo() {
+    return Observable.create((ObservableOnSubscribe<DataResult<List<LibraryInfo>>>) emitter -> {
+      Gson gson = new Gson();
+      Type type = new TypeToken<List<LibraryInfo>>() {
+      }.getType();
+      List<LibraryInfo> list = gson.fromJson(Utils.getApp().getString(R.string.library_json), type);
+      emitter.onNext(new DataResult<>(list, new ResponseStatus()));
+    });
   }
 
   @SuppressLint("CheckResult")
-  public ObservableOnSubscribe<Integer> downloadFile() {
+  public Observable<Integer> downloadFile() {
     synchronized (this) {
-      return emitter -> {
+      return Observable.create(emitter -> {
         byte[] bytes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
         try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
              ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
@@ -111,21 +114,23 @@ public class DataRepository {
         } catch (IOException | InterruptedException e) {
           e.printStackTrace();
         }
-      };
+      });
     }
   }
 
-  public DataResult<String> login(User user) {
-    Call<String> call = retrofit.create(AccountService.class).login(user.getName(), user.getPassword());
-    Response<String> response;
-    try {
-      response = call.execute();
-      ResponseStatus responseStatus = new ResponseStatus(
-        String.valueOf(response.code()), response.isSuccessful(), ResultSource.NETWORK);
-      return new DataResult<>(response.body(), responseStatus);
-    } catch (IOException e) {
-      return new DataResult<>(null,
-        new ResponseStatus(e.getMessage(), false, ResultSource.NETWORK));
-    }
+  public Observable<DataResult<String>> login(User user) {
+    return Observable.create((ObservableOnSubscribe<DataResult<String>>) emitter -> {
+      Call<String> call = retrofit.create(AccountService.class).login(user.getName(), user.getPassword());
+      Response<String> response;
+      try {
+        response = call.execute();
+        ResponseStatus responseStatus = new ResponseStatus(
+          String.valueOf(response.code()), response.isSuccessful(), ResultSource.NETWORK);
+        emitter.onNext(new DataResult<>(response.body(), responseStatus));
+      } catch (IOException e) {
+        emitter.onNext(new DataResult<>(null,
+          new ResponseStatus(e.getMessage(), false, ResultSource.NETWORK)));
+      }
+    });
   }
 }

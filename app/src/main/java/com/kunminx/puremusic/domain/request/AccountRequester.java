@@ -52,9 +52,8 @@ public class AccountRequester extends ViewModel implements DefaultLifecycleObser
   private Disposable mDisposable;
 
   public void requestLogin(User user) {
-    Observable.create((ObservableOnSubscribe<DataResult<String>>) emitter -> {
-        emitter.onNext(DataRepository.getInstance().login(user));
-      }).subscribeOn(Schedulers.io())
+    DataRepository.getInstance().login(user)
+      .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(new Observer<DataResult<String>>() {
         @Override
