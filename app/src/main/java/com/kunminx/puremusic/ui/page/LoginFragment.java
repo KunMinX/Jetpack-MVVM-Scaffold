@@ -79,7 +79,6 @@ public class LoginFragment extends BaseFragment {
       mConfigs.token().set(s);
       mStates.loadingVisible.set(false);
 
-      //TODO 登录成功后进行的下一步操作...
       nav().navigateUp();
     });
   }
