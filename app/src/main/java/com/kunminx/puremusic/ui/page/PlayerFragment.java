@@ -23,12 +23,12 @@ import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
 import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
+import com.kunminx.architecture.utils.Res;
 import com.kunminx.architecture.utils.ToastUtils;
 import com.kunminx.architecture.utils.Utils;
 import com.kunminx.player.PlayingInfoManager;
@@ -45,8 +45,6 @@ import com.kunminx.puremusic.ui.view.PlayerSlideListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import net.steamcrafted.materialiconlib.MaterialDrawableBuilder;
-
-import java.util.Objects;
 
 /**
  * Create by KunMinX at 19/10/29
@@ -167,7 +165,7 @@ public class PlayerFragment extends BaseFragment {
     public final State<String> title = new State<>(Utils.getApp().getString(R.string.app_name));
     public final State<String> artist = new State<>(Utils.getApp().getString(R.string.app_name));
     public final State<String> coverImg = new State<>("");
-    public final State<Drawable> placeHolder = new State<>(Objects.requireNonNull(ContextCompat.getDrawable(Utils.getApp(), R.drawable.bg_album_default)));
+    public final State<Drawable> placeHolder = new State<>(Res.getDrawable(R.drawable.bg_album_default));
     public final State<Integer> maxSeekDuration = new State<>(0);
     public final State<Integer> currentSeekPosition = new State<>(0);
     public final State<Boolean> isPlaying = new State<>(false, true);

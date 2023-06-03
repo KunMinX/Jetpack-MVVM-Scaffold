@@ -32,16 +32,10 @@ public class PlayerReceiver extends BroadcastReceiver {
   public void onReceive(Context context, Intent intent) {
 
     if (Objects.equals(intent.getAction(), Intent.ACTION_MEDIA_BUTTON)) {
-      if (intent.getExtras() == null) {
-        return;
-      }
+      if (intent.getExtras() == null) return;
       KeyEvent keyEvent = (KeyEvent) intent.getExtras().get(Intent.EXTRA_KEY_EVENT);
-      if (keyEvent == null) {
-        return;
-      }
-      if (keyEvent.getAction() != KeyEvent.ACTION_DOWN) {
-        return;
-      }
+      if (keyEvent == null) return;
+      if (keyEvent.getAction() != KeyEvent.ACTION_DOWN) return;
 
       switch (keyEvent.getKeyCode()) {
         case KeyEvent.KEYCODE_HEADSETHOOK:

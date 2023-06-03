@@ -55,30 +55,20 @@ public class DrawerCoordinateManager implements DefaultLifecycleObserver {
   }
 
   public void requestToUpdateDrawerMode(boolean pageOpened, String pageName) {
-    if (pageOpened) {
-      tagOfSecondaryPages.add(pageName);
-    } else {
-      tagOfSecondaryPages.remove(pageName);
-    }
+    if (pageOpened) tagOfSecondaryPages.add(pageName);
+    else tagOfSecondaryPages.remove(pageName);
     enableSwipeDrawer.setValue(isNoneSecondaryPage());
   }
 
   @Override
   public void onCreate(@NonNull LifecycleOwner owner) {
-
     tagOfSecondaryPages.add(owner.getClass().getSimpleName());
-
     enableSwipeDrawer.setValue(isNoneSecondaryPage());
-
   }
 
   @Override
   public void onDestroy(@NonNull LifecycleOwner owner) {
-
     tagOfSecondaryPages.remove(owner.getClass().getSimpleName());
-
     enableSwipeDrawer.setValue(isNoneSecondaryPage());
-
   }
-
 }
