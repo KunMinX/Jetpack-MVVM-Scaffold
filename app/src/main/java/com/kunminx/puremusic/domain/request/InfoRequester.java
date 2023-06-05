@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel;
 import com.kunminx.architecture.data.response.DataResult;
 import com.kunminx.architecture.domain.message.MutableResult;
 import com.kunminx.architecture.domain.message.Result;
+import com.kunminx.architecture.domain.request.Requester;
 import com.kunminx.puremusic.data.bean.LibraryInfo;
 import com.kunminx.puremusic.data.repository.DataRepository;
 
@@ -38,7 +39,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by KunMinX at 19/11/2
  */
-public class InfoRequester extends ViewModel {
+public class InfoRequester extends Requester {
 
   private final MutableResult<DataResult<List<LibraryInfo>>> mLibraryResult = new MutableResult<>();
 

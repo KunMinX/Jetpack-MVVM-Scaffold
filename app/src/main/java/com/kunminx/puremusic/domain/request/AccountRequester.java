@@ -26,6 +26,7 @@ import com.kunminx.architecture.data.response.ResponseStatus;
 import com.kunminx.architecture.data.response.ResultSource;
 import com.kunminx.architecture.domain.message.MutableResult;
 import com.kunminx.architecture.domain.message.Result;
+import com.kunminx.architecture.domain.request.Requester;
 import com.kunminx.puremusic.data.bean.User;
 import com.kunminx.puremusic.data.repository.DataRepository;
 
@@ -41,7 +42,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by KunMinX at 20/04/26
  */
-public class AccountRequester extends ViewModel implements DefaultLifecycleObserver {
+public class AccountRequester extends Requester implements DefaultLifecycleObserver {
 
   private final MutableResult<DataResult<String>> tokenResult = new MutableResult<>();
 

@@ -30,6 +30,7 @@ import com.kunminx.architecture.ui.state.State;
 import com.kunminx.puremusic.domain.event.Messages;
 import com.kunminx.puremusic.domain.message.DrawerCoordinateManager;
 import com.kunminx.puremusic.domain.message.PageMessenger;
+import com.kunminx.puremusic.domain.proxy.PlayerManager;
 
 /**
  * Create by KunMinX at 19/10/16
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    PlayerManager.getInstance().init(this);
     mMessenger.output(this, messages -> {
       switch (messages.eventId) {
         case Messages.EVENT_CLOSE_ACTIVITY_IF_ALLOWED:

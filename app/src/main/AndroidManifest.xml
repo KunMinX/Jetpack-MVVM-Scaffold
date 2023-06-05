@@ -8,7 +8,6 @@
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
   <application
-    android:name=".App"
     android:allowBackup="true"
     android:icon="@drawable/ic_launcher"
     android:label="${APP_NAME}"
@@ -17,8 +16,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     android:usesCleartextTraffic="true"
-    tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute"
-    tools:replace="android:name">
+    tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
 
     <activity
       android:name=".MainActivity"
