@@ -80,7 +80,7 @@ public class DataRepository {
   }
 
   public Observable<DataResult<TestAlbum>> getFreeMusic() {
-    return Observable.create((ObservableOnSubscribe<DataResult<TestAlbum>>) emitter -> {
+    return Observable.create(emitter -> {
       Gson gson = new Gson();
       Type type = new TypeToken<TestAlbum>() {
       }.getType();
@@ -90,7 +90,7 @@ public class DataRepository {
   }
 
   public Observable<DataResult<List<LibraryInfo>>> getLibraryInfo() {
-    return Observable.create((ObservableOnSubscribe<DataResult<List<LibraryInfo>>>) emitter -> {
+    return Observable.create(emitter -> {
       Gson gson = new Gson();
       Type type = new TypeToken<List<LibraryInfo>>() {
       }.getType();
@@ -119,7 +119,7 @@ public class DataRepository {
   }
 
   public Observable<DataResult<String>> login(User user) {
-    return Observable.create((ObservableOnSubscribe<DataResult<String>>) emitter -> {
+    return Observable.create(emitter -> {
       Call<String> call = retrofit.create(AccountService.class).login(user.getName(), user.getPassword());
       Response<String> response;
       try {

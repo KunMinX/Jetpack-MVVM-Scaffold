@@ -1,4 +1,4 @@
-![](https://images.xiaozhuanlan.com/photo/2021/30ce2eb5fbfc71775ca39981537f7471.png)
+![](https://images.xiaozhuanlan.com/photo/2023/2b4e8ed4e7308f8a27ba0d7275484a55.jpg)
 
 
 # 版权声明
