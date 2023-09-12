@@ -172,6 +172,16 @@ public class PlayerManager implements IPlayController<TestAlbum, TestAlbum.TestM
   }
 
   @Override
+  public State<Integer> getCurrentPositionState() {
+    return mController.mCurrentPositionState;
+  }
+
+  @Override
+  public State<Integer> getDurationState() {
+    return mController.mDurationState;
+  }
+
+  @Override
   public TestAlbum getAlbum() {
     return mController.getAlbum();
   }
