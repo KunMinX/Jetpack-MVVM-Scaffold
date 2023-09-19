@@ -27,14 +27,13 @@ import com.kunminx.architecture.ui.page.BaseFragment;
 import com.kunminx.architecture.ui.page.DataBindingConfig;
 import com.kunminx.architecture.ui.page.StateHolder;
 import com.kunminx.architecture.ui.state.State;
-import com.kunminx.player.domain.PlayerEvent;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.data.bean.TestAlbum;
 import com.kunminx.puremusic.domain.event.Messages;
 import com.kunminx.puremusic.domain.message.PageMessenger;
-import com.kunminx.puremusic.domain.request.MusicRequester;
 import com.kunminx.puremusic.domain.proxy.PlayerManager;
+import com.kunminx.puremusic.domain.request.MusicRequester;
 import com.kunminx.puremusic.ui.page.adapter.PlaylistAdapter;
 
 import java.util.ArrayList;
@@ -73,18 +72,16 @@ public class MainFragment extends BaseFragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    PlayerManager.getInstance().getDispatcher().output(this, playerEvent -> {
-      if (playerEvent.eventId == PlayerEvent.EVENT_CHANGE_MUSIC) {
-        mAdapter.notifyDataSetChanged();
-      }
+    PlayerManager.getInstance().getUiStates().observe(getViewLifecycleOwner(), uiStates -> {
+      mStates.musicId.set(uiStates.getMusicId(), onDiff -> mAdapter.notifyDataSetChanged());
     });
 
     mMusicRequester.getFreeMusicsResult().observe(getViewLifecycleOwner(), dataResult -> {
       if (!dataResult.getResponseStatus().isSuccess()) return;
 
       TestAlbum musicAlbum = dataResult.getResult();
-      if (musicAlbum != null && musicAlbum.getMusics() != null) {
-        mStates.list.set(musicAlbum.getMusics());
+      if (musicAlbum != null && musicAlbum.musics != null) {
+        mStates.list.set(musicAlbum.musics);
         PlayerManager.getInstance().loadAlbum(musicAlbum);
       }
     });
@@ -105,6 +102,7 @@ public class MainFragment extends BaseFragment {
   }
 
   public static class MainStates extends StateHolder {
+    public final State<String> musicId = new State<>("", true);
     public final State<Boolean> initTabAndPage = new State<>(true);
     public final State<String> pageAssetPath = new State<>("summary.html");
     public final State<List<TestAlbum.TestMusic>> list = new State<>(new ArrayList<>());

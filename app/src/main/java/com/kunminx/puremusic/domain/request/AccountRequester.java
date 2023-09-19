@@ -19,7 +19,6 @@ package com.kunminx.puremusic.domain.request;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModel;
 
 import com.kunminx.architecture.data.response.DataResult;
 import com.kunminx.architecture.data.response.ResponseStatus;
@@ -32,8 +31,6 @@ import com.kunminx.puremusic.data.repository.DataRepository;
 
 import org.jetbrains.annotations.NotNull;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

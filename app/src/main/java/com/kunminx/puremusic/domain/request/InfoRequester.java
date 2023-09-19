@@ -18,8 +18,6 @@ package com.kunminx.puremusic.domain.request;
 
 import android.annotation.SuppressLint;
 
-import androidx.lifecycle.ViewModel;
-
 import com.kunminx.architecture.data.response.DataResult;
 import com.kunminx.architecture.domain.message.MutableResult;
 import com.kunminx.architecture.domain.message.Result;
@@ -29,11 +27,7 @@ import com.kunminx.puremusic.data.repository.DataRepository;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**

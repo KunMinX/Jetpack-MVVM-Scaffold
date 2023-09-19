@@ -32,9 +32,6 @@
       name="vm"
       type="com.kunminx.puremusic.ui.page.PlayerFragment.PlayerStates" />
 
-    <variable
-      name="player"
-      type="com.kunminx.puremusic.domain.proxy.PlayerManager" />
   </data>
 
   <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -119,10 +116,10 @@
       android:background="@color/transparent"
       android:clickable="true"
       android:focusable="true"
-      android:max="@{player.durationState}"
+      android:max="@{vm.maxSeekDuration}"
       android:minHeight="6dp"
       android:paddingTop="24dp"
-      android:progress="@{player.currentPositionState}"
+      android:progress="@{vm.currentSeekPosition}"
       android:progressDrawable="@drawable/progressbar_color"
       android:thumb="@null"
       android:visibility="visible"

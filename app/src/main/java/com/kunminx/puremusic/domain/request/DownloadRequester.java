@@ -9,8 +9,6 @@ import com.kunminx.puremusic.data.repository.DataRepository;
 import com.kunminx.puremusic.domain.event.DownloadEvent;
 import com.kunminx.puremusic.ui.page.helper.DefaultInterface;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
