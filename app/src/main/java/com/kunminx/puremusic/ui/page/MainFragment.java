@@ -73,7 +73,7 @@ public class MainFragment extends BaseFragment {
     super.onViewCreated(view, savedInstanceState);
 
     PlayerManager.getInstance().getUiStates().observe(getViewLifecycleOwner(), uiStates -> {
-      mStates.musicId.set(uiStates.getMusicId(), onDiff -> mAdapter.notifyDataSetChanged());
+      mStates.musicId.set(uiStates.getMusicId(), changed -> mAdapter.notifyDataSetChanged());
     });
 
     mMusicRequester.getFreeMusicsResult().observe(getViewLifecycleOwner(), dataResult -> {
