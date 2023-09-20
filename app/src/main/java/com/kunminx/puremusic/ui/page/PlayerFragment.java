@@ -31,6 +31,7 @@ import com.kunminx.architecture.ui.state.State;
 import com.kunminx.architecture.utils.Res;
 import com.kunminx.architecture.utils.ToastUtils;
 import com.kunminx.architecture.utils.Utils;
+import com.kunminx.player.domain.PlayingInfoManager;
 import com.kunminx.puremusic.BR;
 import com.kunminx.puremusic.R;
 import com.kunminx.puremusic.databinding.FragmentPlayerBinding;
@@ -107,15 +108,18 @@ public class PlayerFragment extends BaseFragment {
     });
 
     PlayerManager.getInstance().getUiStates().observe(getViewLifecycleOwner(), uiStates -> {
-      mStates.title.set(uiStates.getTitle());
-      mStates.artist.set(uiStates.getSummary());
-      mStates.coverImg.set(uiStates.getImg(), changed -> {
+      mStates.musicId.set(uiStates.getMusicId(), changed -> {
+        mStates.title.set(uiStates.getTitle());
+        mStates.artist.set(uiStates.getSummary());
+        mStates.coverImg.set(uiStates.getImg());
         if (mListener != null) view.post(mListener::calculateTitleAndArtist);
+        mStates.maxSeekDuration.set(uiStates.getDuration());
       });
-      mStates.isPlaying.set(!uiStates.isPaused());
-      mStates.playModeIcon.set(PlayerManager.getInstance().getModeIcon(uiStates.getRepeatMode()));
-      mStates.maxSeekDuration.set(uiStates.getDuration());
       mStates.currentSeekPosition.set(uiStates.getProgress());
+      mStates.isPlaying.set(!uiStates.isPaused());
+      mStates.repeatMode.set(uiStates.getRepeatMode(), changed -> {
+        mStates.playModeIcon.set(PlayerManager.getInstance().getModeIcon(uiStates.getRepeatMode()));
+      });
     });
   }
 
@@ -150,6 +154,8 @@ public class PlayerFragment extends BaseFragment {
   }
 
   public static class PlayerStates extends StateHolder {
+    public final State<String> musicId = new State<>("", true);
+    public final State<Enum<PlayingInfoManager.RepeatMode>> repeatMode = new State<>(PlayingInfoManager.RepeatMode.LIST_CYCLE, true);
     public final State<String> title = new State<>(Utils.getApp().getString(R.string.app_name), true);
     public final State<String> artist = new State<>(Utils.getApp().getString(R.string.app_name), true);
     public final State<String> coverImg = new State<>("", true);
